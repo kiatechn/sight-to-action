@@ -9,9 +9,23 @@ between the male and female connectomes?
 
 ## Status
 
-V0.1 in progress: extracting and validating one real visual-input →
-descending-neuron pathway from the [MaleCNS dataset](https://male-cns.janelia.org/download/)
-(Janelia, CC-BY licensed).
+V0.1 pathway extracted: [notebooks/01_extract_giant_fiber_pathway.ipynb](notebooks/01_extract_giant_fiber_pathway.ipynb)
+reproducibly pulls the **Giant Fiber visual escape circuit** out of the
+[MaleCNS dataset](https://male-cns.janelia.org/download/) (Janelia,
+CC-BY licensed) — a published, well-characterized pathway (von Reyn et
+al. 2014/2017; Ache et al. 2019):
+
+```
+10 optic-lobe motion/feature detectors (T4/T5, Tm/T2/TmY family)
+        -> LC4, LPLC2  (looming-sensitive visual projection neurons)
+        -> DNp01       (the Giant Fiber, a descending neuron)
+        -> TTMn, PSI   (jump motor neuron / flight-motor pathway)
+```
+
+15 cell types, 118 aggregated type-to-type connections, exported to
+[data/processed/giant_fiber_pathway.json](data/processed/giant_fiber_pathway.json)
+for the (not yet built) web front end. Next: the React + Cytoscape.js /
+R3F interactive viewer, then the male/female comparison in V0.2.
 
 ## Data source
 
