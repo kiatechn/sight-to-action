@@ -106,6 +106,14 @@ export interface PathwayData {
   removals: Record<string, RemovalEffect>;
 }
 
+export interface ExplorerData {
+  meta: { max_hops: number; method: string };
+  modality: Record<string, string>;
+  sources: string[];
+  targets: string[];
+  results: Record<string, Record<string, { score: number; route: string[] }>>;
+}
+
 export interface SkeletonEntry {
   bodyId: number;
   segments: number[];

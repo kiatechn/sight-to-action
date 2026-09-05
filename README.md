@@ -24,6 +24,7 @@ evidence-linked information about every neuron.
 | **Journey** | A step-by-step animated walk from retina → lamina → medulla → lobula → central brain → descending neuron, with the 3D view following along. |
 | **Circuit** | A simplified weighted graph of the pathway; arrow thickness is the fraction of the target's input supplied by that source. |
 | **Routes** | Ranked alternative routes, path lengths, bottleneck neurons, and a node-removal experiment showing how structural routes change. |
+| **Explore** | Pick any of 30 senses and any of 480 movement neurons and get the real route, its strength, and how it ranks — so the statistical argument can be tested rather than taken on trust. |
 | **Context** | Whether the route is stronger than chance: rank against all descending neurons, against all sensory modalities, against weight-shuffled graphs, plus a threshold-robustness sweep. |
 | **Sex** | Each neuron classified as shared, sex-specific or sexually dimorphic using the dataset's cross-connectome mappings. |
 | **Neuron detail** | Cell type, class, connection strengths, predicted neurotransmitter, sex status, and an evidence label on every claim, with links to neuPrint. |
@@ -97,6 +98,7 @@ src/sight_to_action/
   data.py        loaders for the MaleCNS flat tables
   analysis.py    type-level graph, route ranking, bottlenecks, removal experiment
   nulls.py       null models: rank vs other DNs/senses, weight-shuffled graphs
+  explorer.py    precomputes every sense -> every descending neuron for the app
   pipeline.py    assembles the pathway dataset (evidence + sex labels)
   skeletons.py   SWC download, parsing and decimation
   build.py       one reproducible build of every artefact
@@ -133,6 +135,7 @@ Connectomics Group, Google Research and collaborators —
 - [x] Structural node-removal experiment
 - [x] Male/female comparison via cross-connectome mappings
 - [x] Statistical null models and threshold-robustness analysis
+- [x] Interactive explorer over all 30 senses x 480 descending neurons
 - [x] Four-level evidence labelling with links to source data
 - [x] Reproducible notebook, documented provenance, methods write-up
 - [ ] Public deployment

@@ -18,6 +18,7 @@ import pandas as pd
 from .analysis import build_type_graph
 from .data import load_annotations, load_neurotransmitters, load_weights
 from .pipeline import build_context, build_pathway_dataset, write_pathway_dataset
+from .explorer import build_explorer, write_explorer
 from .skeletons import build_skeleton_payload, write_skeletons
 
 PROCESSED_DIR = Path(__file__).resolve().parents[2] / "data" / "processed"
@@ -98,4 +99,13 @@ def build_all(
     cloud_path = PROCESSED_DIR / "cloud.json"
     cloud_path.write_text(json.dumps({"stride": 3, "positions": cloud}))
 
-    return {"pathway": pathway_path, "skeletons": skeleton_path, "cloud": cloud_path}
+    # every sense -> every descending neuron, so the statistical argument can
+    # be tested interactively rather than just asserted
+    explorer_path = write_explorer(build_explorer(graph, annotations, max_hops=max_hops))
+
+    return {
+        "pathway": pathway_path,
+        "skeletons": skeleton_path,
+        "cloud": cloud_path,
+        "explorer": explorer_path,
+    }

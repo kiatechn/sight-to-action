@@ -677,6 +677,42 @@ select {
   vertical-align: top;
 }
 
+/* ---------- explorer ---------- */
+
+.field-label {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+.verdict-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.verdict-num {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 2px 0 2px;
+}
+
+.verdict-num .muted {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.tab {
+  padding: 10px 2px;
+  font-size: 11px;
+}
+
 .removal-result {
   margin-top: 10px;
   background: var(--panel-2);
