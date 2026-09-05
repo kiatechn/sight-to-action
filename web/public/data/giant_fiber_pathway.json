@@ -1,0 +1,830 @@
+{
+  "meta": {
+    "title": "Visual looming input to the Giant Fiber escape circuit",
+    "dataset": "MaleCNS v1.0 (minconf 0.5)",
+    "source": "gs://flyem-male-cns/v1.0/connectome-data/flat-connectome/",
+    "description": "LC4/LPLC2 looming-sensitive visual projection neurons drive DNp01 (the Giant Fiber), which drives TTMn (jump muscle) and PSI (flight motor pathway).",
+    "references": [
+      "von Reyn et al. 2014, Neuron - 'A spike-timing mechanism for action selection'",
+      "von Reyn et al. 2017, Nat Neurosci - 'Feature integration drives probabilistic behavior'",
+      "Ache et al. 2019, Curr Biol - 'Neural basis for looming size and velocity encoding'"
+    ]
+  },
+  "nodes": [
+    {
+      "type": "T2",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 1630,
+      "predicted_neurotransmitter": "acetylcholine"
+    },
+    {
+      "type": "TmY3",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 824,
+      "predicted_neurotransmitter": "acetylcholine"
+    },
+    {
+      "type": "Tm4",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 1670,
+      "predicted_neurotransmitter": "acetylcholine"
+    },
+    {
+      "type": "Tm5Y",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 898,
+      "predicted_neurotransmitter": "acetylcholine"
+    },
+    {
+      "type": "T5c",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 1720,
+      "predicted_neurotransmitter": "acetylcholine"
+    },
+    {
+      "type": "Tm2",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 1766,
+      "predicted_neurotransmitter": "acetylcholine"
+    },
+    {
+      "type": "T5d",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 1620,
+      "predicted_neurotransmitter": "acetylcholine"
+    },
+    {
+      "type": "T5b",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 1715,
+      "predicted_neurotransmitter": "acetylcholine"
+    },
+    {
+      "type": "Tm3",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 2054,
+      "predicted_neurotransmitter": "acetylcholine"
+    },
+    {
+      "type": "T4c",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 1778,
+      "predicted_neurotransmitter": "acetylcholine"
+    },
+    {
+      "type": "LC4",
+      "tier": 1,
+      "superclass": "visual_projection",
+      "n_bodies": 126,
+      "predicted_neurotransmitter": "acetylcholine"
+    },
+    {
+      "type": "LPLC2",
+      "tier": 1,
+      "superclass": "visual_projection",
+      "n_bodies": 185,
+      "predicted_neurotransmitter": "acetylcholine"
+    },
+    {
+      "type": "DNp01",
+      "tier": 2,
+      "superclass": "descending_neuron",
+      "n_bodies": 2,
+      "predicted_neurotransmitter": "acetylcholine"
+    },
+    {
+      "type": "TTMn",
+      "tier": 3,
+      "superclass": "vnc_motor",
+      "n_bodies": 2,
+      "predicted_neurotransmitter": "histamine"
+    },
+    {
+      "type": "PSI",
+      "tier": 3,
+      "superclass": "vnc_efferent",
+      "n_bodies": 2,
+      "predicted_neurotransmitter": "unclear"
+    }
+  ],
+  "edges": [
+    {
+      "source": "Tm2",
+      "target": "T2",
+      "weight": 101562,
+      "n_synapse_connections": 6702
+    },
+    {
+      "source": "Tm3",
+      "target": "T2",
+      "weight": 60659,
+      "n_synapse_connections": 5683
+    },
+    {
+      "source": "Tm2",
+      "target": "T5c",
+      "weight": 57159,
+      "n_synapse_connections": 5919
+    },
+    {
+      "source": "Tm2",
+      "target": "T5b",
+      "weight": 56599,
+      "n_synapse_connections": 5992
+    },
+    {
+      "source": "Tm3",
+      "target": "TmY3",
+      "weight": 51210,
+      "n_synapse_connections": 8489
+    },
+    {
+      "source": "Tm2",
+      "target": "T5d",
+      "weight": 48116,
+      "n_synapse_connections": 5131
+    },
+    {
+      "source": "T2",
+      "target": "LC4",
+      "weight": 44134,
+      "n_synapse_connections": 5958
+    },
+    {
+      "source": "Tm2",
+      "target": "TmY3",
+      "weight": 44003,
+      "n_synapse_connections": 6103
+    },
+    {
+      "source": "Tm3",
+      "target": "Tm3",
+      "weight": 43312,
+      "n_synapse_connections": 9129
+    },
+    {
+      "source": "Tm3",
+      "target": "T4c",
+      "weight": 42767,
+      "n_synapse_connections": 6156
+    },
+    {
+      "source": "TmY3",
+      "target": "LC4",
+      "weight": 40543,
+      "n_synapse_connections": 3194
+    },
+    {
+      "source": "LPLC2",
+      "target": "LPLC2",
+      "weight": 37032,
+      "n_synapse_connections": 7149
+    },
+    {
+      "source": "Tm4",
+      "target": "T5c",
+      "weight": 32781,
+      "n_synapse_connections": 5195
+    },
+    {
+      "source": "T2",
+      "target": "T2",
+      "weight": 29967,
+      "n_synapse_connections": 6209
+    },
+    {
+      "source": "Tm4",
+      "target": "LC4",
+      "weight": 29659,
+      "n_synapse_connections": 4099
+    },
+    {
+      "source": "Tm4",
+      "target": "T5d",
+      "weight": 27591,
+      "n_synapse_connections": 4394
+    },
+    {
+      "source": "Tm4",
+      "target": "T5b",
+      "weight": 26929,
+      "n_synapse_connections": 4445
+    },
+    {
+      "source": "Tm5Y",
+      "target": "LPLC2",
+      "weight": 25814,
+      "n_synapse_connections": 2951
+    },
+    {
+      "source": "TmY3",
+      "target": "T2",
+      "weight": 22677,
+      "n_synapse_connections": 3721
+    },
+    {
+      "source": "T5b",
+      "target": "T5b",
+      "weight": 22363,
+      "n_synapse_connections": 5137
+    },
+    {
+      "source": "Tm2",
+      "target": "LC4",
+      "weight": 18966,
+      "n_synapse_connections": 3162
+    },
+    {
+      "source": "T4c",
+      "target": "T4c",
+      "weight": 17377,
+      "n_synapse_connections": 3953
+    },
+    {
+      "source": "T5d",
+      "target": "LPLC2",
+      "weight": 16342,
+      "n_synapse_connections": 2906
+    },
+    {
+      "source": "T5d",
+      "target": "T5d",
+      "weight": 15118,
+      "n_synapse_connections": 3559
+    },
+    {
+      "source": "T5b",
+      "target": "LPLC2",
+      "weight": 15011,
+      "n_synapse_connections": 2902
+    },
+    {
+      "source": "T5c",
+      "target": "T5c",
+      "weight": 14901,
+      "n_synapse_connections": 3553
+    },
+    {
+      "source": "LC4",
+      "target": "LC4",
+      "weight": 14814,
+      "n_synapse_connections": 2845
+    },
+    {
+      "source": "Tm3",
+      "target": "LC4",
+      "weight": 14768,
+      "n_synapse_connections": 2771
+    },
+    {
+      "source": "Tm4",
+      "target": "TmY3",
+      "weight": 14152,
+      "n_synapse_connections": 3245
+    },
+    {
+      "source": "T5c",
+      "target": "LPLC2",
+      "weight": 13934,
+      "n_synapse_connections": 2672
+    },
+    {
+      "source": "T4c",
+      "target": "LPLC2",
+      "weight": 12454,
+      "n_synapse_connections": 2439
+    },
+    {
+      "source": "Tm2",
+      "target": "Tm4",
+      "weight": 11464,
+      "n_synapse_connections": 2690
+    },
+    {
+      "source": "Tm4",
+      "target": "Tm4",
+      "weight": 8385,
+      "n_synapse_connections": 2263
+    },
+    {
+      "source": "Tm5Y",
+      "target": "Tm5Y",
+      "weight": 7988,
+      "n_synapse_connections": 1803
+    },
+    {
+      "source": "LC4",
+      "target": "DNp01",
+      "weight": 6362,
+      "n_synapse_connections": 126
+    },
+    {
+      "source": "Tm4",
+      "target": "LPLC2",
+      "weight": 6036,
+      "n_synapse_connections": 1269
+    },
+    {
+      "source": "LPLC2",
+      "target": "DNp01",
+      "weight": 4858,
+      "n_synapse_connections": 182
+    },
+    {
+      "source": "TmY3",
+      "target": "LPLC2",
+      "weight": 3703,
+      "n_synapse_connections": 814
+    },
+    {
+      "source": "T5b",
+      "target": "T2",
+      "weight": 3466,
+      "n_synapse_connections": 975
+    },
+    {
+      "source": "Tm3",
+      "target": "Tm5Y",
+      "weight": 2876,
+      "n_synapse_connections": 648
+    },
+    {
+      "source": "Tm3",
+      "target": "Tm4",
+      "weight": 2689,
+      "n_synapse_connections": 661
+    },
+    {
+      "source": "T4c",
+      "target": "T5c",
+      "weight": 2583,
+      "n_synapse_connections": 741
+    },
+    {
+      "source": "T5c",
+      "target": "T4c",
+      "weight": 2404,
+      "n_synapse_connections": 689
+    },
+    {
+      "source": "T5d",
+      "target": "T2",
+      "weight": 1869,
+      "n_synapse_connections": 528
+    },
+    {
+      "source": "Tm4",
+      "target": "Tm3",
+      "weight": 1786,
+      "n_synapse_connections": 454
+    },
+    {
+      "source": "LPLC2",
+      "target": "LC4",
+      "weight": 1780,
+      "n_synapse_connections": 380
+    },
+    {
+      "source": "Tm5Y",
+      "target": "LC4",
+      "weight": 1735,
+      "n_synapse_connections": 374
+    },
+    {
+      "source": "Tm5Y",
+      "target": "Tm3",
+      "weight": 1170,
+      "n_synapse_connections": 290
+    },
+    {
+      "source": "TmY3",
+      "target": "Tm4",
+      "weight": 1149,
+      "n_synapse_connections": 300
+    },
+    {
+      "source": "T5c",
+      "target": "LC4",
+      "weight": 1096,
+      "n_synapse_connections": 314
+    },
+    {
+      "source": "TmY3",
+      "target": "TmY3",
+      "weight": 651,
+      "n_synapse_connections": 178
+    },
+    {
+      "source": "Tm4",
+      "target": "T2",
+      "weight": 567,
+      "n_synapse_connections": 143
+    },
+    {
+      "source": "T5c",
+      "target": "T5b",
+      "weight": 556,
+      "n_synapse_connections": 89
+    },
+    {
+      "source": "Tm4",
+      "target": "Tm2",
+      "weight": 504,
+      "n_synapse_connections": 140
+    },
+    {
+      "source": "T5c",
+      "target": "T2",
+      "weight": 492,
+      "n_synapse_connections": 150
+    },
+    {
+      "source": "Tm2",
+      "target": "Tm3",
+      "weight": 428,
+      "n_synapse_connections": 91
+    },
+    {
+      "source": "T5b",
+      "target": "T5c",
+      "weight": 406,
+      "n_synapse_connections": 85
+    },
+    {
+      "source": "T5c",
+      "target": "T5d",
+      "weight": 368,
+      "n_synapse_connections": 77
+    },
+    {
+      "source": "TmY3",
+      "target": "T5b",
+      "weight": 362,
+      "n_synapse_connections": 102
+    },
+    {
+      "source": "Tm3",
+      "target": "Tm2",
+      "weight": 340,
+      "n_synapse_connections": 84
+    },
+    {
+      "source": "T5b",
+      "target": "T5d",
+      "weight": 281,
+      "n_synapse_connections": 57
+    },
+    {
+      "source": "T5d",
+      "target": "T5b",
+      "weight": 265,
+      "n_synapse_connections": 43
+    },
+    {
+      "source": "T5d",
+      "target": "T5c",
+      "weight": 253,
+      "n_synapse_connections": 59
+    },
+    {
+      "source": "TmY3",
+      "target": "Tm3",
+      "weight": 209,
+      "n_synapse_connections": 56
+    },
+    {
+      "source": "Tm2",
+      "target": "Tm2",
+      "weight": 201,
+      "n_synapse_connections": 43
+    },
+    {
+      "source": "TmY3",
+      "target": "Tm2",
+      "weight": 173,
+      "n_synapse_connections": 54
+    },
+    {
+      "source": "T5b",
+      "target": "LC4",
+      "weight": 142,
+      "n_synapse_connections": 45
+    },
+    {
+      "source": "Tm4",
+      "target": "Tm5Y",
+      "weight": 137,
+      "n_synapse_connections": 38
+    },
+    {
+      "source": "T2",
+      "target": "Tm3",
+      "weight": 135,
+      "n_synapse_connections": 36
+    },
+    {
+      "source": "Tm3",
+      "target": "LPLC2",
+      "weight": 105,
+      "n_synapse_connections": 27
+    },
+    {
+      "source": "Tm3",
+      "target": "T5c",
+      "weight": 98,
+      "n_synapse_connections": 21
+    },
+    {
+      "source": "DNp01",
+      "target": "TTMn",
+      "weight": 90,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "Tm2",
+      "target": "T4c",
+      "weight": 88,
+      "n_synapse_connections": 19
+    },
+    {
+      "source": "Tm3",
+      "target": "T5b",
+      "weight": 86,
+      "n_synapse_connections": 25
+    },
+    {
+      "source": "T2",
+      "target": "Tm4",
+      "weight": 78,
+      "n_synapse_connections": 23
+    },
+    {
+      "source": "TmY3",
+      "target": "T4c",
+      "weight": 78,
+      "n_synapse_connections": 25
+    },
+    {
+      "source": "TmY3",
+      "target": "T5c",
+      "weight": 74,
+      "n_synapse_connections": 23
+    },
+    {
+      "source": "T2",
+      "target": "Tm2",
+      "weight": 73,
+      "n_synapse_connections": 18
+    },
+    {
+      "source": "T2",
+      "target": "TmY3",
+      "weight": 51,
+      "n_synapse_connections": 16
+    },
+    {
+      "source": "Tm3",
+      "target": "T5d",
+      "weight": 47,
+      "n_synapse_connections": 11
+    },
+    {
+      "source": "Tm2",
+      "target": "Tm5Y",
+      "weight": 44,
+      "n_synapse_connections": 10
+    },
+    {
+      "source": "T2",
+      "target": "T5c",
+      "weight": 43,
+      "n_synapse_connections": 8
+    },
+    {
+      "source": "T4c",
+      "target": "Tm5Y",
+      "weight": 39,
+      "n_synapse_connections": 10
+    },
+    {
+      "source": "T2",
+      "target": "Tm5Y",
+      "weight": 38,
+      "n_synapse_connections": 10
+    },
+    {
+      "source": "T4c",
+      "target": "T5d",
+      "weight": 34,
+      "n_synapse_connections": 10
+    },
+    {
+      "source": "TmY3",
+      "target": "T5d",
+      "weight": 33,
+      "n_synapse_connections": 10
+    },
+    {
+      "source": "Tm5Y",
+      "target": "TmY3",
+      "weight": 32,
+      "n_synapse_connections": 8
+    },
+    {
+      "source": "T4c",
+      "target": "T5b",
+      "weight": 32,
+      "n_synapse_connections": 9
+    },
+    {
+      "source": "T2",
+      "target": "LPLC2",
+      "weight": 31,
+      "n_synapse_connections": 9
+    },
+    {
+      "source": "Tm5Y",
+      "target": "Tm4",
+      "weight": 31,
+      "n_synapse_connections": 9
+    },
+    {
+      "source": "Tm4",
+      "target": "T4c",
+      "weight": 31,
+      "n_synapse_connections": 9
+    },
+    {
+      "source": "T5c",
+      "target": "Tm5Y",
+      "weight": 30,
+      "n_synapse_connections": 9
+    },
+    {
+      "source": "T4c",
+      "target": "TmY3",
+      "weight": 28,
+      "n_synapse_connections": 8
+    },
+    {
+      "source": "LC4",
+      "target": "LPLC2",
+      "weight": 26,
+      "n_synapse_connections": 8
+    },
+    {
+      "source": "T4c",
+      "target": "Tm3",
+      "weight": 24,
+      "n_synapse_connections": 6
+    },
+    {
+      "source": "T5b",
+      "target": "T4c",
+      "weight": 23,
+      "n_synapse_connections": 7
+    },
+    {
+      "source": "PSI",
+      "target": "PSI",
+      "weight": 22,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "T5d",
+      "target": "T4c",
+      "weight": 22,
+      "n_synapse_connections": 7
+    },
+    {
+      "source": "T4c",
+      "target": "T2",
+      "weight": 20,
+      "n_synapse_connections": 6
+    },
+    {
+      "source": "T5b",
+      "target": "TmY3",
+      "weight": 19,
+      "n_synapse_connections": 6
+    },
+    {
+      "source": "T2",
+      "target": "T5d",
+      "weight": 19,
+      "n_synapse_connections": 4
+    },
+    {
+      "source": "T5b",
+      "target": "Tm2",
+      "weight": 18,
+      "n_synapse_connections": 6
+    },
+    {
+      "source": "T2",
+      "target": "T5b",
+      "weight": 17,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "TmY3",
+      "target": "Tm5Y",
+      "weight": 16,
+      "n_synapse_connections": 5
+    },
+    {
+      "source": "T5c",
+      "target": "TmY3",
+      "weight": 16,
+      "n_synapse_connections": 5
+    },
+    {
+      "source": "T5d",
+      "target": "LC4",
+      "weight": 14,
+      "n_synapse_connections": 3
+    },
+    {
+      "source": "DNp01",
+      "target": "PSI",
+      "weight": 12,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "T2",
+      "target": "T4c",
+      "weight": 10,
+      "n_synapse_connections": 3
+    },
+    {
+      "source": "Tm5Y",
+      "target": "T2",
+      "weight": 7,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "T4c",
+      "target": "Tm2",
+      "weight": 7,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "T5c",
+      "target": "Tm2",
+      "weight": 6,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "Tm5Y",
+      "target": "Tm2",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "Tm5Y",
+      "target": "T5d",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "Tm5Y",
+      "target": "T4c",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "Tm2",
+      "target": "LPLC2",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "T5d",
+      "target": "Tm4",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "T5d",
+      "target": "Tm3",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "T5d",
+      "target": "Tm5Y",
+      "weight": 3,
+      "n_synapse_connections": 1
+    }
+  ]
+}

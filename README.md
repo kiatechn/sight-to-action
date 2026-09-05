@@ -23,9 +23,29 @@ al. 2014/2017; Ache et al. 2019):
 ```
 
 15 cell types, 118 aggregated type-to-type connections, exported to
-[data/processed/giant_fiber_pathway.json](data/processed/giant_fiber_pathway.json)
-for the (not yet built) web front end. Next: the React + Cytoscape.js /
-R3F interactive viewer, then the male/female comparison in V0.2.
+[data/processed/giant_fiber_pathway.json](data/processed/giant_fiber_pathway.json).
+
+**Interactive viewer:** [web/](web/) is a React + TypeScript + Cytoscape.js
+app that renders the pathway as a layered, directed diagram (visual input
+→ VPNs → Giant Fiber → motor output), colored by stage. Click any neuron
+for an evidence card (cell type, superclass, traced-body count, predicted
+neurotransmitter, and whether its role is experimentally supported or
+inferred); "Play signal" animates the connectome's own synaptic direction
+propagating stage by stage. Run it with:
+
+```
+npm install --prefix web
+npm run dev --prefix web
+```
+
+Real 3D neuron skeletons are not yet implemented — MaleCNS ships neuron
+meshes only as sharded Neuroglancer precomputed volumes
+(`gs://flyem-male-cns/v1.0/male-cns-meshes-transformed-to-fafb-flywire/`),
+which need a dedicated decoder; that's a planned follow-up, not part of
+this pass.
+
+Next: male/female comparison and the "remove this neuron" graph
+experiment (V0.2).
 
 ## Data source
 
