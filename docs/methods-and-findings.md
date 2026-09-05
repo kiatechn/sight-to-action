@@ -109,6 +109,49 @@ sexually dimorphic**. A directly equivalent route may therefore not exist in
 the female connectome. Routes 2–4, which run through LC10a → AOTU002, use
 only shared cell types up to the final dimorphic target.
 
+### 4.5 Statistical context — the main result
+
+A dense recurrent network connects nearly everything to nearly everything
+within a few hops, so **"a path exists" is close to meaningless on its own**.
+Three comparisons were run to try to falsify the route.
+
+**Against other descending neurons.** Best route score from R1–R6 to every
+descending neuron type, using a hop-limited Bellman–Ford relaxation so all
+targets are scored in one pass. DNg13 ranks **312 of 480** — below median.
+The top of that ranking is a useful check that the method works: it
+independently surfaces DNc01, DNc02, DNp11, DNp04, DNp02 and **DNp01 (the
+Giant Fiber)** — the descending neurons already known to be strongly visually
+driven. DNp01 scores 5.5 × 10⁻⁴, roughly **140× stronger** than DNg13.
+
+**Against other senses.** R1–R6 ranks **191 of 333** sensory types for
+connection into DNg13. DNg13's strongest structural sensory inputs are not
+visual at all — they are mechanosensory (SNpp10), gustatory (BM_Taste) and
+olfactory (ORN_DA1), each two to three orders of magnitude stronger than the
+photoreceptor route.
+
+**Against shuffled connection strengths.** Keeping the wiring fixed but
+permuting relative weights across edges, **70% of 50 shuffles** produced a
+route at least as strong as the observed one (observed 3.95 × 10⁻⁶ vs
+shuffled mean 1.49 × 10⁻⁵). *Caveat:* this null breaks the relationship
+between a connection's strength and its position in the network, so it is a
+deliberately harsh comparison rather than a definitive test.
+
+**Interpretation.** The R1–R6 → DNg13 route is real, reproducible and stable,
+but it is **not statistically special**. This does not contradict the
+published finding that DNg13 is visually driven and steers locomotion — DNg13
+may well receive its visual drive over routes this method scores poorly, or
+via pathways whose relevance is functional rather than structural weight. What
+it does show is that **path existence, and even "strongest path", are weak
+evidence of a functional channel** — which is exactly the failure mode that
+tools returning a path between any two neurons invite.
+
+### 4.6 Robustness
+
+The strongest route is unchanged at minimum-synapse thresholds of 10, 20 and
+50, and at hop limits of 4 and 5. It changes only at a threshold of 100,
+which deletes one of its own edges and forces a detour. So the result is not
+an artefact of the threshold choice.
+
 ## 5. Evidence labelling
 
 Every statement in the interactive application is tagged:

@@ -20976,5 +20976,172 @@
    "hops_before": 4,
    "hops_after": 4
   }
+ },
+ "context": {
+  "nulls": {
+   "observed_score": 3.952782097354029e-06,
+   "target_rank": 312,
+   "target_pool": 480,
+   "target_percentile": 35.20833333333333,
+   "source_rank": 191,
+   "source_pool": 333,
+   "source_percentile": 42.94294294294294,
+   "shuffled_mean": 1.492085451290061e-05,
+   "shuffled_p95": 7.152537180178614e-05,
+   "shuffled_better_fraction": 0.7,
+   "n_shuffles": 50
+  },
+  "topDescendingFromSource": [
+   {
+    "type": "DNc01",
+    "score": 0.005755023749293112
+   },
+   {
+    "type": "DNc02",
+    "score": 0.0028389906017676774
+   },
+   {
+    "type": "DNp11",
+    "score": 0.0022935665005717953
+   },
+   {
+    "type": "DNp04",
+    "score": 0.001808234318589447
+   },
+   {
+    "type": "DNp02",
+    "score": 0.0008966427107844053
+   },
+   {
+    "type": "DNg46",
+    "score": 0.0008952385952574484
+   },
+   {
+    "type": "DNp01",
+    "score": 0.0005548374505232856
+   },
+   {
+    "type": "DNg41",
+    "score": 0.000503606121333047
+   },
+   {
+    "type": "DNge097",
+    "score": 0.0004773604890884475
+   },
+   {
+    "type": "DNp03",
+    "score": 0.00044483832570317485
+   },
+   {
+    "type": "DNa07",
+    "score": 0.00043287912720778256
+   },
+   {
+    "type": "DNb03",
+    "score": 0.0004306138264026614
+   }
+  ],
+  "topSensoryToTarget": [
+   {
+    "type": "SNpp10",
+    "score": 0.001431466246261047
+   },
+   {
+    "type": "BM_Taste",
+    "score": 0.0005316628603111338
+   },
+   {
+    "type": "SNpp21",
+    "score": 0.0005161881622577396
+   },
+   {
+    "type": "SNpp50",
+    "score": 0.00043727193612215894
+   },
+   {
+    "type": "ORN_DA1",
+    "score": 0.0002420434796707399
+   },
+   {
+    "type": "SNpp48",
+    "score": 0.00019009341348391492
+   },
+   {
+    "type": "JO-A2",
+    "score": 0.0001713343047707053
+   },
+   {
+    "type": "SNta21",
+    "score": 0.00012501638904797999
+   },
+   {
+    "type": "SNppxx",
+    "score": 0.00012444553795643677
+   },
+   {
+    "type": "SNta38",
+    "score": 0.00011987872922409057
+   },
+   {
+    "type": "LgLG4",
+    "score": 0.00011895457300165482
+   },
+   {
+    "type": "SNta28",
+    "score": 0.0001147410694002009
+   }
+  ],
+  "robustness": [
+   {
+    "min_weight": 10,
+    "route": [
+     "R1-R6",
+     "L3",
+     "Tm5c",
+     "LoVP92",
+     "DNg13"
+    ],
+    "score": 3.5427619372646555e-06,
+    "hops": 4
+   },
+   {
+    "min_weight": 20,
+    "route": [
+     "R1-R6",
+     "L3",
+     "Tm5c",
+     "LoVP92",
+     "DNg13"
+    ],
+    "score": 3.952782097354027e-06,
+    "hops": 4
+   },
+   {
+    "min_weight": 50,
+    "route": [
+     "R1-R6",
+     "L3",
+     "Tm5c",
+     "LoVP92",
+     "DNg13"
+    ],
+    "score": 5.4719989750081235e-06,
+    "hops": 4
+   },
+   {
+    "min_weight": 100,
+    "route": [
+     "R1-R6",
+     "L3",
+     "Tm5c",
+     "LoVP92",
+     "VES200m",
+     "DNg13"
+    ],
+    "score": 3.1855906022892694e-06,
+    "hops": 5
+   }
+  ],
+  "note": "Scores are the product of relative synaptic weights along the best route of at most five hops. Everything here is structural: it describes wiring, not activity or behaviour."
  }
 }

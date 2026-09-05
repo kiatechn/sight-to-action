@@ -223,6 +223,78 @@ def build_pathway_dataset(
     }
 
 
+def build_context(
+    graph: nx.DiGraph,
+    weights: pd.DataFrame,
+    annotations: pd.DataFrame,
+    max_hops: int = 5,
+    n_shuffles: int = 50,
+    leaderboard: int = 12,
+    thresholds: tuple[int, ...] = (10, 20, 50, 100),
+) -> dict:
+    """Statistical context: is this route actually special?
+
+    A dense recurrent network connects nearly everything to nearly everything
+    within a few hops, so "a path exists" is weak evidence on its own. This
+    compares the observed route against other descending neurons, other
+    sensory modalities, and weight-shuffled versions of the same graph, and
+    checks that the route survives changes to the analysis thresholds.
+    """
+    from .analysis import build_type_graph, strongest_paths
+    from .nulls import best_scores_from, best_scores_to, evaluate
+
+    traced = annotations[annotations["status"] == "Traced"]
+    dn_types = set(traced[traced["superclass"] == "descending_neuron"]["type"].dropna())
+    sensory_types = set(
+        traced[traced["superclass"].isin(["ol_sensory", "cb_sensory", "vnc_sensory"])][
+            "type"
+        ].dropna()
+    )
+
+    nulls = evaluate(
+        graph, annotations, SOURCE_TYPE, TARGET_TYPE, max_hops=max_hops, n_shuffles=n_shuffles
+    )
+
+    forward = best_scores_from(graph, SOURCE_TYPE, max_hops=max_hops)
+    backward = best_scores_to(graph, TARGET_TYPE, max_hops=max_hops)
+
+    top_dn = sorted(
+        ((t, s) for t, s in forward.items() if t in dn_types and s > 0),
+        key=lambda kv: kv[1],
+        reverse=True,
+    )[:leaderboard]
+    top_sensory = sorted(
+        ((t, s) for t, s in backward.items() if t in sensory_types and s > 0),
+        key=lambda kv: kv[1],
+        reverse=True,
+    )[:leaderboard]
+
+    robustness = []
+    for mw in thresholds:
+        g = build_type_graph(weights, min_weight=mw)
+        found = strongest_paths(g, SOURCE_TYPE, TARGET_TYPE, k=1, max_hops=max_hops)
+        robustness.append(
+            {
+                "min_weight": mw,
+                "route": found[0].nodes if found else None,
+                "score": found[0].score if found else 0.0,
+                "hops": found[0].hops if found else None,
+            }
+        )
+
+    return {
+        "nulls": nulls.to_dict(),
+        "topDescendingFromSource": [{"type": t, "score": s} for t, s in top_dn],
+        "topSensoryToTarget": [{"type": t, "score": s} for t, s in top_sensory],
+        "robustness": robustness,
+        "note": (
+            "Scores are the product of relative synaptic weights along the best "
+            "route of at most five hops. Everything here is structural: it "
+            "describes wiring, not activity or behaviour."
+        ),
+    }
+
+
 def write_pathway_dataset(payload: dict, name: str = "pathway") -> Path:
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
     out = PROCESSED_DIR / f"{name}.json"

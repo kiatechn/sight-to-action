@@ -17,7 +17,7 @@ import pandas as pd
 
 from .analysis import build_type_graph
 from .data import load_annotations, load_neurotransmitters, load_weights
-from .pipeline import build_pathway_dataset, write_pathway_dataset
+from .pipeline import build_context, build_pathway_dataset, write_pathway_dataset
 from .skeletons import build_skeleton_payload, write_skeletons
 
 PROCESSED_DIR = Path(__file__).resolve().parents[2] / "data" / "processed"
@@ -73,6 +73,10 @@ def build_all(
             ]
         else:
             node["somaPositions"] = []
+
+    payload["context"] = build_context(
+        graph, weights, annotations, max_hops=max_hops
+    )
 
     pathway_path = write_pathway_dataset(payload, "pathway")
 

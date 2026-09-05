@@ -65,7 +65,30 @@ export interface RemovalEffect {
   hops_after: number | null;
 }
 
+export interface NullStats {
+  observed_score: number;
+  target_rank: number | null;
+  target_pool: number;
+  target_percentile: number | null;
+  source_rank: number | null;
+  source_pool: number;
+  source_percentile: number | null;
+  shuffled_mean: number;
+  shuffled_p95: number;
+  shuffled_better_fraction: number;
+  n_shuffles: number;
+}
+
+export interface PathwayContext {
+  nulls: NullStats;
+  topDescendingFromSource: { type: string; score: number }[];
+  topSensoryToTarget: { type: string; score: number }[];
+  robustness: { min_weight: number; route: string[] | null; score: number; hops: number | null }[];
+  note: string;
+}
+
 export interface PathwayData {
+  context?: PathwayContext;
   meta: {
     title: string;
     subtitle: string;

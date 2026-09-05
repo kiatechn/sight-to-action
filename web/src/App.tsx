@@ -5,11 +5,12 @@ import CircuitPanel from "./CircuitPanel";
 import JourneyPanel from "./JourneyPanel";
 import AnalysisPanel from "./AnalysisPanel";
 import SexPanel from "./SexPanel";
+import ContextPanel from "./ContextPanel";
 import NeuronDetail from "./NeuronDetail";
 import type { CloudData, PathwayData, SkeletonData } from "./types";
 import { STAGE_COLORS } from "./types";
 
-type Tab = "journey" | "circuit" | "analysis" | "sex";
+type Tab = "journey" | "circuit" | "analysis" | "context" | "sex";
 const STEP_MS = 2200;
 
 export default function App() {
@@ -160,8 +161,9 @@ export default function App() {
               [
                 ["journey", "Journey"],
                 ["circuit", "Circuit"],
-                ["analysis", "Analysis"],
-                ["sex", "Male / female"],
+                ["analysis", "Routes"],
+                ["context", "Context"],
+                ["sex", "Sex"],
               ] as [Tab, string][]
             ).map(([id, label]) => (
               <button
@@ -203,6 +205,7 @@ export default function App() {
                 onRemoveType={setRemovedType}
               />
             )}
+            {tab === "context" && <ContextPanel data={data} onSelectType={setSelectedType} />}
             {tab === "sex" && <SexPanel data={data} onSelectType={setSelectedType} />}
           </div>
 

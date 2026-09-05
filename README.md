@@ -23,18 +23,36 @@ evidence-linked information about every neuron.
 | **3D connectome** | Real EM-traced neuron skeletons, coloured by pathway stage, inside a soma point-cloud of the whole CNS. Click a neuron to inspect it. |
 | **Journey** | A step-by-step animated walk from retina → lamina → medulla → lobula → central brain → descending neuron, with the 3D view following along. |
 | **Circuit** | A simplified weighted graph of the pathway; arrow thickness is the fraction of the target's input supplied by that source. |
-| **Analysis** | Ranked alternative routes, path lengths, bottleneck neurons, and a node-removal experiment showing how structural routes change. |
-| **Male / female** | Each neuron classified as shared, sex-specific or sexually dimorphic using the dataset's cross-connectome mappings. |
+| **Routes** | Ranked alternative routes, path lengths, bottleneck neurons, and a node-removal experiment showing how structural routes change. |
+| **Context** | Whether the route is stronger than chance: rank against all descending neurons, against all sensory modalities, against weight-shuffled graphs, plus a threshold-robustness sweep. |
+| **Sex** | Each neuron classified as shared, sex-specific or sexually dimorphic using the dataset's cross-connectome mappings. |
 | **Neuron detail** | Cell type, class, connection strengths, predicted neurotransmitter, sex status, and an evidence label on every claim, with links to neuPrint. |
 
 ## Headline finding
 
-The route recapitulates the textbook fly visual pathway **without that
-structure being imposed on the search** — and it is not sex-neutral. The
-top-ranked route passes through **LoVP92 (male-specific)** and terminates on
-**DNg13 (sexually dimorphic)**, so a directly equivalent route may not exist
-in the female connectome, even though the early visual stages map cleanly
-onto female cell types.
+Existing connectome explorers will return a path between almost any two
+neurons, because a dense recurrent network links nearly everything within a
+few hops. **So "a path exists" is weak evidence — and this project measures
+how weak.**
+
+The R1–R6 → DNg13 route is real, reproducible and stable across thresholds.
+It also turns out **not to be statistically special**:
+
+- DNg13 ranks **312 of 480** descending neurons for connection strength from
+  the photoreceptors.
+- R1–R6 ranks **191 of 333** sensory types into DNg13 — whose strongest
+  structural sensory inputs are mechanosensory, gustatory and olfactory, not
+  visual.
+- **70% of weight-shuffled** versions of the same graph produce a route at
+  least as strong.
+
+The same ranking independently surfaces **DNp01 (the Giant Fiber)** and the
+other known visually-driven descending neurons at the top — about 140×
+stronger than DNg13 — which is a useful check that the method works.
+
+Along the way the pathway also proves not to be sex-neutral: the top route
+passes through **LoVP92 (male-specific)** and ends on **DNg13 (sexually
+dimorphic)**.
 
 Full write-up: [docs/methods-and-findings.md](docs/methods-and-findings.md).
 
@@ -78,6 +96,7 @@ cp data/processed/*.json web/public/data/
 src/sight_to_action/
   data.py        loaders for the MaleCNS flat tables
   analysis.py    type-level graph, route ranking, bottlenecks, removal experiment
+  nulls.py       null models: rank vs other DNs/senses, weight-shuffled graphs
   pipeline.py    assembles the pathway dataset (evidence + sex labels)
   skeletons.py   SWC download, parsing and decimation
   build.py       one reproducible build of every artefact
@@ -113,6 +132,7 @@ Connectomics Group, Google Research and collaborators —
 - [x] Route ranking, path lengths, alternative routes, bottleneck analysis
 - [x] Structural node-removal experiment
 - [x] Male/female comparison via cross-connectome mappings
+- [x] Statistical null models and threshold-robustness analysis
 - [x] Four-level evidence labelling with links to source data
 - [x] Reproducible notebook, documented provenance, methods write-up
 - [ ] Public deployment

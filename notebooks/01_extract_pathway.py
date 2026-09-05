@@ -164,7 +164,93 @@ sex_df
 sex_df[sex_df["dimorphism"].notna()]
 
 # %% [markdown]
-# ## 7. Build every artefact the web app consumes
+# ## 7. Is the route actually special?
+#
+# This is the part that distinguishes the project from a path-finder. A dense
+# recurrent network connects nearly everything to nearly everything within a
+# few hops, so *a path existing* is weak evidence. Three attempts to falsify
+# the route follow.
+
+# %%
+from sight_to_action.nulls import best_scores_from, best_scores_to, evaluate
+
+nulls = evaluate(graph, annotations, "R1-R6", "DNg13", max_hops=5, n_shuffles=50)
+print(f"observed score            {nulls.observed_score:.3e}")
+print(f"rank among descending     {nulls.target_rank} of {nulls.target_pool}")
+print(f"rank among sensory types  {nulls.source_rank} of {nulls.source_pool}")
+print(f"weight-shuffled mean      {nulls.shuffled_mean:.3e}")
+print(f"shuffles >= observed      {nulls.shuffled_better_fraction:.0%} of {nulls.n_shuffles}")
+
+# %% [markdown]
+# ### Which descending neurons *are* strongly wired from the photoreceptors?
+#
+# This doubles as a sanity check on the method: if it is measuring anything
+# real, the descending neurons already known to be visually driven should come
+# out on top.
+
+# %%
+traced_all = annotations[annotations["status"] == "Traced"]
+dn_types = set(traced_all[traced_all["superclass"] == "descending_neuron"]["type"].dropna())
+forward = best_scores_from(graph, "R1-R6", max_hops=5)
+top_dn = sorted(
+    ((t, s) for t, s in forward.items() if t in dn_types and s > 0),
+    key=lambda kv: kv[1],
+    reverse=True,
+)[:10]
+pd.DataFrame(top_dn, columns=["descending_neuron", "score"])
+
+# %% [markdown]
+# `DNp01` — the Giant Fiber, the textbook visual escape neuron — appears near
+# the top at roughly 140× the score of DNg13, alongside DNp02/03/04 and DNp11.
+# The method is finding the visually-driven descending neurons; DNg13 simply
+# is not one of the strongest of them by this structural measure.
+
+# %% [markdown]
+# ### Which senses dominate DNg13's input?
+
+# %%
+sensory_types = set(
+    traced_all[traced_all["superclass"].isin(["ol_sensory", "cb_sensory", "vnc_sensory"])][
+        "type"
+    ].dropna()
+)
+backward = best_scores_to(graph, "DNg13", max_hops=5)
+top_sensory = sorted(
+    ((t, s) for t, s in backward.items() if t in sensory_types and s > 0),
+    key=lambda kv: kv[1],
+    reverse=True,
+)[:10]
+pd.DataFrame(top_sensory, columns=["sensory_type", "score"])
+
+# %% [markdown]
+# **Conclusion.** The R1–R6 → DNg13 route is real, reproducible and stable,
+# but it is *not statistically special*: below median against other descending
+# neurons, below median against other senses, and beaten by most
+# weight-shuffled graphs. That does not contradict the published result that
+# DNg13 is visually driven and steers walking — it shows that **path
+# existence, and even "strongest path", are weak evidence of a functional
+# channel**, which is precisely the failure mode invited by tools that return
+# a path between any two neurons.
+
+# %% [markdown]
+# ### Robustness to analysis choices
+
+# %%
+rows = []
+for min_weight in [10, 20, 50, 100]:
+    g = build_type_graph(weights, min_weight=min_weight)
+    found = strongest_paths(g, "R1-R6", "DNg13", k=1, max_hops=5)
+    rows.append(
+        {
+            "min_weight": min_weight,
+            "score": found[0].score if found else 0.0,
+            "route": " → ".join(found[0].nodes) if found else "none",
+        }
+    )
+pd.DataFrame(rows)
+
+# %% [markdown]
+# ## 8. Build every artefact the web app consumes
 #
 # This writes `pathway.json` (types, routes, bottlenecks, removal effects,
 # sex mapping), `skeletons.json` (real EM-traced morphology, decimated) and
