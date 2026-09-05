@@ -8,32 +8,39 @@ cytoscape.use(dagre);
 
 interface Props {
   data: PathwayData;
+  visibleTypes: Set<string>;
   onSelectType: (type: string | null) => void;
-  playSignal: number;
+  activeUpTo: number; // -1 = nothing lit, else tiers [0..activeUpTo] are lit
 }
 
 // Same-tier (recurrent, e.g. optic-lobe-internal) edges are real but make
 // the "signal flows forward" story hard to read, so the diagram only draws
 // edges that move strictly from an earlier tier to a later one.
-function feedForwardEdges(data: PathwayData) {
+function feedForwardEdges(data: PathwayData, visibleTypes: Set<string>) {
   const tierOf = new Map(data.nodes.map((n) => [n.type, n.tier]));
-  return data.edges.filter((e) => (tierOf.get(e.source) ?? 0) < (tierOf.get(e.target) ?? 0));
+  return data.edges.filter(
+    (e) =>
+      visibleTypes.has(e.source) &&
+      visibleTypes.has(e.target) &&
+      (tierOf.get(e.source) ?? 0) < (tierOf.get(e.target) ?? 0),
+  );
 }
 
-export default function PathwayGraph({ data, onSelectType, playSignal }: Props) {
+export default function PathwayGraph({ data, visibleTypes, onSelectType, activeUpTo }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cyRef = useRef<Core | null>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const edges = feedForwardEdges(data);
-    const maxWeight = Math.max(...edges.map((e) => e.weight));
+    const visibleNodes = data.nodes.filter((n) => visibleTypes.has(n.type));
+    const edges = feedForwardEdges(data, visibleTypes);
+    const maxWeight = Math.max(1, ...edges.map((e) => e.weight));
 
     const cy = cytoscape({
       container: containerRef.current,
       elements: [
-        ...data.nodes.map((n) => ({
+        ...visibleNodes.map((n) => ({
           data: { id: n.type, label: n.type, tier: n.tier },
         })),
         ...edges.map((e) => ({
@@ -93,8 +100,8 @@ export default function PathwayGraph({ data, onSelectType, playSignal }: Props) 
       layout: {
         name: "dagre",
         rankDir: "LR",
-        nodeSep: 30,
-        rankSep: 130,
+        nodeSep: 14,
+        rankSep: 120,
         padding: 30,
       } as cytoscape.LayoutOptions,
     });
@@ -120,40 +127,25 @@ export default function PathwayGraph({ data, onSelectType, playSignal }: Props) 
       resizeObserver.disconnect();
       cy.destroy();
     };
-  }, [data]);
+  }, [data, visibleTypes]);
 
   useEffect(() => {
     const cy = cyRef.current;
-    if (!cy || playSignal === 0) return;
-
-    cy.elements().removeClass("highlighted").addClass("dimmed");
-    const tiers = [...new Set(data.nodes.map((n) => n.tier))].sort();
-    const timeouts: ReturnType<typeof setTimeout>[] = [];
-
-    tiers.forEach((tier, i) => {
-      timeouts.push(
-        setTimeout(() => {
-          const nodesInTier = cy.nodes().filter((n) => n.data("tier") === tier);
-          nodesInTier.removeClass("dimmed").addClass("highlighted");
-          if (i > 0) {
-            const incoming = nodesInTier.incomers("edge");
-            incoming.removeClass("dimmed").addClass("highlighted");
-          }
-        }, i * 900),
-      );
+    if (!cy) return;
+    if (activeUpTo < 0) {
+      cy.elements().removeClass("highlighted dimmed");
+      return;
+    }
+    cy.nodes().forEach((n) => {
+      n.toggleClass("highlighted", n.data("tier") <= activeUpTo);
+      n.toggleClass("dimmed", n.data("tier") > activeUpTo);
     });
-
-    timeouts.push(
-      setTimeout(
-        () => {
-          cy.elements().removeClass("highlighted dimmed");
-        },
-        tiers.length * 900 + 1500,
-      ),
-    );
-
-    return () => timeouts.forEach(clearTimeout);
-  }, [playSignal, data]);
+    cy.edges().forEach((e) => {
+      const targetLit = (e.target().data("tier") ?? 0) <= activeUpTo;
+      e.toggleClass("highlighted", targetLit);
+      e.toggleClass("dimmed", !targetLit);
+    });
+  }, [activeUpTo]);
 
   return <div ref={containerRef} style={{ width: "100%", height: "100%" }} />;
 }

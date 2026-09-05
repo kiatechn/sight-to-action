@@ -4,6 +4,7 @@ export interface PathwayNode {
   superclass: string | null;
   n_bodies: number;
   predicted_neurotransmitter: string | null;
+  input_weight: number | null;
 }
 
 export interface PathwayEdge {
@@ -25,6 +26,20 @@ export interface PathwayData {
   meta: PathwayMeta;
   nodes: PathwayNode[];
   edges: PathwayEdge[];
+}
+
+export interface Neuron3D {
+  bodyId: number;
+  type: string;
+  tier: number;
+  side: string | null;
+  position: [number, number, number];
+}
+
+export interface Scene3DData {
+  meta: { description: string; n_background_points: number; n_pathway_neurons: number };
+  backgroundCloud: [number, number, number][];
+  neurons: Neuron3D[];
 }
 
 export const TIER_LABELS: Record<number, string> = {

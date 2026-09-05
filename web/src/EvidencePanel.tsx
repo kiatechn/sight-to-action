@@ -36,16 +36,22 @@ function evidenceLevel(node: PathwayNode): { label: string; note: string } {
   };
 }
 
+function bodyCountNote(node: PathwayNode): string | null {
+  if (node.n_bodies > 4) return null;
+  return `Only ${node.n_bodies} traced in this dataset because ${node.type} is an identified, individually-named neuron that exists as one bilateral pair (one copy on the left, one on the right) — not because tracing is incomplete.`;
+}
+
 export default function EvidencePanel({ node }: Props) {
   if (!node) {
     return (
       <div className="evidence-panel evidence-panel--empty">
-        <p>Click any neuron in the diagram to see what the data actually shows about it.</p>
+        <p>Click any neuron — in the 3D view or the diagram — to see what the data actually shows about it.</p>
       </div>
     );
   }
 
   const evidence = evidenceLevel(node);
+  const countNote = bodyCountNote(node);
 
   return (
     <div className="evidence-panel">
@@ -58,10 +64,24 @@ export default function EvidencePanel({ node }: Props) {
         <dd>{node.superclass ?? "unannotated"}</dd>
 
         <dt>Traced cell bodies of this type</dt>
-        <dd>{node.n_bodies.toLocaleString()}</dd>
+        <dd>
+          {node.n_bodies.toLocaleString()}
+          {countNote && <span className="dd-footnote"> — {countNote}</span>}
+        </dd>
 
         <dt>Predicted neurotransmitter</dt>
         <dd>{node.predicted_neurotransmitter ?? "no confident prediction"}</dd>
+
+        {node.input_weight != null && (
+          <>
+            <dt>Synaptic weight into LC4/LPLC2</dt>
+            <dd>
+              {node.input_weight.toLocaleString()} synapses — this is why {node.type} is included
+              as a "visual input" neuron: it's ranked among the strongest measured inputs to the
+              looming detectors, not hand-picked.
+            </dd>
+          </>
+        )}
       </dl>
 
       <div className="evidence-badge">{evidence.label}</div>

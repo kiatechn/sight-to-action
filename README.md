@@ -22,30 +22,47 @@ al. 2014/2017; Ache et al. 2019):
         -> TTMn, PSI   (jump motor neuron / flight-motor pathway)
 ```
 
-15 cell types, 118 aggregated type-to-type connections, exported to
-[data/processed/giant_fiber_pathway.json](data/processed/giant_fiber_pathway.json).
+25 candidate cell types (20 ranked upstream-input candidates + LC4/LPLC2 +
+DNp01 + TTMn/PSI), exported to
+[data/processed/giant_fiber_pathway.json](data/processed/giant_fiber_pathway.json),
+plus every pathway neuron's real 3D soma position (EM-reconstructed, not
+simulated) in
+[data/processed/giant_fiber_3d.json](data/processed/giant_fiber_3d.json).
 
-**Interactive viewer:** [web/](web/) is a React + TypeScript + Cytoscape.js
-app that renders the pathway as a layered, directed diagram (visual input
-→ VPNs → Giant Fiber → motor output), colored by stage. Click any neuron
-for an evidence card (cell type, superclass, traced-body count, predicted
-neurotransmitter, and whether its role is experimentally supported or
-inferred); "Play signal" animates the connectome's own synaptic direction
-propagating stage by stage. Run it with:
+**Interactive viewer:** [web/](web/) is a React + TypeScript app with two
+linked views:
+
+- **3D connectome** (Three.js / React Three Fiber) — a real point cloud of
+  ~20k traced-neuron soma positions (giving a recognizable brain-shaped
+  cloud) with the pathway neurons picked out by tier color. "Play signal"
+  runs a short sequence: a looming-stimulus intro (what the fly's eye
+  detects), a camera zoom into the circuit, the real neurons lighting up
+  tier by tier in the order the signal actually reaches them, then a
+  labeled outcome ("escape jump triggered") explicitly marked as the
+  known behavioral result from prior physiology — not something simulated
+  from the connectome itself.
+- **Simplified circuit diagram** (Cytoscape.js) — a clean, directed,
+  tier-colored diagram of the same pathway, with an adjustable "minimum
+  synapse weight" slider (so which optic-lobe types count as "visual
+  input" is a transparent, explorable threshold rather than a silently
+  hard-coded cutoff) and click-to-inspect evidence cards (cell type,
+  superclass, traced-body count — with a note when a low count reflects a
+  known bilateral pair rather than incomplete tracing — predicted
+  neurotransmitter, and explicit observed-vs-inferred framing).
+
+Run it with:
 
 ```
 npm install --prefix web
 npm run dev --prefix web
 ```
 
-Real 3D neuron skeletons are not yet implemented — MaleCNS ships neuron
-meshes only as sharded Neuroglancer precomputed volumes
+Not yet implemented: real neuron *shapes* (dendrites/axons) in 3D — MaleCNS
+ships full morphology only as sharded Neuroglancer precomputed meshes
 (`gs://flyem-male-cns/v1.0/male-cns-meshes-transformed-to-fafb-flywire/`),
-which need a dedicated decoder; that's a planned follow-up, not part of
-this pass.
-
-Next: male/female comparison and the "remove this neuron" graph
-experiment (V0.2).
+which need a dedicated decoder; the 3D view currently shows real soma
+*positions* as points, not full arbors. Also still open for V0.2:
+male/female comparison and the "remove this neuron" graph experiment.
 
 ## Data source
 

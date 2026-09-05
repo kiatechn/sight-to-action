@@ -26,6 +26,7 @@ sys.path.insert(0, "../src")
 from sight_to_action.data import load_annotations, load_neurotransmitters, load_weights
 from sight_to_action.pathway import build_pathway_graph, top_upstream_types
 from sight_to_action.export import to_json
+from sight_to_action.export_3d import export_3d_scene
 
 annotations = load_annotations()
 neurotransmitters = load_neurotransmitters()
@@ -57,18 +58,26 @@ for t in known_types:
 # other).
 
 # %%
-ranked = top_upstream_types(weights, target_types=["LC4", "LPLC2"], n=15)
+ranked = top_upstream_types(weights, target_types=["LC4", "LPLC2"], n=25)
 ranked = ranked[~ranked.index.isin(["LC4", "LPLC2"])]
-ranked.head(10)
+ranked.head(20)
 
 # %% [markdown]
 # These are optic-lobe motion- and feature-detecting neurons — T4/T5
 # (direction-selective motion detectors) and Tm/T2/TmY-family medulla
 # neurons — exactly the classes of neuron known from the literature to
 # feed looming-detection VPNs.
+#
+# We keep the top 20 as *candidates* (rather than hand-picking a smaller
+# set) and export each one's synapse weight into LC4/LPLC2. The web app
+# turns this into an adjustable "minimum synapse weight" slider, defaulting
+# to the top 10 for a readable starting diagram, so the choice of which
+# inputs count as "visual input" is transparent and explorable rather than
+# a silently hard-coded cutoff.
 
 # %%
-visual_input_tier = ranked.head(10).index.tolist()
+visual_input_tier = ranked.head(20).index.tolist()
+input_weights = ranked.head(20)["total_weight"].to_dict()
 visual_input_tier
 
 # %% [markdown]
@@ -92,7 +101,7 @@ tiers = [
 ]
 
 result = build_pathway_graph(
-    weights, annotations, neurotransmitters, tiers, min_weight=3
+    weights, annotations, neurotransmitters, tiers, min_weight=3, input_weights=input_weights
 )
 print(f"{result.graph.number_of_nodes()} cell types, {result.graph.number_of_edges()} edges")
 result.node_table
@@ -138,3 +147,15 @@ out_path = to_json(
     },
 )
 print("wrote", out_path)
+
+# %% [markdown]
+# ## 6. Export real 3D soma positions
+#
+# For the 3D viewer: every pathway neuron's real EM-reconstructed soma
+# coordinate, plus a background sample of all traced neurons (for a
+# recognizable brain-shaped point cloud), normalized into a [-1, 1] cube
+# with true relative proportions preserved.
+
+# %%
+out_3d_path = export_3d_scene(annotations, tiers, background_sample_size=20000)
+print("wrote", out_3d_path)

@@ -38,7 +38,12 @@ def build_pathway_graph(
     neurotransmitters: pd.DataFrame,
     tiers: list[list[str]],
     min_weight: int = 3,
+    input_weights: dict[str, int] | None = None,
 ) -> PathwayResult:
+    """`input_weights` (optional) records, for tier-0 types only, how strongly
+    each one feeds the next tier (used client-side to power an adjustable
+    "minimum synapse weight" threshold, so the visual-input tier isn't a
+    silently hard-coded choice)."""
     all_types = [t for tier in tiers for t in tier]
     tier_index = {t: i for i, tier in enumerate(tiers) for t in tier}
 
@@ -81,6 +86,7 @@ def build_pathway_graph(
                     else None,
                     "n_bodies": int(counts_by_type.get(t, 0)),
                     "predicted_neurotransmitter": nt_by_type.get(t),
+                    "input_weight": int(input_weights[t]) if input_weights and t in input_weights else None,
                 }
             )
     node_table = pd.DataFrame(node_rows)

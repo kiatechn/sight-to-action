@@ -16,105 +16,200 @@
       "tier": 0,
       "superclass": "ol_intrinsic",
       "n_bodies": 1630,
-      "predicted_neurotransmitter": "acetylcholine"
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": 46366.0
     },
     {
       "type": "TmY3",
       "tier": 0,
       "superclass": "ol_intrinsic",
       "n_bodies": 824,
-      "predicted_neurotransmitter": "acetylcholine"
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": 45917.0
     },
     {
       "type": "Tm4",
       "tier": 0,
       "superclass": "ol_intrinsic",
       "n_bodies": 1670,
-      "predicted_neurotransmitter": "acetylcholine"
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": 38892.0
     },
     {
       "type": "Tm5Y",
       "tier": 0,
       "superclass": "ol_intrinsic",
       "n_bodies": 898,
-      "predicted_neurotransmitter": "acetylcholine"
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": 29372.0
     },
     {
       "type": "T5c",
       "tier": 0,
       "superclass": "ol_intrinsic",
       "n_bodies": 1720,
-      "predicted_neurotransmitter": "acetylcholine"
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": 20789.0
     },
     {
       "type": "Tm2",
       "tier": 0,
       "superclass": "ol_intrinsic",
       "n_bodies": 1766,
-      "predicted_neurotransmitter": "acetylcholine"
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": 20600.0
     },
     {
       "type": "T5d",
       "tier": 0,
       "superclass": "ol_intrinsic",
       "n_bodies": 1620,
-      "predicted_neurotransmitter": "acetylcholine"
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": 19345.0
     },
     {
       "type": "T5b",
       "tier": 0,
       "superclass": "ol_intrinsic",
       "n_bodies": 1715,
-      "predicted_neurotransmitter": "acetylcholine"
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": 19305.0
     },
     {
       "type": "Tm3",
       "tier": 0,
       "superclass": "ol_intrinsic",
       "n_bodies": 2054,
-      "predicted_neurotransmitter": "acetylcholine"
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": 17494.0
     },
     {
       "type": "T4c",
       "tier": 0,
       "superclass": "ol_intrinsic",
       "n_bodies": 1778,
-      "predicted_neurotransmitter": "acetylcholine"
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": 15376.0
+    },
+    {
+      "type": "T5a",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 1664,
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": 13510.0
+    },
+    {
+      "type": "Tm20",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 1762,
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": 13464.0
+    },
+    {
+      "type": "Tm37",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 559,
+      "predicted_neurotransmitter": "glutamate",
+      "input_weight": 13196.0
+    },
+    {
+      "type": "T4b",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 1690,
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": 12673.0
+    },
+    {
+      "type": "T4a",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 1684,
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": 10678.0
+    },
+    {
+      "type": "Y3",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 627,
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": 10482.0
+    },
+    {
+      "type": "PVLP011",
+      "tier": 0,
+      "superclass": "cb_intrinsic",
+      "n_bodies": 2,
+      "predicted_neurotransmitter": "gaba",
+      "input_weight": 10330.0
+    },
+    {
+      "type": "TmY5a",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 1364,
+      "predicted_neurotransmitter": "glutamate",
+      "input_weight": 9794.0
+    },
+    {
+      "type": "TmY18",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 1367,
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": 9408.0
+    },
+    {
+      "type": "Li28",
+      "tier": 0,
+      "superclass": "ol_intrinsic",
+      "n_bodies": 13,
+      "predicted_neurotransmitter": "gaba",
+      "input_weight": 7399.0
     },
     {
       "type": "LC4",
       "tier": 1,
       "superclass": "visual_projection",
       "n_bodies": 126,
-      "predicted_neurotransmitter": "acetylcholine"
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": null
     },
     {
       "type": "LPLC2",
       "tier": 1,
       "superclass": "visual_projection",
       "n_bodies": 185,
-      "predicted_neurotransmitter": "acetylcholine"
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": null
     },
     {
       "type": "DNp01",
       "tier": 2,
       "superclass": "descending_neuron",
       "n_bodies": 2,
-      "predicted_neurotransmitter": "acetylcholine"
+      "predicted_neurotransmitter": "acetylcholine",
+      "input_weight": null
     },
     {
       "type": "TTMn",
       "tier": 3,
       "superclass": "vnc_motor",
       "n_bodies": 2,
-      "predicted_neurotransmitter": "histamine"
+      "predicted_neurotransmitter": "histamine",
+      "input_weight": null
     },
     {
       "type": "PSI",
       "tier": 3,
       "superclass": "vnc_efferent",
       "n_bodies": 2,
-      "predicted_neurotransmitter": "unclear"
+      "predicted_neurotransmitter": "unclear",
+      "input_weight": null
     }
   ],
   "edges": [
@@ -123,6 +218,24 @@
       "target": "T2",
       "weight": 101562,
       "n_synapse_connections": 6702
+    },
+    {
+      "source": "Tm4",
+      "target": "TmY5a",
+      "weight": 100031,
+      "n_synapse_connections": 7041
+    },
+    {
+      "source": "Tm3",
+      "target": "TmY5a",
+      "weight": 91859,
+      "n_synapse_connections": 7052
+    },
+    {
+      "source": "TmY5a",
+      "target": "Y3",
+      "weight": 66900,
+      "n_synapse_connections": 5064
     },
     {
       "source": "Tm3",
@@ -143,16 +256,40 @@
       "n_synapse_connections": 5992
     },
     {
+      "source": "Tm2",
+      "target": "T5a",
+      "weight": 53998,
+      "n_synapse_connections": 4872
+    },
+    {
       "source": "Tm3",
       "target": "TmY3",
       "weight": 51210,
       "n_synapse_connections": 8489
     },
     {
+      "source": "Tm20",
+      "target": "Tm5Y",
+      "weight": 48785,
+      "n_synapse_connections": 6181
+    },
+    {
       "source": "Tm2",
       "target": "T5d",
       "weight": 48116,
       "n_synapse_connections": 5131
+    },
+    {
+      "source": "Tm3",
+      "target": "T4b",
+      "weight": 47447,
+      "n_synapse_connections": 6539
+    },
+    {
+      "source": "Tm3",
+      "target": "T4a",
+      "weight": 45472,
+      "n_synapse_connections": 6735
     },
     {
       "source": "T2",
@@ -210,9 +347,33 @@
     },
     {
       "source": "Tm4",
+      "target": "T5a",
+      "weight": 28721,
+      "n_synapse_connections": 4323
+    },
+    {
+      "source": "T4b",
+      "target": "T4b",
+      "weight": 28292,
+      "n_synapse_connections": 5882
+    },
+    {
+      "source": "Y3",
+      "target": "Tm5Y",
+      "weight": 27610,
+      "n_synapse_connections": 3059
+    },
+    {
+      "source": "Tm4",
       "target": "T5d",
       "weight": 27591,
       "n_synapse_connections": 4394
+    },
+    {
+      "source": "Y3",
+      "target": "TmY5a",
+      "weight": 27430,
+      "n_synapse_connections": 3096
     },
     {
       "source": "Tm4",
@@ -227,10 +388,28 @@
       "n_synapse_connections": 2951
     },
     {
+      "source": "T2",
+      "target": "TmY5a",
+      "weight": 23810,
+      "n_synapse_connections": 4984
+    },
+    {
+      "source": "Tm3",
+      "target": "Li28",
+      "weight": 23652,
+      "n_synapse_connections": 3343
+    },
+    {
       "source": "TmY3",
       "target": "T2",
       "weight": 22677,
       "n_synapse_connections": 3721
+    },
+    {
+      "source": "Tm2",
+      "target": "Li28",
+      "weight": 22676,
+      "n_synapse_connections": 2950
     },
     {
       "source": "T5b",
@@ -239,10 +418,40 @@
       "n_synapse_connections": 5137
     },
     {
+      "source": "T4a",
+      "target": "T4a",
+      "weight": 21037,
+      "n_synapse_connections": 4561
+    },
+    {
+      "source": "Tm20",
+      "target": "Tm20",
+      "weight": 20845,
+      "n_synapse_connections": 4141
+    },
+    {
+      "source": "TmY3",
+      "target": "Y3",
+      "weight": 19728,
+      "n_synapse_connections": 2473
+    },
+    {
       "source": "Tm2",
       "target": "LC4",
       "weight": 18966,
       "n_synapse_connections": 3162
+    },
+    {
+      "source": "Tm3",
+      "target": "TmY18",
+      "weight": 17463,
+      "n_synapse_connections": 3202
+    },
+    {
+      "source": "T5a",
+      "target": "T5a",
+      "weight": 17405,
+      "n_synapse_connections": 4034
     },
     {
       "source": "T4c",
@@ -255,6 +464,18 @@
       "target": "LPLC2",
       "weight": 16342,
       "n_synapse_connections": 2906
+    },
+    {
+      "source": "T5d",
+      "target": "TmY5a",
+      "weight": 16151,
+      "n_synapse_connections": 3231
+    },
+    {
+      "source": "Tm2",
+      "target": "Y3",
+      "weight": 15817,
+      "n_synapse_connections": 2927
     },
     {
       "source": "T5d",
@@ -293,10 +514,22 @@
       "n_synapse_connections": 3245
     },
     {
+      "source": "TmY3",
+      "target": "TmY5a",
+      "weight": 14116,
+      "n_synapse_connections": 2645
+    },
+    {
       "source": "T5c",
       "target": "LPLC2",
       "weight": 13934,
       "n_synapse_connections": 2672
+    },
+    {
+      "source": "T5c",
+      "target": "Y3",
+      "weight": 12486,
+      "n_synapse_connections": 2510
     },
     {
       "source": "T4c",
@@ -305,10 +538,76 @@
       "n_synapse_connections": 2439
     },
     {
+      "source": "TmY18",
+      "target": "TmY5a",
+      "weight": 11668,
+      "n_synapse_connections": 2356
+    },
+    {
+      "source": "TmY18",
+      "target": "TmY18",
+      "weight": 11614,
+      "n_synapse_connections": 2537
+    },
+    {
+      "source": "Tm20",
+      "target": "LPLC2",
+      "weight": 11589,
+      "n_synapse_connections": 1975
+    },
+    {
       "source": "Tm2",
       "target": "Tm4",
       "weight": 11464,
       "n_synapse_connections": 2690
+    },
+    {
+      "source": "Tm2",
+      "target": "TmY18",
+      "weight": 11035,
+      "n_synapse_connections": 2289
+    },
+    {
+      "source": "Y3",
+      "target": "Tm20",
+      "weight": 10869,
+      "n_synapse_connections": 2183
+    },
+    {
+      "source": "Tm37",
+      "target": "Tm4",
+      "weight": 10742,
+      "n_synapse_connections": 2014
+    },
+    {
+      "source": "T5a",
+      "target": "LPLC2",
+      "weight": 9945,
+      "n_synapse_connections": 1885
+    },
+    {
+      "source": "PVLP011",
+      "target": "LPLC2",
+      "weight": 9657,
+      "n_synapse_connections": 185
+    },
+    {
+      "source": "T4b",
+      "target": "LPLC2",
+      "weight": 9360,
+      "n_synapse_connections": 2040
+    },
+    {
+      "source": "Y3",
+      "target": "LPLC2",
+      "weight": 8863,
+      "n_synapse_connections": 1201
+    },
+    {
+      "source": "TmY18",
+      "target": "T2",
+      "weight": 8411,
+      "n_synapse_connections": 1856
     },
     {
       "source": "Tm4",
@@ -317,10 +616,52 @@
       "n_synapse_connections": 2263
     },
     {
+      "source": "T4a",
+      "target": "LPLC2",
+      "weight": 8223,
+      "n_synapse_connections": 1672
+    },
+    {
+      "source": "Tm37",
+      "target": "LPLC2",
+      "weight": 8153,
+      "n_synapse_connections": 1183
+    },
+    {
       "source": "Tm5Y",
       "target": "Tm5Y",
       "weight": 7988,
       "n_synapse_connections": 1803
+    },
+    {
+      "source": "Tm3",
+      "target": "Tm37",
+      "weight": 7841,
+      "n_synapse_connections": 1582
+    },
+    {
+      "source": "Tm5Y",
+      "target": "Tm37",
+      "weight": 7469,
+      "n_synapse_connections": 1448
+    },
+    {
+      "source": "Li28",
+      "target": "LC4",
+      "weight": 7318,
+      "n_synapse_connections": 393
+    },
+    {
+      "source": "Tm5Y",
+      "target": "TmY5a",
+      "weight": 7182,
+      "n_synapse_connections": 1485
+    },
+    {
+      "source": "Tm37",
+      "target": "Tm5Y",
+      "weight": 6553,
+      "n_synapse_connections": 1358
     },
     {
       "source": "LC4",
@@ -335,10 +676,52 @@
       "n_synapse_connections": 1269
     },
     {
+      "source": "TmY5a",
+      "target": "LPLC2",
+      "weight": 6023,
+      "n_synapse_connections": 1280
+    },
+    {
       "source": "LPLC2",
       "target": "DNp01",
       "weight": 4858,
       "n_synapse_connections": 182
+    },
+    {
+      "source": "T5c",
+      "target": "TmY5a",
+      "weight": 4631,
+      "n_synapse_connections": 1067
+    },
+    {
+      "source": "TmY18",
+      "target": "LPLC2",
+      "weight": 4410,
+      "n_synapse_connections": 909
+    },
+    {
+      "source": "Tm37",
+      "target": "TmY18",
+      "weight": 4380,
+      "n_synapse_connections": 1058
+    },
+    {
+      "source": "T4c",
+      "target": "Y3",
+      "weight": 3889,
+      "n_synapse_connections": 953
+    },
+    {
+      "source": "T4a",
+      "target": "TmY18",
+      "weight": 3744,
+      "n_synapse_connections": 987
+    },
+    {
+      "source": "T4b",
+      "target": "T5b",
+      "weight": 3723,
+      "n_synapse_connections": 1047
     },
     {
       "source": "TmY3",
@@ -347,10 +730,40 @@
       "n_synapse_connections": 814
     },
     {
+      "source": "T4c",
+      "target": "TmY5a",
+      "weight": 3658,
+      "n_synapse_connections": 918
+    },
+    {
       "source": "T5b",
       "target": "T2",
       "weight": 3466,
       "n_synapse_connections": 975
+    },
+    {
+      "source": "T5b",
+      "target": "TmY5a",
+      "weight": 3448,
+      "n_synapse_connections": 878
+    },
+    {
+      "source": "Tm37",
+      "target": "LC4",
+      "weight": 3441,
+      "n_synapse_connections": 672
+    },
+    {
+      "source": "T5b",
+      "target": "T4b",
+      "weight": 3131,
+      "n_synapse_connections": 884
+    },
+    {
+      "source": "Tm5Y",
+      "target": "Tm20",
+      "weight": 3009,
+      "n_synapse_connections": 750
     },
     {
       "source": "Tm3",
@@ -377,6 +790,36 @@
       "n_synapse_connections": 689
     },
     {
+      "source": "T5a",
+      "target": "TmY18",
+      "weight": 2353,
+      "n_synapse_connections": 592
+    },
+    {
+      "source": "TmY5a",
+      "target": "TmY18",
+      "weight": 2210,
+      "n_synapse_connections": 583
+    },
+    {
+      "source": "TmY18",
+      "target": "LC4",
+      "weight": 2198,
+      "n_synapse_connections": 507
+    },
+    {
+      "source": "T4a",
+      "target": "T5a",
+      "weight": 1998,
+      "n_synapse_connections": 566
+    },
+    {
+      "source": "Tm37",
+      "target": "TmY3",
+      "weight": 1933,
+      "n_synapse_connections": 496
+    },
+    {
       "source": "T5d",
       "target": "T2",
       "weight": 1869,
@@ -401,6 +844,54 @@
       "n_synapse_connections": 374
     },
     {
+      "source": "Tm4",
+      "target": "Y3",
+      "weight": 1712,
+      "n_synapse_connections": 434
+    },
+    {
+      "source": "TmY5a",
+      "target": "TmY3",
+      "weight": 1598,
+      "n_synapse_connections": 452
+    },
+    {
+      "source": "T5a",
+      "target": "T4a",
+      "weight": 1470,
+      "n_synapse_connections": 427
+    },
+    {
+      "source": "Tm20",
+      "target": "TmY3",
+      "weight": 1394,
+      "n_synapse_connections": 345
+    },
+    {
+      "source": "T4b",
+      "target": "TmY18",
+      "weight": 1389,
+      "n_synapse_connections": 394
+    },
+    {
+      "source": "T5a",
+      "target": "Y3",
+      "weight": 1318,
+      "n_synapse_connections": 342
+    },
+    {
+      "source": "Li28",
+      "target": "Tm2",
+      "weight": 1234,
+      "n_synapse_connections": 361
+    },
+    {
+      "source": "T5a",
+      "target": "TmY3",
+      "weight": 1226,
+      "n_synapse_connections": 348
+    },
+    {
       "source": "Tm5Y",
       "target": "Tm3",
       "weight": 1170,
@@ -413,16 +904,88 @@
       "n_synapse_connections": 300
     },
     {
+      "source": "Tm3",
+      "target": "Y3",
+      "weight": 1121,
+      "n_synapse_connections": 291
+    },
+    {
       "source": "T5c",
       "target": "LC4",
       "weight": 1096,
       "n_synapse_connections": 314
     },
     {
+      "source": "Y3",
+      "target": "Tm37",
+      "weight": 1034,
+      "n_synapse_connections": 254
+    },
+    {
+      "source": "T5d",
+      "target": "Y3",
+      "weight": 961,
+      "n_synapse_connections": 254
+    },
+    {
+      "source": "Tm20",
+      "target": "Y3",
+      "weight": 903,
+      "n_synapse_connections": 239
+    },
+    {
+      "source": "T4b",
+      "target": "T2",
+      "weight": 871,
+      "n_synapse_connections": 248
+    },
+    {
+      "source": "Tm4",
+      "target": "TmY18",
+      "weight": 839,
+      "n_synapse_connections": 231
+    },
+    {
+      "source": "T4a",
+      "target": "Y3",
+      "weight": 797,
+      "n_synapse_connections": 222
+    },
+    {
+      "source": "TmY18",
+      "target": "Tm4",
+      "weight": 751,
+      "n_synapse_connections": 212
+    },
+    {
+      "source": "T5a",
+      "target": "T2",
+      "weight": 719,
+      "n_synapse_connections": 213
+    },
+    {
+      "source": "TmY3",
+      "target": "TmY18",
+      "weight": 688,
+      "n_synapse_connections": 195
+    },
+    {
+      "source": "TmY5a",
+      "target": "Tm4",
+      "weight": 662,
+      "n_synapse_connections": 193
+    },
+    {
       "source": "TmY3",
       "target": "TmY3",
       "weight": 651,
       "n_synapse_connections": 178
+    },
+    {
+      "source": "PVLP011",
+      "target": "LC4",
+      "weight": 633,
+      "n_synapse_connections": 86
     },
     {
       "source": "Tm4",
@@ -435,6 +998,12 @@
       "target": "T5b",
       "weight": 556,
       "n_synapse_connections": 89
+    },
+    {
+      "source": "TmY5a",
+      "target": "T2",
+      "weight": 527,
+      "n_synapse_connections": 151
     },
     {
       "source": "Tm4",
@@ -450,15 +1019,45 @@
     },
     {
       "source": "Tm2",
+      "target": "TmY5a",
+      "weight": 462,
+      "n_synapse_connections": 122
+    },
+    {
+      "source": "T4b",
+      "target": "T4a",
+      "weight": 447,
+      "n_synapse_connections": 97
+    },
+    {
+      "source": "T5c",
+      "target": "T5a",
+      "weight": 433,
+      "n_synapse_connections": 60
+    },
+    {
+      "source": "Tm2",
       "target": "Tm3",
       "weight": 428,
       "n_synapse_connections": 91
+    },
+    {
+      "source": "T4b",
+      "target": "TmY5a",
+      "weight": 424,
+      "n_synapse_connections": 123
     },
     {
       "source": "T5b",
       "target": "T5c",
       "weight": 406,
       "n_synapse_connections": 85
+    },
+    {
+      "source": "T4b",
+      "target": "T4c",
+      "weight": 399,
+      "n_synapse_connections": 101
     },
     {
       "source": "T5c",
@@ -473,10 +1072,58 @@
       "n_synapse_connections": 102
     },
     {
+      "source": "T4a",
+      "target": "T4b",
+      "weight": 351,
+      "n_synapse_connections": 87
+    },
+    {
       "source": "Tm3",
       "target": "Tm2",
       "weight": 340,
       "n_synapse_connections": 84
+    },
+    {
+      "source": "T4c",
+      "target": "T4b",
+      "weight": 336,
+      "n_synapse_connections": 71
+    },
+    {
+      "source": "T4c",
+      "target": "T4a",
+      "weight": 332,
+      "n_synapse_connections": 65
+    },
+    {
+      "source": "T5b",
+      "target": "T5a",
+      "weight": 312,
+      "n_synapse_connections": 48
+    },
+    {
+      "source": "Y3",
+      "target": "LC4",
+      "weight": 311,
+      "n_synapse_connections": 74
+    },
+    {
+      "source": "T5a",
+      "target": "T5c",
+      "weight": 306,
+      "n_synapse_connections": 72
+    },
+    {
+      "source": "T4c",
+      "target": "TmY18",
+      "weight": 306,
+      "n_synapse_connections": 96
+    },
+    {
+      "source": "TmY5a",
+      "target": "Tm5Y",
+      "weight": 300,
+      "n_synapse_connections": 86
     },
     {
       "source": "T5b",
@@ -485,15 +1132,63 @@
       "n_synapse_connections": 57
     },
     {
+      "source": "T5a",
+      "target": "T5b",
+      "weight": 281,
+      "n_synapse_connections": 52
+    },
+    {
+      "source": "T4a",
+      "target": "T4c",
+      "weight": 271,
+      "n_synapse_connections": 64
+    },
+    {
       "source": "T5d",
       "target": "T5b",
       "weight": 265,
       "n_synapse_connections": 43
     },
     {
+      "source": "T5a",
+      "target": "T5d",
+      "weight": 260,
+      "n_synapse_connections": 52
+    },
+    {
+      "source": "T5a",
+      "target": "LC4",
+      "weight": 256,
+      "n_synapse_connections": 77
+    },
+    {
       "source": "T5d",
       "target": "T5c",
       "weight": 253,
+      "n_synapse_connections": 59
+    },
+    {
+      "source": "T2",
+      "target": "Li28",
+      "weight": 246,
+      "n_synapse_connections": 69
+    },
+    {
+      "source": "Tm4",
+      "target": "Li28",
+      "weight": 241,
+      "n_synapse_connections": 52
+    },
+    {
+      "source": "Tm4",
+      "target": "Tm37",
+      "weight": 227,
+      "n_synapse_connections": 65
+    },
+    {
+      "source": "Tm20",
+      "target": "Tm2",
+      "weight": 215,
       "n_synapse_connections": 59
     },
     {
@@ -503,16 +1198,94 @@
       "n_synapse_connections": 56
     },
     {
+      "source": "TmY3",
+      "target": "T5a",
+      "weight": 208,
+      "n_synapse_connections": 59
+    },
+    {
+      "source": "TmY5a",
+      "target": "Tm3",
+      "weight": 203,
+      "n_synapse_connections": 59
+    },
+    {
       "source": "Tm2",
       "target": "Tm2",
       "weight": 201,
       "n_synapse_connections": 43
     },
     {
+      "source": "T5d",
+      "target": "T5a",
+      "weight": 200,
+      "n_synapse_connections": 33
+    },
+    {
+      "source": "Tm5Y",
+      "target": "Y3",
+      "weight": 195,
+      "n_synapse_connections": 55
+    },
+    {
+      "source": "Tm2",
+      "target": "Tm20",
+      "weight": 187,
+      "n_synapse_connections": 53
+    },
+    {
+      "source": "T5a",
+      "target": "TmY5a",
+      "weight": 182,
+      "n_synapse_connections": 50
+    },
+    {
+      "source": "Tm3",
+      "target": "T5a",
+      "weight": 173,
+      "n_synapse_connections": 42
+    },
+    {
       "source": "TmY3",
       "target": "Tm2",
       "weight": 173,
       "n_synapse_connections": 54
+    },
+    {
+      "source": "TmY3",
+      "target": "Li28",
+      "weight": 162,
+      "n_synapse_connections": 46
+    },
+    {
+      "source": "Tm20",
+      "target": "TmY5a",
+      "weight": 161,
+      "n_synapse_connections": 48
+    },
+    {
+      "source": "Tm2",
+      "target": "T4b",
+      "weight": 157,
+      "n_synapse_connections": 42
+    },
+    {
+      "source": "Y3",
+      "target": "Y3",
+      "weight": 156,
+      "n_synapse_connections": 43
+    },
+    {
+      "source": "Tm37",
+      "target": "T5b",
+      "weight": 154,
+      "n_synapse_connections": 45
+    },
+    {
+      "source": "TmY18",
+      "target": "Tm37",
+      "weight": 144,
+      "n_synapse_connections": 41
     },
     {
       "source": "T5b",
@@ -533,16 +1306,64 @@
       "n_synapse_connections": 36
     },
     {
+      "source": "T2",
+      "target": "Y3",
+      "weight": 122,
+      "n_synapse_connections": 30
+    },
+    {
+      "source": "Tm37",
+      "target": "Y3",
+      "weight": 121,
+      "n_synapse_connections": 35
+    },
+    {
+      "source": "Tm2",
+      "target": "T4a",
+      "weight": 111,
+      "n_synapse_connections": 21
+    },
+    {
       "source": "Tm3",
       "target": "LPLC2",
       "weight": 105,
       "n_synapse_connections": 27
     },
     {
+      "source": "TmY5a",
+      "target": "TmY5a",
+      "weight": 100,
+      "n_synapse_connections": 22
+    },
+    {
       "source": "Tm3",
       "target": "T5c",
       "weight": 98,
       "n_synapse_connections": 21
+    },
+    {
+      "source": "T2",
+      "target": "TmY18",
+      "weight": 98,
+      "n_synapse_connections": 27
+    },
+    {
+      "source": "TmY18",
+      "target": "T4a",
+      "weight": 98,
+      "n_synapse_connections": 24
+    },
+    {
+      "source": "Tm37",
+      "target": "T5d",
+      "weight": 92,
+      "n_synapse_connections": 28
+    },
+    {
+      "source": "Tm37",
+      "target": "T5c",
+      "weight": 90,
+      "n_synapse_connections": 27
     },
     {
       "source": "DNp01",
@@ -557,9 +1378,39 @@
       "n_synapse_connections": 19
     },
     {
+      "source": "TmY18",
+      "target": "TmY3",
+      "weight": 87,
+      "n_synapse_connections": 25
+    },
+    {
       "source": "Tm3",
       "target": "T5b",
       "weight": 86,
+      "n_synapse_connections": 25
+    },
+    {
+      "source": "Tm20",
+      "target": "Tm37",
+      "weight": 84,
+      "n_synapse_connections": 22
+    },
+    {
+      "source": "TmY18",
+      "target": "Y3",
+      "weight": 83,
+      "n_synapse_connections": 25
+    },
+    {
+      "source": "TmY18",
+      "target": "Tm3",
+      "weight": 80,
+      "n_synapse_connections": 22
+    },
+    {
+      "source": "TmY3",
+      "target": "T4c",
+      "weight": 78,
       "n_synapse_connections": 25
     },
     {
@@ -567,12 +1418,6 @@
       "target": "Tm4",
       "weight": 78,
       "n_synapse_connections": 23
-    },
-    {
-      "source": "TmY3",
-      "target": "T4c",
-      "weight": 78,
-      "n_synapse_connections": 25
     },
     {
       "source": "TmY3",
@@ -587,16 +1432,130 @@
       "n_synapse_connections": 18
     },
     {
+      "source": "Tm37",
+      "target": "Tm3",
+      "weight": 71,
+      "n_synapse_connections": 21
+    },
+    {
+      "source": "Tm3",
+      "target": "Tm20",
+      "weight": 68,
+      "n_synapse_connections": 20
+    },
+    {
+      "source": "TmY5a",
+      "target": "Tm2",
+      "weight": 67,
+      "n_synapse_connections": 21
+    },
+    {
+      "source": "Y3",
+      "target": "Tm4",
+      "weight": 64,
+      "n_synapse_connections": 16
+    },
+    {
+      "source": "Tm37",
+      "target": "TmY5a",
+      "weight": 57,
+      "n_synapse_connections": 16
+    },
+    {
+      "source": "Tm4",
+      "target": "Tm20",
+      "weight": 57,
+      "n_synapse_connections": 16
+    },
+    {
+      "source": "TmY5a",
+      "target": "LC4",
+      "weight": 55,
+      "n_synapse_connections": 17
+    },
+    {
+      "source": "T4b",
+      "target": "T5c",
+      "weight": 55,
+      "n_synapse_connections": 13
+    },
+    {
+      "source": "T4a",
+      "target": "T2",
+      "weight": 53,
+      "n_synapse_connections": 17
+    },
+    {
+      "source": "Y3",
+      "target": "T2",
+      "weight": 53,
+      "n_synapse_connections": 15
+    },
+    {
       "source": "T2",
       "target": "TmY3",
       "weight": 51,
       "n_synapse_connections": 16
     },
     {
+      "source": "TmY5a",
+      "target": "Tm20",
+      "weight": 50,
+      "n_synapse_connections": 16
+    },
+    {
+      "source": "Y3",
+      "target": "TmY18",
+      "weight": 50,
+      "n_synapse_connections": 11
+    },
+    {
+      "source": "Tm20",
+      "target": "Tm4",
+      "weight": 50,
+      "n_synapse_connections": 16
+    },
+    {
+      "source": "TmY5a",
+      "target": "Tm37",
+      "weight": 50,
+      "n_synapse_connections": 9
+    },
+    {
+      "source": "T4b",
+      "target": "T5a",
+      "weight": 49,
+      "n_synapse_connections": 10
+    },
+    {
       "source": "Tm3",
       "target": "T5d",
       "weight": 47,
       "n_synapse_connections": 11
+    },
+    {
+      "source": "TmY18",
+      "target": "T4b",
+      "weight": 45,
+      "n_synapse_connections": 7
+    },
+    {
+      "source": "TmY3",
+      "target": "T4b",
+      "weight": 44,
+      "n_synapse_connections": 13
+    },
+    {
+      "source": "Y3",
+      "target": "Tm3",
+      "weight": 44,
+      "n_synapse_connections": 10
+    },
+    {
+      "source": "T4a",
+      "target": "TmY5a",
+      "weight": 44,
+      "n_synapse_connections": 14
     },
     {
       "source": "Tm2",
@@ -608,6 +1567,30 @@
       "source": "T2",
       "target": "T5c",
       "weight": 43,
+      "n_synapse_connections": 8
+    },
+    {
+      "source": "T2",
+      "target": "Tm20",
+      "weight": 42,
+      "n_synapse_connections": 13
+    },
+    {
+      "source": "Tm20",
+      "target": "Tm3",
+      "weight": 42,
+      "n_synapse_connections": 12
+    },
+    {
+      "source": "Tm20",
+      "target": "TmY18",
+      "weight": 41,
+      "n_synapse_connections": 13
+    },
+    {
+      "source": "TmY18",
+      "target": "T4c",
+      "weight": 41,
       "n_synapse_connections": 8
     },
     {
@@ -623,6 +1606,30 @@
       "n_synapse_connections": 10
     },
     {
+      "source": "T4b",
+      "target": "Y3",
+      "weight": 38,
+      "n_synapse_connections": 10
+    },
+    {
+      "source": "Tm2",
+      "target": "Tm37",
+      "weight": 37,
+      "n_synapse_connections": 11
+    },
+    {
+      "source": "Tm37",
+      "target": "Tm20",
+      "weight": 35,
+      "n_synapse_connections": 10
+    },
+    {
+      "source": "TmY3",
+      "target": "Tm37",
+      "weight": 34,
+      "n_synapse_connections": 10
+    },
+    {
       "source": "T4c",
       "target": "T5d",
       "weight": 34,
@@ -631,6 +1638,12 @@
     {
       "source": "TmY3",
       "target": "T5d",
+      "weight": 33,
+      "n_synapse_connections": 10
+    },
+    {
+      "source": "TmY3",
+      "target": "Tm20",
       "weight": 33,
       "n_synapse_connections": 10
     },
@@ -647,10 +1660,10 @@
       "n_synapse_connections": 9
     },
     {
-      "source": "T2",
-      "target": "LPLC2",
+      "source": "TmY18",
+      "target": "T5a",
       "weight": 31,
-      "n_synapse_connections": 9
+      "n_synapse_connections": 10
     },
     {
       "source": "Tm5Y",
@@ -665,9 +1678,39 @@
       "n_synapse_connections": 9
     },
     {
+      "source": "T2",
+      "target": "LPLC2",
+      "weight": 31,
+      "n_synapse_connections": 9
+    },
+    {
+      "source": "T5a",
+      "target": "T4b",
+      "weight": 30,
+      "n_synapse_connections": 8
+    },
+    {
       "source": "T5c",
       "target": "Tm5Y",
       "weight": 30,
+      "n_synapse_connections": 9
+    },
+    {
+      "source": "TmY18",
+      "target": "Tm20",
+      "weight": 29,
+      "n_synapse_connections": 9
+    },
+    {
+      "source": "TmY18",
+      "target": "Tm5Y",
+      "weight": 29,
+      "n_synapse_connections": 9
+    },
+    {
+      "source": "TmY5a",
+      "target": "Li28",
+      "weight": 29,
       "n_synapse_connections": 9
     },
     {
@@ -677,10 +1720,40 @@
       "n_synapse_connections": 8
     },
     {
+      "source": "T5b",
+      "target": "Y3",
+      "weight": 28,
+      "n_synapse_connections": 7
+    },
+    {
       "source": "LC4",
       "target": "LPLC2",
       "weight": 26,
       "n_synapse_connections": 8
+    },
+    {
+      "source": "T2",
+      "target": "T5a",
+      "weight": 26,
+      "n_synapse_connections": 3
+    },
+    {
+      "source": "Tm37",
+      "target": "T5a",
+      "weight": 26,
+      "n_synapse_connections": 8
+    },
+    {
+      "source": "T4b",
+      "target": "T5d",
+      "weight": 25,
+      "n_synapse_connections": 8
+    },
+    {
+      "source": "Y3",
+      "target": "T5b",
+      "weight": 25,
+      "n_synapse_connections": 7
     },
     {
       "source": "T4c",
@@ -689,9 +1762,33 @@
       "n_synapse_connections": 6
     },
     {
+      "source": "Tm37",
+      "target": "Tm2",
+      "weight": 23,
+      "n_synapse_connections": 7
+    },
+    {
+      "source": "Tm20",
+      "target": "T2",
+      "weight": 23,
+      "n_synapse_connections": 6
+    },
+    {
       "source": "T5b",
       "target": "T4c",
       "weight": 23,
+      "n_synapse_connections": 7
+    },
+    {
+      "source": "Tm5Y",
+      "target": "TmY18",
+      "weight": 23,
+      "n_synapse_connections": 6
+    },
+    {
+      "source": "Li28",
+      "target": "Tm3",
+      "weight": 22,
       "n_synapse_connections": 7
     },
     {
@@ -707,14 +1804,50 @@
       "n_synapse_connections": 7
     },
     {
+      "source": "T4b",
+      "target": "Tm3",
+      "weight": 22,
+      "n_synapse_connections": 5
+    },
+    {
+      "source": "TmY5a",
+      "target": "T5d",
+      "weight": 22,
+      "n_synapse_connections": 7
+    },
+    {
+      "source": "T5c",
+      "target": "T4b",
+      "weight": 21,
+      "n_synapse_connections": 7
+    },
+    {
+      "source": "Tm4",
+      "target": "T4b",
+      "weight": 21,
+      "n_synapse_connections": 5
+    },
+    {
       "source": "T4c",
       "target": "T2",
       "weight": 20,
       "n_synapse_connections": 6
     },
     {
+      "source": "TmY18",
+      "target": "Tm2",
+      "weight": 20,
+      "n_synapse_connections": 5
+    },
+    {
       "source": "T5b",
       "target": "TmY3",
+      "weight": 19,
+      "n_synapse_connections": 6
+    },
+    {
+      "source": "TmY3",
+      "target": "T4a",
       "weight": 19,
       "n_synapse_connections": 6
     },
@@ -725,10 +1858,46 @@
       "n_synapse_connections": 4
     },
     {
+      "source": "TmY5a",
+      "target": "T4a",
+      "weight": 19,
+      "n_synapse_connections": 6
+    },
+    {
+      "source": "TmY5a",
+      "target": "T5c",
+      "weight": 19,
+      "n_synapse_connections": 6
+    },
+    {
       "source": "T5b",
       "target": "Tm2",
       "weight": 18,
       "n_synapse_connections": 6
+    },
+    {
+      "source": "T5d",
+      "target": "T4a",
+      "weight": 18,
+      "n_synapse_connections": 6
+    },
+    {
+      "source": "Y3",
+      "target": "T5c",
+      "weight": 18,
+      "n_synapse_connections": 5
+    },
+    {
+      "source": "T4a",
+      "target": "T5c",
+      "weight": 17,
+      "n_synapse_connections": 5
+    },
+    {
+      "source": "T5a",
+      "target": "T4c",
+      "weight": 17,
+      "n_synapse_connections": 5
     },
     {
       "source": "T2",
@@ -737,8 +1906,26 @@
       "n_synapse_connections": 2
     },
     {
+      "source": "Y3",
+      "target": "Tm2",
+      "weight": 17,
+      "n_synapse_connections": 4
+    },
+    {
+      "source": "T4a",
+      "target": "Tm3",
+      "weight": 16,
+      "n_synapse_connections": 5
+    },
+    {
       "source": "TmY3",
       "target": "Tm5Y",
+      "weight": 16,
+      "n_synapse_connections": 5
+    },
+    {
+      "source": "Tm37",
+      "target": "Tm37",
       "weight": 16,
       "n_synapse_connections": 5
     },
@@ -749,10 +1936,70 @@
       "n_synapse_connections": 5
     },
     {
+      "source": "Li28",
+      "target": "Li28",
+      "weight": 15,
+      "n_synapse_connections": 4
+    },
+    {
+      "source": "T2",
+      "target": "T4b",
+      "weight": 15,
+      "n_synapse_connections": 4
+    },
+    {
+      "source": "Y3",
+      "target": "T5d",
+      "weight": 15,
+      "n_synapse_connections": 4
+    },
+    {
+      "source": "T2",
+      "target": "T4a",
+      "weight": 15,
+      "n_synapse_connections": 4
+    },
+    {
+      "source": "T5d",
+      "target": "Li28",
+      "weight": 14,
+      "n_synapse_connections": 2
+    },
+    {
       "source": "T5d",
       "target": "LC4",
       "weight": 14,
       "n_synapse_connections": 3
+    },
+    {
+      "source": "PVLP011",
+      "target": "DNp01",
+      "weight": 14,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "TmY18",
+      "target": "T5c",
+      "weight": 13,
+      "n_synapse_connections": 3
+    },
+    {
+      "source": "TmY5a",
+      "target": "T4b",
+      "weight": 13,
+      "n_synapse_connections": 4
+    },
+    {
+      "source": "TmY5a",
+      "target": "T5a",
+      "weight": 13,
+      "n_synapse_connections": 4
+    },
+    {
+      "source": "Li28",
+      "target": "T2",
+      "weight": 12,
+      "n_synapse_connections": 4
     },
     {
       "source": "DNp01",
@@ -761,10 +2008,76 @@
       "n_synapse_connections": 2
     },
     {
+      "source": "T5b",
+      "target": "T4a",
+      "weight": 11,
+      "n_synapse_connections": 3
+    },
+    {
+      "source": "T4b",
+      "target": "TmY3",
+      "weight": 11,
+      "n_synapse_connections": 3
+    },
+    {
+      "source": "TmY5a",
+      "target": "T4c",
+      "weight": 10,
+      "n_synapse_connections": 3
+    },
+    {
       "source": "T2",
       "target": "T4c",
       "weight": 10,
       "n_synapse_connections": 3
+    },
+    {
+      "source": "Tm20",
+      "target": "LC4",
+      "weight": 9,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "Tm37",
+      "target": "T2",
+      "weight": 9,
+      "n_synapse_connections": 3
+    },
+    {
+      "source": "T4a",
+      "target": "T5b",
+      "weight": 9,
+      "n_synapse_connections": 3
+    },
+    {
+      "source": "T4b",
+      "target": "Tm4",
+      "weight": 9,
+      "n_synapse_connections": 3
+    },
+    {
+      "source": "Y3",
+      "target": "T4c",
+      "weight": 9,
+      "n_synapse_connections": 3
+    },
+    {
+      "source": "T4a",
+      "target": "T5d",
+      "weight": 8,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "Tm5Y",
+      "target": "T4b",
+      "weight": 7,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "Tm5Y",
+      "target": "T4a",
+      "weight": 7,
+      "n_synapse_connections": 2
     },
     {
       "source": "Tm5Y",
@@ -779,31 +2092,109 @@
       "n_synapse_connections": 2
     },
     {
+      "source": "Li28",
+      "target": "Tm4",
+      "weight": 7,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "Li28",
+      "target": "T5b",
+      "weight": 6,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "Y3",
+      "target": "T4b",
+      "weight": 6,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "Y3",
+      "target": "T5a",
+      "weight": 6,
+      "n_synapse_connections": 2
+    },
+    {
       "source": "T5c",
       "target": "Tm2",
       "weight": 6,
       "n_synapse_connections": 2
     },
     {
-      "source": "Tm5Y",
-      "target": "Tm2",
-      "weight": 3,
+      "source": "T5d",
+      "target": "T4b",
+      "weight": 6,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "T5a",
+      "target": "Tm4",
+      "weight": 6,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "T2",
+      "target": "Tm37",
+      "weight": 6,
       "n_synapse_connections": 1
     },
     {
       "source": "Tm5Y",
+      "target": "Li28",
+      "weight": 6,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "TmY18",
       "target": "T5d",
-      "weight": 3,
+      "weight": 6,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "T4a",
+      "target": "TmY3",
+      "weight": 6,
+      "n_synapse_connections": 2
+    },
+    {
+      "source": "T4c",
+      "target": "Tm37",
+      "weight": 4,
       "n_synapse_connections": 1
     },
     {
       "source": "Tm5Y",
-      "target": "T4c",
+      "target": "T5a",
+      "weight": 4,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "T4c",
+      "target": "T5a",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "TmY18",
+      "target": "T5b",
       "weight": 3,
       "n_synapse_connections": 1
     },
     {
       "source": "Tm2",
+      "target": "LPLC2",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "T5d",
+      "target": "Tm5Y",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "Li28",
       "target": "LPLC2",
       "weight": 3,
       "n_synapse_connections": 1
@@ -816,13 +2207,97 @@
     },
     {
       "source": "T5d",
-      "target": "Tm3",
+      "target": "Tm37",
       "weight": 3,
       "n_synapse_connections": 1
     },
     {
       "source": "T5d",
-      "target": "Tm5Y",
+      "target": "Tm3",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "T5c",
+      "target": "TmY18",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "T5c",
+      "target": "Tm37",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "T4b",
+      "target": "LC4",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "T5c",
+      "target": "T4a",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "T4b",
+      "target": "Tm37",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "T4b",
+      "target": "Tm2",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "T5b",
+      "target": "TmY18",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "Tm5Y",
+      "target": "Tm2",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "Tm5Y",
+      "target": "T5d",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "Tm5Y",
+      "target": "T4c",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "T5a",
+      "target": "Tm20",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "Tm4",
+      "target": "T4a",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "TmY5a",
+      "target": "T5b",
+      "weight": 3,
+      "n_synapse_connections": 1
+    },
+    {
+      "source": "T4c",
+      "target": "Tm20",
       "weight": 3,
       "n_synapse_connections": 1
     }
