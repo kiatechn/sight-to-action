@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
@@ -14,6 +14,9 @@ interface Props {
   onSelectType: (t: string | null) => void;
   hiddenTypes: Set<string>;
 }
+
+const MIN_DIST = 0.25;
+const MAX_DIST = 5;
 
 // MaleCNS voxel space -> Three.js: the long brain→nerve-cord axis is data Z,
 // and low Z is the brain, so map it to -Y to stand the animal upright.
@@ -116,17 +119,32 @@ function Rig({
   const key = focus ? `${focus.centre.toArray().map((v) => v.toFixed(3)).join(",")}|${focus.radius.toFixed(3)}` : "none";
   const lastKey = useRef("");
 
+  // As soon as the viewer grabs the camera, stop assisting — otherwise the
+  // rig keeps lerping towards its goal and drags against the pointer.
+  useEffect(() => {
+    const ctrl = controls.current;
+    if (!ctrl) return;
+    const cancel = () => {
+      animating.current = 0;
+    };
+    ctrl.addEventListener("start", cancel);
+    return () => ctrl.removeEventListener("start", cancel);
+  }, [controls]);
+
   useFrame((_, delta) => {
     const ctrl = controls.current;
     if (!ctrl || !focus) return;
 
     if (key !== lastKey.current) {
       lastKey.current = key;
-      // distance that makes the bounding sphere fill most of the viewport
+      // distance that makes the bounding sphere fill most of the viewport,
+      // clamped into the OrbitControls range — otherwise the controls clamp
+      // it while the rig keeps lerping and the camera visibly judders
       const cam = camera as THREE.PerspectiveCamera;
       const vFov = (cam.fov * Math.PI) / 180;
       const hFov = 2 * Math.atan(Math.tan(vFov / 2) * cam.aspect);
-      const dist = (focus.radius / Math.sin(Math.min(vFov, hFov) / 2)) * 1.15;
+      const raw = (focus.radius / Math.sin(Math.min(vFov, hFov) / 2)) * 1.15;
+      const dist = Math.min(Math.max(raw, MIN_DIST + 0.02), MAX_DIST - 0.02);
 
       const dir = camera.position.clone().sub(ctrl.target);
       if (!Number.isFinite(dir.x) || dir.lengthSq() < 1e-6) dir.set(0.4, 0.15, 1);
@@ -241,12 +259,14 @@ export default function BrainScene({
         );
       })}
       <Rig focus={focus} controls={controlsRef} />
+      {/* damping off: drei's OrbitControls and the rig would otherwise both
+          call update() each frame and visibly fight over the camera */}
       <OrbitControls
         ref={controlsRef}
         enablePan={false}
-        minDistance={0.3}
-        maxDistance={5}
-        enableDamping
+        minDistance={MIN_DIST}
+        maxDistance={MAX_DIST}
+        enableDamping={false}
       />
     </Canvas>
   );
