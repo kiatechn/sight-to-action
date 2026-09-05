@@ -4,7 +4,7 @@ import { SEX_COLOR } from "./types";
 interface Props {
   data: PathwayData;
   onSelectType: (t: string) => void;
-  onShowRoute: (route: string[] | null) => void;
+  onShowRoute: (route: string[] | null, brain?: "male" | "female") => void;
 }
 
 const ORDER: SexStatus["category"][] = [
@@ -71,10 +71,22 @@ export default function SexPanel({ data, onSelectType, onShowRoute }: Props) {
             <div className="sex-route">
               <span className="sex-tag male">Male</span>
               <span className="mono">{data.routes[0]?.nodes.join(" → ")}</span>
+              <button
+                className="ghost-button"
+                onClick={() => onShowRoute(data.routes[0].nodes, "male")}
+              >
+                View
+              </button>
             </div>
             <div className="sex-route">
               <span className="sex-tag female">Female</span>
               <span className="mono">{f.femaleRoutes[0]?.nodes.join(" → ")}</span>
+              <button
+                className="ghost-button"
+                onClick={() => onShowRoute(f.femaleRoutes[0].nodes, "female")}
+              >
+                View
+              </button>
             </div>
             <p className="small muted">
               The strongest male route runs through a male-specific neuron, so it has no female
@@ -85,14 +97,45 @@ export default function SexPanel({ data, onSelectType, onShowRoute }: Props) {
                 <div className="conn-head">Routes present in both sexes</div>
                 {f.conservedRoutes.map((r) => (
                   <div className="sex-route" key={r.join()}>
-                    <button className="ghost-button" onClick={() => onShowRoute(r)}>
-                      Show in 3D
-                    </button>
                     <span className="mono">{r.join(" → ")}</span>
+                    <button className="ghost-button" onClick={() => onShowRoute(r, "male")}>
+                      View in ♂
+                    </button>
                   </div>
                 ))}
               </>
             )}
+          </section>
+
+          <section className="detail-block">
+            <h4>Is anything female-specific?</h4>
+            <p className="small">
+              The female connectome contains{" "}
+              <strong>{f.femaleSpecific.femaleSpecificCount} female-specific neurons</strong>{" "}
+              across {f.femaleSpecific.femaleSpecificTypeCount} cell types, plus{" "}
+              {f.femaleSpecific.sexuallyDimorphicCount} annotated sexually dimorphic — so the
+              asymmetry is not that the female brain has nothing of its own.
+            </p>
+            <p className="small">
+              But <strong>none of them lie on the routes to DNg13</strong>. Every neuron on the
+              female routes is annotated <em>isomorphic</em> (shared between the sexes) except
+              the target DNg13 itself, which is sexually dimorphic.
+            </p>
+            <p className="small muted">
+              So the asymmetry here is genuinely one-sided: the male pathway routes through a
+              male-specific neuron, whereas the female pathway is built entirely from shared
+              cells. The female-specific cells exist elsewhere in her brain, not on this route.
+            </p>
+            <div className="conn-head">Neurons on the female routes</div>
+            {f.femaleSpecific.routeTypes.map((r) => (
+              <div className="conn-row" key={r.type}>
+                <span>{r.type}</span>
+                <span className="small muted">
+                  {r.dimorphism ?? "unannotated"}
+                  {r.hasMaleCounterpart ? "" : " · no male counterpart recorded"}
+                </span>
+              </div>
+            ))}
           </section>
 
           <section className="detail-block">

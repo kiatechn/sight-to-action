@@ -16,6 +16,10 @@ interface Props {
   soma: Record<string, [number, number, number][]>;
   overlayRoute: string[] | null;
   overlayStep: number;
+  /** Which animal's brain is on screen. The two datasets are in different
+   *  template spaces, so they are shown one at a time and never overlaid. */
+  brain: "male" | "female";
+  cloudOverride: CloudData | null;
 }
 
 const MIN_DIST = 0.25;
@@ -187,7 +191,7 @@ function RouteOverlay({
               onSelectType(p.type);
             }}
           >
-            <sphereGeometry args={[lit ? 0.022 : 0.012, 16, 16]} />
+            <sphereGeometry args={[lit ? 0.012 : 0.007, 16, 16]} />
             <meshBasicMaterial
               color={lit ? routeColor(i, points.length) : "#475569"}
               transparent
@@ -283,7 +287,10 @@ export default function BrainScene({
   soma,
   overlayRoute,
   overlayStep,
+  brain,
+  cloudOverride,
 }: Props) {
+  const activeCloud = cloudOverride ?? cloud;
   const controlsRef = useRef<any>(null);
   const stageOf = useMemo(
     () => new Map(nodes.map((n) => [n.type, n.stage])),
@@ -331,6 +338,13 @@ export default function BrainScene({
           box.expandByPoint(v.set(x, y, z));
         }
       }
+    } else if (brain === "female") {
+      // no skeletons for the female dataset, so frame the cloud itself
+      const src = activeCloud.positions;
+      for (let i = 0; i < src.length; i += 3) {
+        const [x, y, z] = toScene(src[i], src[i + 1], src[i + 2]);
+        box.expandByPoint(v.set(x, y, z));
+      }
     } else {
       if (!relevant.length) return null;
       for (const m of relevant) {
@@ -343,7 +357,7 @@ export default function BrainScene({
     const centre = box.getCenter(new THREE.Vector3());
     const radius = Math.max(box.getSize(new THREE.Vector3()).length() / 2, 0.05);
     return { centre, radius };
-  }, [meshes, activeStage, selectedType, hiddenTypes, overlayRoute, soma]);
+  }, [meshes, activeStage, selectedType, hiddenTypes, overlayRoute, soma, brain, activeCloud]);
 
   return (
     <Canvas
@@ -353,8 +367,8 @@ export default function BrainScene({
       onPointerMissed={() => onSelectType(null)}
     >
       <color attach="background" args={["#070b14"]} />
-      <CloudPoints cloud={cloud} />
-      {meshes.map((m) => {
+      <CloudPoints cloud={activeCloud} />
+      {brain === "male" && meshes.map((m) => {
         if (hiddenTypes.has(m.type)) return null;
         let emphasis: "active" | "seen" | "muted";
         if (overlayRoute?.length) {

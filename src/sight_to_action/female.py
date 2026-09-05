@@ -82,8 +82,20 @@ def build_female_type_graph(
     return g
 
 
-def male_to_female_map(annotations_male: pd.DataFrame, types: list[str]) -> dict[str, list[str]]:
-    """MaleCNS type -> the female cell type(s) it is matched to."""
+def male_to_female_map(
+    annotations_male: pd.DataFrame,
+    types: list[str],
+    female_types: set[str] | None = None,
+) -> dict[str, list[str]]:
+    """MaleCNS type -> the female cell type(s) it is matched to.
+
+    The recorded `flywireType` is authoritative, but it is not always current:
+    MaleCNS maps LC10c-1 to "LC10c" while FlyWire actually names that type
+    "LC10c-1". So when a female type list is supplied, the male type's own name
+    is accepted as a fallback if it exists verbatim in the female dataset.
+    Both projects use the same community nomenclature, so an exact name match
+    is a real identification rather than a coincidence.
+    """
     traced = annotations_male[annotations_male["status"] == "Traced"]
     out: dict[str, list[str]] = {}
     for t in types:
@@ -91,7 +103,12 @@ def male_to_female_map(annotations_male: pd.DataFrame, types: list[str]) -> dict
         names: list[str] = []
         for value in rows.unique():
             names.extend(part.strip() for part in str(value).split(","))
-        out[t] = sorted({n for n in names if n})
+        resolved = {n for n in names if n}
+        if female_types is not None:
+            resolved = {n for n in resolved if n in female_types}
+            if t in female_types:
+                resolved.add(t)
+        out[t] = sorted(resolved)
     return out
 
 
@@ -164,7 +181,8 @@ def build_female_comparison(
     )
 
     types = [n["type"] for n in male_payload["nodes"]]
-    mapping = male_to_female_map(male_annotations, types)
+    female_type_names = set(female_ann["cell_type"].dropna())
+    mapping = male_to_female_map(male_annotations, types, female_types=female_type_names)
     edges = compare_edges(None, female_graph, male_payload["edges"], mapping)
 
     # the female names for our two endpoints
@@ -186,10 +204,7 @@ def build_female_comparison(
     rank = next((i for i, (t, _) in enumerate(ranked, 1) if t == female_target), None)
 
     # which male types simply do not exist in the female dataset
-    female_types = set(female_ann["cell_type"].dropna())
-    missing_types = [
-        t for t in types if not any(n in female_types for n in mapping.get(t, []))
-    ]
+    missing_types = [t for t in types if not mapping.get(t)]
 
     male_route_sets = [set(r["nodes"]) for r in male_payload["routes"]]
     conserved = []
@@ -200,7 +215,12 @@ def build_female_comparison(
         if any(set(as_male) == s for s in male_route_sets):
             conserved.append(as_male)
 
+    female_specific = female_specific_analysis(
+        female_ann, male_annotations, [{"nodes": r.nodes} for r in routes]
+    )
+
     return {
+        "femaleSpecific": female_specific,
         "meta": {
             "femaleDataset": "FlyWire / FAFB whole-brain female connectome (snapshot 783)",
             "femaleSource": "Zenodo 10676866 (connectivity, CC-BY); flyconnectome/flywire_annotations (Schlegel et al., Nature 2024)",
@@ -227,4 +247,108 @@ def build_female_comparison(
         "femalePool": len(ranked),
         "femaleTopDescending": [{"type": t, "score": s} for t, s in ranked[:8]],
         "femaleTargetScore": float(forward.get(female_target, 0.0)),
+    }
+
+
+# FAFB/FlyWire voxel space is anisotropic: x and y are 4 nm, z sections are
+# 40 nm. Without correcting that the brain renders badly squashed.
+FAFB_VOXEL_NM = (4.0, 4.0, 40.0)
+
+
+def female_soma_frame(annotations: pd.DataFrame):
+    """Centroid and uniform scale for the female soma cloud, in nm."""
+    s = annotations.dropna(subset=["soma_x", "soma_y", "soma_z"])
+    pts = s[["soma_x", "soma_y", "soma_z"]].to_numpy(dtype=float) * np.array(FAFB_VOXEL_NM)
+    center = pts.mean(axis=0)
+    scale = float(np.abs(pts - center).max())
+    return center, scale, pts
+
+
+def build_female_3d(
+    annotations: pd.DataFrame, cloud_points: int = 12000, seed: int = 0
+) -> tuple[dict, dict]:
+    """Female brain point cloud and one soma position per cell type per side.
+
+    FlyWire ships no skeletons here, so the female view is a soma cloud with
+    route markers — the male view keeps full traced morphology for the featured
+    pathway. The two datasets are also in different template spaces, so each is
+    normalised independently and they are never overlaid.
+    """
+    center, scale, _ = female_soma_frame(annotations)
+
+    s = annotations.dropna(subset=["soma_x", "soma_y", "soma_z"])
+    pts = s[["soma_x", "soma_y", "soma_z"]].to_numpy(dtype=float) * np.array(FAFB_VOXEL_NM)
+    norm = (pts - center) / scale
+
+    rng = np.random.default_rng(seed)
+    idx = rng.choice(len(norm), size=min(cloud_points, len(norm)), replace=False)
+    cloud = {"stride": 3, "positions": norm[idx].round(3).ravel().tolist()}
+
+    soma: dict[str, list] = {}
+    types = s["cell_type"].to_numpy()
+    sides = s["side"].astype(str).to_numpy()
+    for cell_type in pd.unique(types):
+        if not isinstance(cell_type, str) or not cell_type:
+            continue
+        mask = types == cell_type
+        picks = []
+        for side in ("left", "right"):
+            sel = norm[mask & (sides == side)]
+            if len(sel):
+                picks.append([round(float(v), 4) for v in sel.mean(axis=0)])
+        if not picks:
+            picks.append([round(float(v), 4) for v in norm[mask].mean(axis=0)])
+        soma[str(cell_type)] = picks
+    return cloud, soma
+
+
+def female_specific_analysis(
+    female_annotations: pd.DataFrame,
+    male_annotations: pd.DataFrame,
+    female_routes: list[dict],
+) -> dict:
+    """The mirror of the male-specific finding: what is unique to the female?
+
+    Two independent signals are used: FlyWire's own `dimorphism` column, and
+    whether any MaleCNS cell type maps onto that female type at all.
+    """
+    traced_male = male_annotations[male_annotations["status"] == "Traced"]
+    mapped_to_female: set[str] = set()
+    for value in traced_male["flywireType"].dropna().unique():
+        mapped_to_female.update(part.strip() for part in str(value).split(","))
+
+    fa = female_annotations
+    dimorphism_by_type = (
+        fa.dropna(subset=["cell_type"])
+        .groupby("cell_type")["dimorphism"]
+        .agg(lambda s: s.dropna().iloc[0] if s.notna().any() else None)
+    )
+
+    route_types = sorted({n for r in female_routes for n in r["nodes"]})
+    rows = []
+    for t in route_types:
+        dim = dimorphism_by_type.get(t)
+        rows.append(
+            {
+                "type": t,
+                "dimorphism": dim if isinstance(dim, str) else None,
+                "hasMaleCounterpart": t in mapped_to_female,
+            }
+        )
+
+    # every female-specific cell type in the whole dataset, for context
+    female_only = sorted(
+        dimorphism_by_type[
+            dimorphism_by_type.isin(["female-specific", "potentially female-specific"])
+        ].index.tolist()
+    )
+
+    return {
+        "routeTypes": rows,
+        "femaleSpecificCount": int(
+            fa["dimorphism"].isin(["female-specific", "potentially female-specific"]).sum()
+        ),
+        "sexuallyDimorphicCount": int((fa["dimorphism"] == "sexually dimorphic").sum()),
+        "femaleSpecificTypesSample": female_only[:40],
+        "femaleSpecificTypeCount": len(female_only),
     }

@@ -19,7 +19,8 @@ from .analysis import build_type_graph
 from .data import load_annotations, load_neurotransmitters, load_weights
 from .pipeline import build_context, build_pathway_dataset, write_pathway_dataset
 from .explorer import build_explorer, write_explorer
-from .female import build_female_comparison
+from .female import build_female_3d, build_female_comparison, load_female_annotations
+from .female import ANNOTATIONS as FEMALE_ANNOTATIONS
 from .skeletons import build_skeleton_payload, write_skeletons
 
 PROCESSED_DIR = Path(__file__).resolve().parents[2] / "data" / "processed"
@@ -127,10 +128,22 @@ def build_all(
     soma_path = PROCESSED_DIR / "soma.json"
     soma_path.write_text(json.dumps(soma))
 
-    return {
+    out = {
         "pathway": pathway_path,
         "skeletons": skeleton_path,
         "cloud": cloud_path,
         "explorer": explorer_path,
         "soma": soma_path,
     }
+
+    # the female brain, so the comparison can be seen and not just read
+    if FEMALE_ANNOTATIONS.exists():
+        f_cloud, f_soma = build_female_3d(load_female_annotations(), cloud_points=cloud_points)
+        f_cloud_path = PROCESSED_DIR / "female_cloud.json"
+        f_soma_path = PROCESSED_DIR / "female_soma.json"
+        f_cloud_path.write_text(json.dumps(f_cloud))
+        f_soma_path.write_text(json.dumps(f_soma))
+        out["female_cloud"] = f_cloud_path
+        out["female_soma"] = f_soma_path
+
+    return out

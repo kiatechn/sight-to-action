@@ -100,7 +100,7 @@ Schlegel et al., Nature 2024). Same graph construction, same relative-weight
 definition, same route ranking. FlyWire is a brain-only dataset, so descending
 neurons are present but truncated at the neck.
 
-**23 of the 31 connections** in the male pathway have a female counterpart, and
+**25 of the 31 connections** in the male pathway have a female counterpart, and
 the matched connections agree closely across two independently reconstructed
 connectomes:
 
@@ -113,10 +113,24 @@ connectomes:
 | LC10a → AOTU002_a | 45.6% | 34.0% |
 | AOTU002_b → DNg13 | 0.92% | 1.17% |
 
-**Every one of the 8 missing connections involves LoVP92, VES200m or LC10c-1** —
-the neurons with no female counterpart. The early visual stages are shared and
-quantitatively similar; the divergence is concentrated at the male-specific
-branch near the end of the pathway.
+**All 6 missing connections involve only LoVP92 and VES200m** — precisely the
+two neurons MaleCNS annotates male-specific and potentially male-specific. The
+early visual stages are shared and quantitatively similar; the divergence is
+concentrated entirely at the male-specific branch near the end.
+
+(An earlier version of this analysis also reported LC10c-1 as missing. That was
+a mapping artefact, not biology: MaleCNS records its FlyWire counterpart as
+"LC10c" while FlyWire names the type "LC10c-1". The mapping now also accepts an
+exact name match against the female dataset, since both projects use the same
+community nomenclature.)
+
+**Is anything female-specific?** The mirror question matters. The female
+connectome contains 363 female-specific neurons across 71 cell types, plus 652
+annotated sexually dimorphic — so it is not that the female brain lacks unique
+cells. But **none of them lie on the routes to DNg13**: every neuron on the
+female routes is annotated *isomorphic* apart from DNg13 itself. The asymmetry
+here is genuinely one-sided — the male route depends on a male-specific neuron,
+while the female route is assembled entirely from shared cells.
 
 Consequently the strongest male route has **no female equivalent**:
 

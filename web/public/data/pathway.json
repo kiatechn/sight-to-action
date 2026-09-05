@@ -21145,6 +21145,140 @@
   "note": "Scores are the product of relative synaptic weights along the best route of at most five hops. Everything here is structural: it describes wiring, not activity or behaviour."
  },
  "female": {
+  "femaleSpecific": {
+   "routeTypes": [
+    {
+     "type": "CB1080",
+     "dimorphism": "isomorphic",
+     "hasMaleCounterpart": true
+    },
+    {
+     "type": "DNg13",
+     "dimorphism": "sexually dimorphic",
+     "hasMaleCounterpart": true
+    },
+    {
+     "type": "DNpe027",
+     "dimorphism": "isomorphic",
+     "hasMaleCounterpart": true
+    },
+    {
+     "type": "L1",
+     "dimorphism": "isomorphic",
+     "hasMaleCounterpart": true
+    },
+    {
+     "type": "L2",
+     "dimorphism": "isomorphic",
+     "hasMaleCounterpart": true
+    },
+    {
+     "type": "L3",
+     "dimorphism": "isomorphic",
+     "hasMaleCounterpart": true
+    },
+    {
+     "type": "L5",
+     "dimorphism": "isomorphic",
+     "hasMaleCounterpart": true
+    },
+    {
+     "type": "LC10c-1",
+     "dimorphism": "isomorphic",
+     "hasMaleCounterpart": false
+    },
+    {
+     "type": "LTe42b",
+     "dimorphism": "isomorphic",
+     "hasMaleCounterpart": true
+    },
+    {
+     "type": "MTe01b",
+     "dimorphism": "isomorphic",
+     "hasMaleCounterpart": true
+    },
+    {
+     "type": "Mi1",
+     "dimorphism": "isomorphic",
+     "hasMaleCounterpart": true
+    },
+    {
+     "type": "Mi9",
+     "dimorphism": "isomorphic",
+     "hasMaleCounterpart": true
+    },
+    {
+     "type": "R1-6",
+     "dimorphism": "isomorphic",
+     "hasMaleCounterpart": true
+    },
+    {
+     "type": "Tm1",
+     "dimorphism": "isomorphic",
+     "hasMaleCounterpart": true
+    },
+    {
+     "type": "Tm20",
+     "dimorphism": "isomorphic",
+     "hasMaleCounterpart": true
+    },
+    {
+     "type": "Tm8a",
+     "dimorphism": "isomorphic",
+     "hasMaleCounterpart": true
+    },
+    {
+     "type": "Y3",
+     "dimorphism": "isomorphic",
+     "hasMaleCounterpart": true
+    }
+   ],
+   "femaleSpecificCount": 363,
+   "sexuallyDimorphicCount": 652,
+   "femaleSpecificTypesSample": [
+    "AVLP008",
+    "AVLP010",
+    "AVLP011,AVLP012",
+    "AVLP100",
+    "AVLP568",
+    "AVLP569",
+    "AVLP570",
+    "CB0094",
+    "CB0151",
+    "CB1930",
+    "CB2258",
+    "CB2317",
+    "CB3244",
+    "CB3300",
+    "CB3515",
+    "CB4233",
+    "CB4244",
+    "CL037",
+    "CL060",
+    "CL156",
+    "CL237",
+    "CL265",
+    "CL289",
+    "CL313",
+    "DNp37",
+    "DNpe038",
+    "DNpe044",
+    "DNpe046",
+    "DNpe047",
+    "FLA100f",
+    "FLA101f_a",
+    "FLA101f_b",
+    "FLA101f_c",
+    "FLA101f_d",
+    "GNG800f",
+    "LHPV3a3_c",
+    "LTe59b",
+    "Li20",
+    "PAL02",
+    "SAD301f"
+   ],
+   "femaleSpecificTypeCount": 71
+  },
   "meta": {
    "femaleDataset": "FlyWire / FAFB whole-brain female connectome (snapshot 783)",
    "femaleSource": "Zenodo 10676866 (connectivity, CC-BY); flyconnectome/flywire_annotations (Schlegel et al., Nature 2024)",
@@ -21172,7 +21306,7 @@
     "male_target": "DNg13",
     "male_weight": 94,
     "male_relative_weight": 0.00924,
-    "female_source": "CB1080,CB4184",
+    "female_source": "CB1080",
     "female_target": "DNg13",
     "found": true,
     "female_weight": 92,
@@ -21281,7 +21415,7 @@
     "male_weight": 4253,
     "male_relative_weight": 0.34667,
     "female_source": "LC10a",
-    "female_target": "CB1080,CB4184",
+    "female_target": "CB1080",
     "found": true,
     "female_weight": 1791,
     "female_relative_weight": 0.30387,
@@ -21316,12 +21450,12 @@
     "male_target": "AOTU002_b",
     "male_weight": 961,
     "male_relative_weight": 0.07833,
-    "female_source": "LC10c",
-    "female_target": "CB1080,CB4184",
-    "found": false,
-    "female_weight": null,
-    "female_relative_weight": null,
-    "reason_missing": "cell types exist but are not connected in the female brain"
+    "female_source": "LC10c-1",
+    "female_target": "CB1080",
+    "found": true,
+    "female_weight": 369,
+    "female_relative_weight": 0.06261,
+    "reason_missing": null
    },
    {
     "male_source": "LC10d",
@@ -21329,7 +21463,7 @@
     "male_weight": 2562,
     "male_relative_weight": 0.20884,
     "female_source": "LC10d",
-    "female_target": "CB1080,CB4184",
+    "female_target": "CB1080",
     "found": true,
     "female_weight": 1394,
     "female_relative_weight": 0.23651,
@@ -21425,11 +21559,11 @@
     "male_weight": 16110,
     "male_relative_weight": 0.18677,
     "female_source": "Tm20",
-    "female_target": "LC10c",
-    "found": false,
-    "female_weight": null,
-    "female_relative_weight": null,
-    "reason_missing": "cell types exist but are not connected in the female brain"
+    "female_target": "LC10c-1",
+    "found": true,
+    "female_weight": 7241,
+    "female_relative_weight": 0.17303,
+    "reason_missing": null
    },
    {
     "male_source": "Tm3",
@@ -21528,11 +21662,10 @@
     "reason_missing": null
    }
   ],
-  "edgesFound": 23,
+  "edgesFound": 25,
   "edgesTotal": 31,
   "missingTypes": [
    "LoVP92",
-   "LC10c-1",
    "VES200m"
   ],
   "femaleRoutes": [

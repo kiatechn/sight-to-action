@@ -100,7 +100,16 @@ export interface FemaleEdge {
   reason_missing: string | null;
 }
 
+export interface FemaleSpecific {
+  routeTypes: { type: string; dimorphism: string | null; hasMaleCounterpart: boolean }[];
+  femaleSpecificCount: number;
+  sexuallyDimorphicCount: number;
+  femaleSpecificTypesSample: string[];
+  femaleSpecificTypeCount: number;
+}
+
 export interface FemaleComparison {
+  femaleSpecific: FemaleSpecific;
   meta: {
     femaleDataset: string;
     femaleSource: string;

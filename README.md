@@ -26,7 +26,7 @@ evidence-linked information about every neuron.
 | **Routes** | Ranked alternative routes, path lengths, bottleneck neurons, and a node-removal experiment showing how structural routes change. |
 | **Explore** | Pick any of 30 senses (filterable by modality) and any of 480 movement neurons and get the real route, its strength and how it ranks — draw it in the 3D view, play it neuron by neuron, and see which senses share a gateway into that neuron. |
 | **Context** | Whether the route is stronger than chance: rank against all descending neurons, against all sensory modalities, against weight-shuffled graphs, plus a threshold-robustness sweep. |
-| **Sex** | The whole analysis re-run on the *female* FlyWire connectome: which connections have a female counterpart, how their strengths compare, which routes are conserved, and the null test replicated in the female brain. |
+| **Sex** | The whole analysis re-run on the *female* FlyWire connectome, with the female brain viewable in 3D: which connections have a female counterpart, how their strengths compare, which routes are conserved, and the null test replicated in the female brain. |
 | **Neuron detail** | Cell type, class, connection strengths, predicted neurotransmitter, sex status, and an evidence label on every claim, with links to neuPrint. |
 
 ## Headline finding
@@ -53,8 +53,9 @@ stronger than DNg13 — which is a useful check that the method works.
 
 The pathway also proves not to be sex-neutral, and this is *computed* rather
 than read off annotations. Re-running the identical analysis on the female
-FlyWire connectome: **23 of 31** connections have a female counterpart, and
-every one of the 8 that don't involves a neuron with no female equivalent. The
+FlyWire connectome: **25 of 31** connections have a female counterpart, and all
+6 that don't involve only LoVP92 and VES200m — exactly the two male-specific
+neurons. The
 strongest male route (via the male-specific **LoVP92**) does not exist in the
 female brain, which reaches DNg13 another way. The null result replicates too —
 DNg13 ranks 264/443 female descending neurons, below median as in the male.
@@ -159,6 +160,7 @@ annotations from [flyconnectome/flywire_annotations](https://github.com/flyconne
 - [x] Statistical null models and threshold-robustness analysis
 - [x] Interactive explorer over all 30 senses x 480 descending neurons
 - [x] Any route drawn and played back in 3D at real soma positions
+- [x] Male and female brains both viewable in 3D, with routes drawn in either
 - [x] Four-level evidence labelling with links to source data
 - [x] Reproducible notebook, documented provenance, methods write-up
 - [ ] Public deployment

@@ -19,6 +19,9 @@ export default function App() {
   const [skeletons, setSkeletons] = useState<SkeletonData | null>(null);
   const [cloud, setCloud] = useState<CloudData | null>(null);
   const [soma, setSoma] = useState<SomaData | null>(null);
+  const [femaleCloud, setFemaleCloud] = useState<CloudData | null>(null);
+  const [femaleSoma, setFemaleSoma] = useState<SomaData | null>(null);
+  const [brain, setBrain] = useState<"male" | "female">("male");
 
   // an explored route drawn over the 3D view, with its own playback position
   const [overlayRoute, setOverlayRoute] = useState<string[] | null>(null);
@@ -43,6 +46,16 @@ export default function App() {
       setCloud(c);
       setSoma(so);
     });
+    // female brain is optional — absent unless the FlyWire build step ran
+    Promise.all([
+      fetch("/data/female_cloud.json").then((r) => (r.ok ? r.json() : null)),
+      fetch("/data/female_soma.json").then((r) => (r.ok ? r.json() : null)),
+    ])
+      .then(([c, s]) => {
+        setFemaleCloud(c);
+        setFemaleSoma(s);
+      })
+      .catch(() => {});
   }, []);
 
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
@@ -72,17 +85,19 @@ export default function App() {
     );
   }
 
-  function showRoute(route: string[] | null) {
+  function showRoute(route: string[] | null, which: "male" | "female" = "male") {
     clearTimers();
     setPlaying(false);
     setActiveStage(-1);
+    if (route) setBrain(which);
     setOverlayRoute(route);
     setOverlayStep(-1);
   }
 
   /** Step along an arbitrary route one neuron at a time, like the Journey. */
-  function playRoute(route: string[]) {
+  function playRoute(route: string[], which: "male" | "female" = "male") {
     clearTimers();
+    setBrain(which);
     setPlaying(true);
     setActiveStage(-1);
     setSelectedType(null);
@@ -150,12 +165,38 @@ export default function App() {
             selectedType={selectedType}
             onSelectType={setSelectedType}
             hiddenTypes={hiddenTypes}
-            soma={soma}
+            soma={brain === "female" && femaleSoma ? femaleSoma : soma}
+            cloudOverride={brain === "female" ? femaleCloud : null}
             overlayRoute={overlayRoute}
             overlayStep={overlayStep}
+            brain={brain}
           />
 
-          <div className="viewer-legend">
+          {femaleCloud && (
+            <div className="brain-switch">
+              <button
+                className={brain === "male" ? "on" : ""}
+                onClick={() => setBrain("male")}
+              >
+                ♂ Male
+              </button>
+              <button
+                className={brain === "female" ? "on" : ""}
+                onClick={() => setBrain("female")}
+              >
+                ♀ Female
+              </button>
+            </div>
+          )}
+
+          {brain === "female" && (
+            <div className="brain-note">
+              Female brain (FlyWire). Soma positions only — no traced morphology in this
+              dataset — and brain only, so there is no nerve cord.
+            </div>
+          )}
+
+          <div className="viewer-legend" hidden={brain === "female"}>
             {stages.map((s) => {
               const name = data.nodes.find((n) => n.stage === s)?.stageName ?? `Stage ${s}`;
               const on = activeStage < 0 || activeStage >= s;
