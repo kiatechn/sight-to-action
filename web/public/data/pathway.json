@@ -3990,7 +3990,7 @@
    },
    "evidence": {
     "level": "experimentally-supported",
-    "note": "DNg13 is a descending neuron of the locomotor/steering control population."
+    "note": "DNg13 is a steering descending neuron: it is reported to receive input from visual pathways, and unilateral activation versus inhibition drives ipsilateral versus contralateral turning in walking flies. That published result is what makes it a meaningful endpoint here \u2014 the structural route found in this connectome ends on a neuron independently shown to be visually driven and to steer locomotion."
    },
    "sex": {
     "category": "sexually dimorphic",

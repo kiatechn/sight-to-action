@@ -40,7 +40,14 @@ EXPERIMENTALLY_SUPPORTED = {
     "Mi1": "Mi1 is a well-characterised ON-pathway medulla interneuron (T4 input element).",
     "Tm3": "Tm3 is a well-characterised ON-pathway medulla interneuron.",
     "LC10a": "LC10a is experimentally linked to visual object tracking and is required for male visual courtship pursuit.",
-    "DNg13": "DNg13 is a descending neuron of the locomotor/steering control population.",
+    "DNg13": (
+        "DNg13 is a steering descending neuron: it is reported to receive input from "
+        "visual pathways, and unilateral activation versus inhibition drives ipsilateral "
+        "versus contralateral turning in walking flies. That published result is what "
+        "makes it a meaningful endpoint here — the structural route found in this "
+        "connectome ends on a neuron independently shown to be visually driven and to "
+        "steer locomotion."
+    ),
 }
 
 
