@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { Html, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import type { CloudData, PathwayNode, SkeletonData } from "./types";
 import { STAGE_COLORS } from "./types";
@@ -13,6 +13,9 @@ interface Props {
   selectedType: string | null;
   onSelectType: (t: string | null) => void;
   hiddenTypes: Set<string>;
+  soma: Record<string, [number, number, number][]>;
+  overlayRoute: string[] | null;
+  overlayStep: number;
 }
 
 const MIN_DIST = 0.25;
@@ -71,7 +74,8 @@ function TypeSkeleton({
 
   useFrame((_, delta) => {
     if (!matRef.current) return;
-    current.current += (target - current.current) * Math.min(1, delta * 5);
+    const dt = Math.min(delta, 0.05);
+    current.current += (target - current.current) * Math.min(1, dt * 5);
     matRef.current.opacity = 0.08 + current.current * 0.92;
   });
 
@@ -99,6 +103,105 @@ function TypeSkeleton({
         blending={THREE.AdditiveBlending}
       />
     </lineSegments>
+  );
+}
+
+/** Colour along a route: cool at the sensory end, hot at the motor end. */
+function routeColor(i: number, n: number) {
+  const c = new THREE.Color("#38bdf8");
+  return c.lerp(new THREE.Color("#f43f5e"), n <= 1 ? 0 : i / (n - 1));
+}
+
+/**
+ * Draws an arbitrary explored route at real soma positions.
+ *
+ * Full EM morphology is only shipped for the featured pathway (skeletons for
+ * all ~11k cell types would be hundreds of megabytes, and the bucket sends no
+ * CORS headers so they cannot be fetched on demand). Every cell type does have
+ * a real soma centroid though, so an explored route is drawn as markers at
+ * true anatomical locations joined in order.
+ */
+function RouteOverlay({
+  route,
+  soma,
+  step,
+  onSelectType,
+}: {
+  route: string[];
+  soma: Record<string, [number, number, number][]>;
+  step: number;
+  onSelectType: (t: string) => void;
+}) {
+  const points = useMemo(() => {
+    const out: { type: string; pos: THREE.Vector3 }[] = [];
+    let prev: THREE.Vector3 | null = null;
+    for (const type of route) {
+      const options = soma[type];
+      if (!options?.length) continue;
+      // pick the side that keeps the chain anatomically coherent
+      let best = options[0];
+      if (prev) {
+        let bestD = Infinity;
+        for (const o of options) {
+          const [x, y, z] = toScene(o[0], o[1], o[2]);
+          const d = prev.distanceToSquared(new THREE.Vector3(x, y, z));
+          if (d < bestD) {
+            bestD = d;
+            best = o;
+          }
+        }
+      }
+      const [x, y, z] = toScene(best[0], best[1], best[2]);
+      const v = new THREE.Vector3(x, y, z);
+      out.push({ type, pos: v });
+      prev = v;
+    }
+    return out;
+  }, [route, soma]);
+
+  const lineGeometry = useMemo(() => {
+    const verts: number[] = [];
+    for (let i = 0; i < points.length - 1; i++) {
+      verts.push(...points[i].pos.toArray(), ...points[i + 1].pos.toArray());
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(verts), 3));
+    return g;
+  }, [points]);
+
+  if (!points.length) return null;
+
+  return (
+    <group>
+      <lineSegments geometry={lineGeometry} frustumCulled={false}>
+        <lineBasicMaterial color="#e2e8f0" transparent opacity={0.5} depthWrite={false} />
+      </lineSegments>
+      {points.map((p, i) => {
+        const lit = step < 0 || i <= step;
+        return (
+          <mesh
+            key={`${p.type}-${i}`}
+            position={p.pos}
+            onClick={(e) => {
+              e.stopPropagation();
+              onSelectType(p.type);
+            }}
+          >
+            <sphereGeometry args={[lit ? 0.022 : 0.012, 16, 16]} />
+            <meshBasicMaterial
+              color={lit ? routeColor(i, points.length) : "#475569"}
+              transparent
+              opacity={lit ? 1 : 0.4}
+            />
+          </mesh>
+        );
+      })}
+      {points.map((p, i) => (
+        <Html key={`label-${p.type}-${i}`} position={p.pos} center distanceFactor={1.6}>
+          <div className={`scene-label ${step < 0 || i <= step ? "" : "dim"}`}>{p.type}</div>
+        </Html>
+      ))}
+    </group>
   );
 }
 
@@ -156,8 +259,11 @@ function Rig({
     }
 
     if (animating.current > 0) {
-      animating.current -= delta;
-      const k = Math.min(1, delta * 2.4);
+      // clamp delta: after any frame hitch (tab switch, GC, heavy re-render)
+      // an unclamped delta makes k reach 1 and the camera visibly snaps
+      const dt = Math.min(delta, 0.05);
+      animating.current -= dt;
+      const k = Math.min(1, dt * 2.4);
       camera.position.lerp(goalPos.current, k);
       ctrl.target.lerp(goalTarget.current, k);
       ctrl.update();
@@ -174,6 +280,9 @@ export default function BrainScene({
   selectedType,
   onSelectType,
   hiddenTypes,
+  soma,
+  overlayRoute,
+  overlayStep,
 }: Props) {
   const controlsRef = useRef<any>(null);
   const stageOf = useMemo(
@@ -210,25 +319,36 @@ export default function BrainScene({
       if (activeStage < 0) return true; // frame the whole pathway
       return m.stage === activeStage;
     });
-    if (!relevant.length) return null;
 
     const box = new THREE.Box3();
     const v = new THREE.Vector3();
-    for (const m of relevant) {
-      for (let i = 0; i < m.positions.length; i += 3) {
-        box.expandByPoint(v.set(m.positions[i], m.positions[i + 1], m.positions[i + 2]));
+
+    // an explored route takes priority for framing
+    if (overlayRoute?.length) {
+      for (const type of overlayRoute) {
+        for (const o of soma[type] ?? []) {
+          const [x, y, z] = toScene(o[0], o[1], o[2]);
+          box.expandByPoint(v.set(x, y, z));
+        }
+      }
+    } else {
+      if (!relevant.length) return null;
+      for (const m of relevant) {
+        for (let i = 0; i < m.positions.length; i += 3) {
+          box.expandByPoint(v.set(m.positions[i], m.positions[i + 1], m.positions[i + 2]));
+        }
       }
     }
     if (box.isEmpty()) return null;
     const centre = box.getCenter(new THREE.Vector3());
     const radius = Math.max(box.getSize(new THREE.Vector3()).length() / 2, 0.05);
     return { centre, radius };
-  }, [meshes, activeStage, selectedType, hiddenTypes]);
+  }, [meshes, activeStage, selectedType, hiddenTypes, overlayRoute, soma]);
 
   return (
     <Canvas
       camera={{ position: [1.6, 0.4, 1.9], fov: 45, near: 0.01, far: 100 }}
-      dpr={[1, 2]}
+      dpr={[1, 1.5]}
       gl={{ antialias: true, preserveDrawingBuffer: true }}
       onPointerMissed={() => onSelectType(null)}
     >
@@ -237,7 +357,9 @@ export default function BrainScene({
       {meshes.map((m) => {
         if (hiddenTypes.has(m.type)) return null;
         let emphasis: "active" | "seen" | "muted";
-        if (selectedType) {
+        if (overlayRoute?.length) {
+          emphasis = overlayRoute.includes(m.type) ? "active" : "muted";
+        } else if (selectedType) {
           emphasis = m.type === selectedType ? "active" : "muted";
         } else if (activeStage < 0) {
           emphasis = "seen";
@@ -258,6 +380,14 @@ export default function BrainScene({
           />
         );
       })}
+      {overlayRoute?.length ? (
+        <RouteOverlay
+          route={overlayRoute}
+          soma={soma}
+          step={overlayStep}
+          onSelectType={onSelectType}
+        />
+      ) : null}
       <Rig focus={focus} controls={controlsRef} />
       {/* damping off: drei's OrbitControls and the rig would otherwise both
           call update() each frame and visibly fight over the camera */}

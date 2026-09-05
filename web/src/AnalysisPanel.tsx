@@ -6,6 +6,9 @@ interface Props {
   onSelectType: (t: string) => void;
   removedType: string | null;
   onRemoveType: (t: string | null) => void;
+  onShowRoute: (route: string[] | null) => void;
+  onPlayRoute: (route: string[]) => void;
+  activeRoute: string[] | null;
 }
 
 export default function AnalysisPanel({
@@ -13,6 +16,9 @@ export default function AnalysisPanel({
   onSelectType,
   removedType,
   onRemoveType,
+  onShowRoute,
+  onPlayRoute,
+  activeRoute,
 }: Props) {
   const [showAllRoutes, setShowAllRoutes] = useState(false);
   const routes = showAllRoutes ? data.routes : data.routes.slice(0, 5);
@@ -31,32 +37,54 @@ export default function AnalysisPanel({
       </section>
 
       <section className="detail-block">
-        <h4>Alternative routes ({data.routes.length} found)</h4>
+        <h4>Routes ({data.routes.length} found)</h4>
+        <p className="small muted">
+          The <strong>primary route</strong> is the strongest by relative synaptic weight.
+          The rest are genuine alternatives through different intermediate neurons — click any
+          one to draw it in the 3D view, or play it neuron by neuron.
+        </p>
         <p className="small muted">
           Path lengths: {Object.entries(hopCounts).map(([h, c]) => `${c}×${h} hops`).join(", ")}
         </p>
         <div className="route-list">
-          {routes.map((r, i) => (
-            <div className="route" key={i}>
-              <div className="route-rank">#{i + 1}</div>
-              <div className="route-body">
-                <div className="route-chain">
-                  {r.nodes.map((n, j) => (
-                    <span key={n}>
-                      {j > 0 && <span className="arrow">→</span>}
-                      <button className="chip" onClick={() => onSelectType(n)}>
-                        {n}
-                      </button>
-                    </span>
-                  ))}
-                </div>
-                <div className="small muted">
-                  {r.hops} hops · {r.total_synapses.toLocaleString()} synapses · weakest link{" "}
-                  {(r.min_relative_weight * 100).toFixed(2)}% of target input
+          {routes.map((r, i) => {
+            const isActive =
+              activeRoute?.length === r.nodes.length &&
+              activeRoute.every((n, k) => n === r.nodes[k]);
+            return (
+              <div className={`route ${i === 0 ? "primary" : ""} ${isActive ? "on" : ""}`} key={i}>
+                <div className="route-rank">{i === 0 ? "★" : `#${i + 1}`}</div>
+                <div className="route-body">
+                  {i === 0 && <div className="route-tag">Primary route</div>}
+                  <div className="route-chain">
+                    {r.nodes.map((n, j) => (
+                      <span key={n}>
+                        {j > 0 && <span className="arrow">→</span>}
+                        <button className="chip" onClick={() => onSelectType(n)}>
+                          {n}
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                  <div className="small muted">
+                    {r.hops} hops · {r.total_synapses.toLocaleString()} synapses · weakest link{" "}
+                    {(r.min_relative_weight * 100).toFixed(2)}% of target input
+                  </div>
+                  <div className="route-actions">
+                    <button
+                      className="ghost-button"
+                      onClick={() => onShowRoute(isActive ? null : r.nodes)}
+                    >
+                      {isActive ? "Hide in 3D" : "Show in 3D"}
+                    </button>
+                    <button className="ghost-button" onClick={() => onPlayRoute(r.nodes)}>
+                      ▶ Play
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         {data.routes.length > 5 && (
           <button className="ghost-button" onClick={() => setShowAllRoutes((s) => !s)}>

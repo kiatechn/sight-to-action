@@ -852,3 +852,95 @@ code {
   border-radius: 4px;
   font-size: 11px;
 }
+
+/* ---------- route overlay + 3D labels ---------- */
+
+.scene-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #e2e8f0;
+  background: rgba(7, 11, 20, 0.82);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 1px 6px;
+  white-space: nowrap;
+  transform: translateY(-18px);
+  pointer-events: none;
+}
+
+.scene-label.dim {
+  opacity: 0.35;
+}
+
+.route-banner {
+  position: absolute;
+  bottom: 42px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 88%;
+  background: rgba(7, 11, 20, 0.9);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 7px 12px;
+  backdrop-filter: blur(6px);
+}
+
+.route-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 7px;
+  flex-wrap: wrap;
+}
+
+.route.primary {
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  background: rgba(56, 189, 248, 0.07);
+}
+
+.route.on {
+  border: 1px solid var(--accent);
+}
+
+.route-tag {
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.converge-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(30, 41, 59, 0.5);
+  flex-wrap: wrap;
+}
+
+.gateway {
+  padding: 6px 8px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  background: var(--panel-2);
+}
+
+.gateway.mine {
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.gateway-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.gateway-senses {
+  margin-top: 2px;
+}

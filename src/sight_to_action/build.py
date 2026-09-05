@@ -103,9 +103,28 @@ def build_all(
     # be tested interactively rather than just asserted
     explorer_path = write_explorer(build_explorer(graph, annotations, max_hops=max_hops))
 
+    # One real soma position per cell type (per side where available). Full
+    # skeletons are far too large to ship for all ~11k types, but this lets any
+    # explored route be drawn at true anatomical locations in the 3D view.
+    soma: dict[str, list] = {}
+    for cell_type, group in traced.groupby("type", observed=True):
+        pts = np.stack(group["somaLocation"].to_numpy()).astype(float)
+        pts = (pts - center) / scale
+        left = pts[pts[:, 0] < 0]
+        right = pts[pts[:, 0] >= 0]
+        picks = []
+        for side in (left, right):
+            if len(side):
+                picks.append([round(float(v), 4) for v in side.mean(axis=0)])
+        if picks:
+            soma[str(cell_type)] = picks
+    soma_path = PROCESSED_DIR / "soma.json"
+    soma_path.write_text(json.dumps(soma))
+
     return {
         "pathway": pathway_path,
         "skeletons": skeleton_path,
         "cloud": cloud_path,
         "explorer": explorer_path,
+        "soma": soma_path,
     }

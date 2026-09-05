@@ -114,6 +114,8 @@ export interface ExplorerData {
   results: Record<string, Record<string, { score: number; route: string[] }>>;
 }
 
+export type SomaData = Record<string, [number, number, number][]>;
+
 export interface SkeletonEntry {
   bodyId: number;
   segments: number[];

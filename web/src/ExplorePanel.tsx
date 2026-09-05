@@ -4,6 +4,10 @@ import type { ExplorerData } from "./types";
 interface Props {
   onSelectType: (t: string) => void;
   pathwayTypes: Set<string>;
+  onShowRoute: (route: string[] | null) => void;
+  onPlayRoute: (route: string[]) => void;
+  activeRoute: string[] | null;
+  playing: boolean;
 }
 
 /** Rank of `value` within `all`, 1 = strongest. */
@@ -12,10 +16,18 @@ function rankOf(value: number, all: number[]) {
   return better + 1;
 }
 
-export default function ExplorePanel({ onSelectType, pathwayTypes }: Props) {
+export default function ExplorePanel({
+  onSelectType,
+  pathwayTypes,
+  onShowRoute,
+  onPlayRoute,
+  activeRoute,
+  playing,
+}: Props) {
   const [data, setData] = useState<ExplorerData | null>(null);
   const [source, setSource] = useState("R1-R6");
   const [target, setTarget] = useState("DNg13");
+  const [modality, setModality] = useState("all");
 
   useEffect(() => {
     fetch("/data/explorer.json")
@@ -40,12 +52,39 @@ export default function ExplorePanel({ onSelectType, pathwayTypes }: Props) {
     acrossSources.sort((a, b) => b.score - a.score);
     const sourceRank = entry ? rankOf(entry.score, acrossSources.map((r) => r.score)) : null;
 
-    return { entry, allFromSource, targetRank, acrossSources, sourceRank };
+    // Where do the senses converge? Different modalities use entirely separate
+    // early processing, so they almost never share mid-route neurons. What they
+    // do share is the *last* neuron before the target — the gateway that
+    // synapses onto it. Grouping senses by that gateway shows which modalities
+    // funnel through the same door, and which have a private one.
+    const gateways: Record<string, { sense: string; modality: string; score: number }[]> = {};
+    for (const s of data.sources) {
+      const r = data.results[s]?.[target];
+      if (!r || r.route.length < 2) continue;
+      const gate = r.route[r.route.length - 2];
+      (gateways[gate] ??= []).push({
+        sense: s,
+        modality: data.modality[s] ?? "sensory",
+        score: r.score,
+      });
+    }
+    const myGateway = entry && entry.route.length >= 2 ? entry.route[entry.route.length - 2] : null;
+    const gatewayList = Object.entries(gateways).sort((a, b) => b[1].length - a[1].length);
+
+    return { entry, allFromSource, targetRank, acrossSources, sourceRank, gatewayList, myGateway };
   }, [data, source, target]);
 
   if (!data) return <div className="panel-scroll">Loading explorer…</div>;
 
-  const { entry, allFromSource, targetRank, acrossSources, sourceRank } = view!;
+  const { entry, allFromSource, targetRank, acrossSources, sourceRank, gatewayList, myGateway } =
+    view!;
+  const modalities = ["all", ...Array.from(new Set(Object.values(data.modality))).sort()];
+  const visibleSources =
+    modality === "all" ? data.sources : data.sources.filter((s) => data.modality[s] === modality);
+  const routeIsActive =
+    !!entry &&
+    activeRoute?.length === entry.route.length &&
+    activeRoute.every((n, i) => n === entry.route[i]);
 
   return (
     <div className="panel-scroll">
@@ -56,11 +95,33 @@ export default function ExplorePanel({ onSelectType, pathwayTypes }: Props) {
           the same method used everywhere else in this project — nothing here is approximated.
         </p>
 
+        <label className="field-label" htmlFor="mod">
+          Which sense are you interested in?
+        </label>
+        <select
+          id="mod"
+          value={modality}
+          onChange={(e) => {
+            const m = e.target.value;
+            setModality(m);
+            if (m !== "all") {
+              const first = data.sources.find((s) => data.modality[s] === m);
+              if (first) setSource(first);
+            }
+          }}
+        >
+          {modalities.map((m) => (
+            <option key={m} value={m}>
+              {m === "all" ? "All senses" : m.replace(/_/g, " ")}
+            </option>
+          ))}
+        </select>
+
         <label className="field-label" htmlFor="src">
-          Sense (input)
+          Sensory cell type (input)
         </label>
         <select id="src" value={source} onChange={(e) => setSource(e.target.value)}>
-          {data.sources.map((s) => (
+          {visibleSources.map((s) => (
             <option key={s} value={s}>
               {s} — {data.modality[s] ?? "sensory"}
             </option>
@@ -109,7 +170,65 @@ export default function ExplorePanel({ onSelectType, pathwayTypes }: Props) {
             <p className="small muted">
               {entry.route.length - 1} hops · score {entry.score.toExponential(2)}
             </p>
+            <div className="route-actions">
+              <button
+                className="ghost-button"
+                onClick={() => onShowRoute(routeIsActive ? null : entry.route)}
+              >
+                {routeIsActive ? "Hide in 3D" : "Show in 3D"}
+              </button>
+              <button
+                className="primary-button"
+                onClick={() => onPlayRoute(entry.route)}
+                disabled={playing}
+              >
+                {playing ? "Playing…" : "▶ Play route"}
+              </button>
+            </div>
+            <p className="small muted">
+              Explored routes are drawn as markers at each neuron's real soma position. Full
+              traced morphology is only shipped for the featured pathway.
+            </p>
           </section>
+
+          {gatewayList.length > 0 && (
+            <section className="detail-block">
+              <h4>How the senses converge on {target}</h4>
+              <p className="small muted">
+                Different senses use completely separate early processing, so they rarely share
+                mid-route neurons. What matters is the <strong>last neuron before {target}</strong>{" "}
+                — the gateway that synapses onto it. Senses sharing a gateway funnel through the
+                same door; a gateway used by one sense is private to it.
+              </p>
+              {gatewayList.slice(0, 8).map(([gate, senses]) => (
+                <div className={`gateway ${gate === myGateway ? "mine" : ""}`} key={gate}>
+                  <div className="gateway-head">
+                    <button
+                      className="chip"
+                      onClick={() => pathwayTypes.has(gate) && onSelectType(gate)}
+                    >
+                      {gate}
+                    </button>
+                    <span className="small muted">
+                      {senses.length === 1 ? "private to 1 sense" : `shared by ${senses.length} senses`}
+                    </span>
+                  </div>
+                  <div className="small muted gateway-senses">
+                    {senses
+                      .slice(0, 5)
+                      .map((s) => `${s.sense} (${s.modality.replace(/_/g, " ")})`)
+                      .join(", ")}
+                    {senses.length > 5 ? ` +${senses.length - 5} more` : ""}
+                  </div>
+                </div>
+              ))}
+              {myGateway && (
+                <p className="small">
+                  <strong>{source}</strong> arrives via <strong>{myGateway}</strong>.
+                </p>
+              )}
+            </section>
+          )}
 
           <section className="detail-block">
             <h4>Is that a strong connection?</h4>

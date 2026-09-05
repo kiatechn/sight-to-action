@@ -8,7 +8,7 @@ import SexPanel from "./SexPanel";
 import ContextPanel from "./ContextPanel";
 import ExplorePanel from "./ExplorePanel";
 import NeuronDetail from "./NeuronDetail";
-import type { CloudData, PathwayData, SkeletonData } from "./types";
+import type { CloudData, PathwayData, SkeletonData, SomaData } from "./types";
 import { STAGE_COLORS } from "./types";
 
 type Tab = "journey" | "circuit" | "analysis" | "context" | "explore" | "sex";
@@ -18,6 +18,11 @@ export default function App() {
   const [data, setData] = useState<PathwayData | null>(null);
   const [skeletons, setSkeletons] = useState<SkeletonData | null>(null);
   const [cloud, setCloud] = useState<CloudData | null>(null);
+  const [soma, setSoma] = useState<SomaData | null>(null);
+
+  // an explored route drawn over the 3D view, with its own playback position
+  const [overlayRoute, setOverlayRoute] = useState<string[] | null>(null);
+  const [overlayStep, setOverlayStep] = useState(-1);
 
   const [tab, setTab] = useState<Tab>("journey");
   const [activeStage, setActiveStage] = useState(-1);
@@ -31,10 +36,12 @@ export default function App() {
       fetch("/data/pathway.json").then((r) => r.json()),
       fetch("/data/skeletons.json").then((r) => r.json()),
       fetch("/data/cloud.json").then((r) => r.json()),
-    ]).then(([p, s, c]) => {
+      fetch("/data/soma.json").then((r) => r.json()),
+    ]).then(([p, s, c, so]) => {
       setData(p);
       setSkeletons(s);
       setCloud(c);
+      setSoma(so);
     });
   }, []);
 
@@ -65,10 +72,35 @@ export default function App() {
     );
   }
 
+  function showRoute(route: string[] | null) {
+    clearTimers();
+    setPlaying(false);
+    setActiveStage(-1);
+    setOverlayRoute(route);
+    setOverlayStep(-1);
+  }
+
+  /** Step along an arbitrary route one neuron at a time, like the Journey. */
+  function playRoute(route: string[]) {
+    clearTimers();
+    setPlaying(true);
+    setActiveStage(-1);
+    setSelectedType(null);
+    setOverlayRoute(route);
+    setOverlayStep(0);
+    route.forEach((_, i) => {
+      if (i === 0) return;
+      timers.current.push(setTimeout(() => setOverlayStep(i), i * 1100));
+    });
+    timers.current.push(setTimeout(() => setPlaying(false), route.length * 1100));
+  }
+
   function goToStage(s: number) {
     clearTimers();
     setPlaying(false);
     setSelectedType(null);
+    setOverlayRoute(null);
+    setOverlayStep(-1);
     setActiveStage(s);
   }
 
@@ -77,7 +109,12 @@ export default function App() {
     [removedType],
   );
 
-  if (!data || !skeletons || !cloud) {
+  const pathwayTypeSet = useMemo(
+    () => new Set((data?.nodes ?? []).map((n) => n.type)),
+    [data],
+  );
+
+  if (!data || !skeletons || !cloud || !soma) {
     return <div className="loading">Loading connectome…</div>;
   }
 
@@ -113,6 +150,9 @@ export default function App() {
             selectedType={selectedType}
             onSelectType={setSelectedType}
             hiddenTypes={hiddenTypes}
+            soma={soma}
+            overlayRoute={overlayRoute}
+            overlayStep={overlayStep}
           />
 
           <div className="viewer-legend">
@@ -145,6 +185,15 @@ export default function App() {
           )}
 
           <div className="viewer-hint">Drag to rotate · scroll to zoom · click a neuron</div>
+
+          {overlayRoute && (
+            <div className="route-banner">
+              <span className="mono">{overlayRoute.join(" → ")}</span>
+              <button className="ghost-button" onClick={() => showRoute(null)}>
+                Clear
+              </button>
+            </div>
+          )}
 
           {removedType && (
             <div className="removed-banner">
@@ -205,13 +254,20 @@ export default function App() {
                 onSelectType={setSelectedType}
                 removedType={removedType}
                 onRemoveType={setRemovedType}
+                onShowRoute={showRoute}
+                onPlayRoute={playRoute}
+                activeRoute={overlayRoute}
               />
             )}
             {tab === "context" && <ContextPanel data={data} onSelectType={setSelectedType} />}
             {tab === "explore" && (
               <ExplorePanel
                 onSelectType={setSelectedType}
-                pathwayTypes={new Set(data.nodes.map((n) => n.type))}
+                pathwayTypes={pathwayTypeSet}
+                onShowRoute={showRoute}
+                onPlayRoute={playRoute}
+                activeRoute={overlayRoute}
+                playing={playing}
               />
             )}
             {tab === "sex" && <SexPanel data={data} onSelectType={setSelectedType} />}
