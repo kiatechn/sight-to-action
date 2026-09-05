@@ -21143,5 +21143,518 @@
    }
   ],
   "note": "Scores are the product of relative synaptic weights along the best route of at most five hops. Everything here is structural: it describes wiring, not activity or behaviour."
+ },
+ "female": {
+  "meta": {
+   "femaleDataset": "FlyWire / FAFB whole-brain female connectome (snapshot 783)",
+   "femaleSource": "Zenodo 10676866 (connectivity, CC-BY); flyconnectome/flywire_annotations (Schlegel et al., Nature 2024)",
+   "note": "The same type-level graph construction, relative-weight definition and route ranking were re-run on the female connectome. FlyWire covers the brain only (no ventral nerve cord), so descending neurons are present but truncated at the neck.",
+   "source": "R1-6",
+   "target": "DNg13",
+   "min_weight": 20,
+   "max_hops": 5
+  },
+  "edges": [
+   {
+    "male_source": "AOTU002_a",
+    "male_target": "DNg13",
+    "male_weight": 61,
+    "male_relative_weight": 0.006,
+    "female_source": "CB2070",
+    "female_target": "DNg13",
+    "found": true,
+    "female_weight": 37,
+    "female_relative_weight": 0.0047,
+    "reason_missing": null
+   },
+   {
+    "male_source": "AOTU002_b",
+    "male_target": "DNg13",
+    "male_weight": 94,
+    "male_relative_weight": 0.00924,
+    "female_source": "CB1080,CB4184",
+    "female_target": "DNg13",
+    "found": true,
+    "female_weight": 92,
+    "female_relative_weight": 0.01168,
+    "reason_missing": null
+   },
+   {
+    "male_source": "AOTU002_c",
+    "male_target": "DNg13",
+    "male_weight": 80,
+    "male_relative_weight": 0.00787,
+    "female_source": "CB1080",
+    "female_target": "DNg13",
+    "found": true,
+    "female_weight": 92,
+    "female_relative_weight": 0.01168,
+    "reason_missing": null
+   },
+   {
+    "male_source": "AOTU016_c",
+    "male_target": "DNg13",
+    "male_weight": 78,
+    "male_relative_weight": 0.00767,
+    "female_source": "CB0007,CB0739",
+    "female_target": "DNg13",
+    "found": true,
+    "female_weight": 68,
+    "female_relative_weight": 0.00864,
+    "reason_missing": null
+   },
+   {
+    "male_source": "L1",
+    "male_target": "Mi1",
+    "male_weight": 142185,
+    "male_relative_weight": 0.20719,
+    "female_source": "L1",
+    "female_target": "Mi1",
+    "found": true,
+    "female_weight": 122732,
+    "female_relative_weight": 0.26036,
+    "reason_missing": null
+   },
+   {
+    "male_source": "L1",
+    "male_target": "Tm3",
+    "male_weight": 151537,
+    "male_relative_weight": 0.20112,
+    "female_source": "L1",
+    "female_target": "Tm3",
+    "found": true,
+    "female_weight": 81768,
+    "female_relative_weight": 0.20622,
+    "reason_missing": null
+   },
+   {
+    "male_source": "L2",
+    "male_target": "Tm4",
+    "male_weight": 162989,
+    "male_relative_weight": 0.22517,
+    "female_source": "L2",
+    "female_target": "Tm4",
+    "found": true,
+    "female_weight": 83189,
+    "female_relative_weight": 0.2182,
+    "reason_missing": null
+   },
+   {
+    "male_source": "L3",
+    "male_target": "Tm20",
+    "male_weight": 53210,
+    "male_relative_weight": 0.14391,
+    "female_source": "L3",
+    "female_target": "Tm20",
+    "found": true,
+    "female_weight": 28484,
+    "female_relative_weight": 0.13229,
+    "reason_missing": null
+   },
+   {
+    "male_source": "L3",
+    "male_target": "Tm5c",
+    "male_weight": 46537,
+    "male_relative_weight": 0.23626,
+    "female_source": "L3",
+    "female_target": "Tm5c",
+    "found": true,
+    "female_weight": 14536,
+    "female_relative_weight": 0.18039,
+    "reason_missing": null
+   },
+   {
+    "male_source": "LC10a",
+    "male_target": "AOTU002_a",
+    "male_weight": 3813,
+    "male_relative_weight": 0.45626,
+    "female_source": "LC10a",
+    "female_target": "CB2070",
+    "found": true,
+    "female_weight": 1189,
+    "female_relative_weight": 0.33962,
+    "reason_missing": null
+   },
+   {
+    "male_source": "LC10a",
+    "male_target": "AOTU002_b",
+    "male_weight": 4253,
+    "male_relative_weight": 0.34667,
+    "female_source": "LC10a",
+    "female_target": "CB1080,CB4184",
+    "found": true,
+    "female_weight": 1791,
+    "female_relative_weight": 0.30387,
+    "reason_missing": null
+   },
+   {
+    "male_source": "LC10a",
+    "male_target": "AOTU002_c",
+    "male_weight": 3371,
+    "male_relative_weight": 0.38904,
+    "female_source": "LC10a",
+    "female_target": "CB1080",
+    "found": true,
+    "female_weight": 1791,
+    "female_relative_weight": 0.30387,
+    "reason_missing": null
+   },
+   {
+    "male_source": "LC10a",
+    "male_target": "AOTU016_c",
+    "male_weight": 4107,
+    "male_relative_weight": 0.38553,
+    "female_source": "LC10a",
+    "female_target": "CB0007,CB0739",
+    "found": true,
+    "female_weight": 1629,
+    "female_relative_weight": 0.32418,
+    "reason_missing": null
+   },
+   {
+    "male_source": "LC10c-1",
+    "male_target": "AOTU002_b",
+    "male_weight": 961,
+    "male_relative_weight": 0.07833,
+    "female_source": "LC10c",
+    "female_target": "CB1080,CB4184",
+    "found": false,
+    "female_weight": null,
+    "female_relative_weight": null,
+    "reason_missing": "cell types exist but are not connected in the female brain"
+   },
+   {
+    "male_source": "LC10d",
+    "male_target": "AOTU002_b",
+    "male_weight": 2562,
+    "male_relative_weight": 0.20884,
+    "female_source": "LC10d",
+    "female_target": "CB1080,CB4184",
+    "found": true,
+    "female_weight": 1394,
+    "female_relative_weight": 0.23651,
+    "reason_missing": null
+   },
+   {
+    "male_source": "LoVP90b",
+    "male_target": "DNg13",
+    "male_weight": 42,
+    "male_relative_weight": 0.00413,
+    "female_source": "LTe42b",
+    "female_target": "DNg13",
+    "found": true,
+    "female_weight": 66,
+    "female_relative_weight": 0.00838,
+    "reason_missing": null
+   },
+   {
+    "male_source": "LoVP92",
+    "male_target": "DNg13",
+    "male_weight": 54,
+    "male_relative_weight": 0.00531,
+    "female_source": null,
+    "female_target": "DNg13",
+    "found": false,
+    "female_weight": null,
+    "female_relative_weight": null,
+    "reason_missing": "no female cell type recorded"
+   },
+   {
+    "male_source": "LoVP92",
+    "male_target": "VES200m",
+    "male_weight": 687,
+    "male_relative_weight": 0.03849,
+    "female_source": null,
+    "female_target": null,
+    "found": false,
+    "female_weight": null,
+    "female_relative_weight": null,
+    "reason_missing": "no female cell type recorded"
+   },
+   {
+    "male_source": "Mi1",
+    "male_target": "Y3",
+    "male_weight": 114274,
+    "male_relative_weight": 0.14181,
+    "female_source": "Mi1",
+    "female_target": "Y3",
+    "found": true,
+    "female_weight": 43789,
+    "female_relative_weight": 0.12832,
+    "reason_missing": null
+   },
+   {
+    "male_source": "R1-R6",
+    "male_target": "L1",
+    "male_weight": 51812,
+    "male_relative_weight": 0.21198,
+    "female_source": "R1-6",
+    "female_target": "L1",
+    "found": true,
+    "female_weight": 63831,
+    "female_relative_weight": 0.35332,
+    "reason_missing": null
+   },
+   {
+    "male_source": "R1-R6",
+    "male_target": "L2",
+    "male_weight": 54456,
+    "male_relative_weight": 0.13282,
+    "female_source": "R1-6",
+    "female_target": "L2",
+    "found": true,
+    "female_weight": 76109,
+    "female_relative_weight": 0.22351,
+    "reason_missing": null
+   },
+   {
+    "male_source": "R1-R6",
+    "male_target": "L3",
+    "male_weight": 13647,
+    "male_relative_weight": 0.07119,
+    "female_source": "R1-6",
+    "female_target": "L3",
+    "found": true,
+    "female_weight": 23067,
+    "female_relative_weight": 0.20673,
+    "reason_missing": null
+   },
+   {
+    "male_source": "Tm20",
+    "male_target": "LC10c-1",
+    "male_weight": 16110,
+    "male_relative_weight": 0.18677,
+    "female_source": "Tm20",
+    "female_target": "LC10c",
+    "found": false,
+    "female_weight": null,
+    "female_relative_weight": null,
+    "reason_missing": "cell types exist but are not connected in the female brain"
+   },
+   {
+    "male_source": "Tm3",
+    "male_target": "LC10a",
+    "male_weight": 3893,
+    "male_relative_weight": 0.01557,
+    "female_source": "Tm3",
+    "female_target": "LC10a",
+    "found": true,
+    "female_weight": 940,
+    "female_relative_weight": 0.01248,
+    "reason_missing": null
+   },
+   {
+    "male_source": "Tm3",
+    "male_target": "LC10d",
+    "male_weight": 2406,
+    "male_relative_weight": 0.01325,
+    "female_source": "Tm3",
+    "female_target": "LC10d",
+    "found": true,
+    "female_weight": 1102,
+    "female_relative_weight": 0.0135,
+    "reason_missing": null
+   },
+   {
+    "male_source": "Tm3",
+    "male_target": "LoVP92",
+    "male_weight": 188,
+    "male_relative_weight": 0.00804,
+    "female_source": "Tm3",
+    "female_target": null,
+    "found": false,
+    "female_weight": null,
+    "female_relative_weight": null,
+    "reason_missing": "no female cell type recorded"
+   },
+   {
+    "male_source": "Tm4",
+    "male_target": "LC10a",
+    "male_weight": 2657,
+    "male_relative_weight": 0.01063,
+    "female_source": "Tm4",
+    "female_target": "LC10a",
+    "found": true,
+    "female_weight": 1341,
+    "female_relative_weight": 0.01781,
+    "reason_missing": null
+   },
+   {
+    "male_source": "Tm4",
+    "male_target": "LoVP92",
+    "male_weight": 225,
+    "male_relative_weight": 0.00962,
+    "female_source": "Tm4",
+    "female_target": null,
+    "found": false,
+    "female_weight": null,
+    "female_relative_weight": null,
+    "reason_missing": "no female cell type recorded"
+   },
+   {
+    "male_source": "Tm5c",
+    "male_target": "LoVP92",
+    "male_weight": 1035,
+    "male_relative_weight": 0.04426,
+    "female_source": "Tm5c",
+    "female_target": null,
+    "found": false,
+    "female_weight": null,
+    "female_relative_weight": null,
+    "reason_missing": "no female cell type recorded"
+   },
+   {
+    "male_source": "VES200m",
+    "male_target": "DNg13",
+    "male_weight": 362,
+    "male_relative_weight": 0.03559,
+    "female_source": null,
+    "female_target": "DNg13",
+    "found": false,
+    "female_weight": null,
+    "female_relative_weight": null,
+    "reason_missing": "no female cell type recorded"
+   },
+   {
+    "male_source": "Y3",
+    "male_target": "LoVP90b",
+    "male_weight": 467,
+    "male_relative_weight": 0.04865,
+    "female_source": "Y3",
+    "female_target": "LTe42b",
+    "found": true,
+    "female_weight": 339,
+    "female_relative_weight": 0.05854,
+    "reason_missing": null
+   }
+  ],
+  "edgesFound": 23,
+  "edgesTotal": 31,
+  "missingTypes": [
+   "LoVP92",
+   "LC10c-1",
+   "VES200m"
+  ],
+  "femaleRoutes": [
+   {
+    "nodes": [
+     "R1-6",
+     "L1",
+     "L5",
+     "MTe01b",
+     "DNpe027",
+     "DNg13"
+    ],
+    "hops": 5,
+    "score": 1.2974268937546633e-05
+   },
+   {
+    "nodes": [
+     "R1-6",
+     "L1",
+     "Mi1",
+     "Y3",
+     "LTe42b",
+     "DNg13"
+    ],
+    "hops": 5,
+    "score": 5.792090225795532e-06
+   },
+   {
+    "nodes": [
+     "R1-6",
+     "L2",
+     "Tm1",
+     "Y3",
+     "LTe42b",
+     "DNg13"
+    ],
+    "hops": 5,
+    "score": 4.614040948809233e-06
+   },
+   {
+    "nodes": [
+     "R1-6",
+     "L3",
+     "Mi9",
+     "Tm8a",
+     "LTe42b",
+     "DNg13"
+    ],
+    "hops": 5,
+    "score": 4.080702356788079e-06
+   },
+   {
+    "nodes": [
+     "R1-6",
+     "L2",
+     "L5",
+     "MTe01b",
+     "DNpe027",
+     "DNg13"
+    ],
+    "hops": 5,
+    "score": 3.949749906179086e-06
+   },
+   {
+    "nodes": [
+     "R1-6",
+     "L3",
+     "Tm20",
+     "LC10c-1",
+     "CB1080",
+     "DNg13"
+    ],
+    "hops": 5,
+    "score": 3.4614014589673828e-06
+   }
+  ],
+  "conservedRoutes": [
+   [
+    "R1-R6",
+    "L1",
+    "Mi1",
+    "Y3",
+    "LoVP90b",
+    "DNg13"
+   ]
+  ],
+  "femaleRank": 264,
+  "femalePool": 443,
+  "femaleTopDescending": [
+   {
+    "type": "DNc01",
+    "score": 0.012983026344349906
+   },
+   {
+    "type": "DNc02",
+    "score": 0.007159323053436459
+   },
+   {
+    "type": "DNp11",
+    "score": 0.004246804129983994
+   },
+   {
+    "type": "DNp04",
+    "score": 0.002807665233566199
+   },
+   {
+    "type": "DNge102",
+    "score": 0.0021605851507736375
+   },
+   {
+    "type": "DNg46",
+    "score": 0.001927482106519257
+   },
+   {
+    "type": "DNp72",
+    "score": 0.0017101654971288923
+   },
+   {
+    "type": "DNg36_b",
+    "score": 0.0017025647615860966
+   }
+  ],
+  "femaleTargetScore": 1.2974268937546642e-05
  }
 }

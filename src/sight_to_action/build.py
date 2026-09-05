@@ -19,6 +19,7 @@ from .analysis import build_type_graph
 from .data import load_annotations, load_neurotransmitters, load_weights
 from .pipeline import build_context, build_pathway_dataset, write_pathway_dataset
 from .explorer import build_explorer, write_explorer
+from .female import build_female_comparison
 from .skeletons import build_skeleton_payload, write_skeletons
 
 PROCESSED_DIR = Path(__file__).resolve().parents[2] / "data" / "processed"
@@ -78,6 +79,11 @@ def build_all(
     payload["context"] = build_context(
         graph, weights, annotations, max_hops=max_hops
     )
+
+    # optional: the same analysis re-run on the female connectome
+    female = build_female_comparison(annotations, payload, min_weight=min_weight, max_hops=max_hops)
+    if female is not None:
+        payload["female"] = female
 
     pathway_path = write_pathway_dataset(payload, "pathway")
 

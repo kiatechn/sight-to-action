@@ -26,7 +26,7 @@ evidence-linked information about every neuron.
 | **Routes** | Ranked alternative routes, path lengths, bottleneck neurons, and a node-removal experiment showing how structural routes change. |
 | **Explore** | Pick any of 30 senses (filterable by modality) and any of 480 movement neurons and get the real route, its strength and how it ranks — draw it in the 3D view, play it neuron by neuron, and see which senses share a gateway into that neuron. |
 | **Context** | Whether the route is stronger than chance: rank against all descending neurons, against all sensory modalities, against weight-shuffled graphs, plus a threshold-robustness sweep. |
-| **Sex** | Each neuron classified as shared, sex-specific or sexually dimorphic using the dataset's cross-connectome mappings. |
+| **Sex** | The whole analysis re-run on the *female* FlyWire connectome: which connections have a female counterpart, how their strengths compare, which routes are conserved, and the null test replicated in the female brain. |
 | **Neuron detail** | Cell type, class, connection strengths, predicted neurotransmitter, sex status, and an evidence label on every claim, with links to neuPrint. |
 
 ## Headline finding
@@ -51,9 +51,13 @@ The same ranking independently surfaces **DNp01 (the Giant Fiber)** and the
 other known visually-driven descending neurons at the top — about 140×
 stronger than DNg13 — which is a useful check that the method works.
 
-Along the way the pathway also proves not to be sex-neutral: the top route
-passes through **LoVP92 (male-specific)** and ends on **DNg13 (sexually
-dimorphic)**.
+The pathway also proves not to be sex-neutral, and this is *computed* rather
+than read off annotations. Re-running the identical analysis on the female
+FlyWire connectome: **23 of 31** connections have a female counterpart, and
+every one of the 8 that don't involves a neuron with no female equivalent. The
+strongest male route (via the male-specific **LoVP92**) does not exist in the
+female brain, which reaches DNg13 another way. The null result replicates too —
+DNg13 ranks 264/443 female descending neurons, below median as in the male.
 
 Full write-up: [docs/methods-and-findings.md](docs/methods-and-findings.md).
 
@@ -83,6 +87,18 @@ curl -o data/raw/body-neurotransmitters-male-cns-v1.0.feather $BASE/body-neurotr
 curl -o data/raw/connectome-weights-male-cns-v1.0-minconf-0.5-significant-only.feather $BASE/connectome-weights-male-cns-v1.0-minconf-0.5-significant-only.feather
 ```
 
+Optionally add the **female** connectome for the sex comparison (~880 MB):
+
+```bash
+mkdir -p data/raw/flywire
+curl -L -o data/raw/flywire/proofread_connections_783.feather \
+  "https://zenodo.org/records/10676866/files/proofread_connections_783.feather?download=1"
+curl -L -o data/raw/flywire/flywire_annotations.tsv \
+  "https://raw.githubusercontent.com/flyconnectome/flywire_annotations/main/supplemental_files/Supplemental_file1_neuron_annotations.tsv"
+```
+
+The build skips the female comparison if these are absent.
+
 Then run the notebook, which regenerates every file the app consumes
 (skeletons are fetched from the public bucket on first run and cached):
 
@@ -99,6 +115,7 @@ src/sight_to_action/
   analysis.py    type-level graph, route ranking, bottlenecks, removal experiment
   nulls.py       null models: rank vs other DNs/senses, weight-shuffled graphs
   explorer.py    precomputes every sense -> every descending neuron for the app
+  female.py      rebuilds the same graph on FlyWire and compares male vs female
   pipeline.py    assembles the pathway dataset (evidence + sex labels)
   skeletons.py   SWC download, parsing and decimation
   build.py       one reproducible build of every artefact
@@ -122,9 +139,14 @@ type and re-runs the search.
 
 ## Data and licence
 
-MaleCNS v1.0, CC-BY, produced by HHMI Janelia, the Cambridge Drosophila
-Connectomics Group, Google Research and collaborators —
+**Male:** MaleCNS v1.0, CC-BY, produced by HHMI Janelia, the Cambridge
+Drosophila Connectomics Group, Google Research and collaborators —
 <https://male-cns.janelia.org/download/>.
+
+**Female:** FlyWire/FAFB whole-brain connectome, snapshot 783, CC-BY —
+connectivity from [Zenodo 10676866](https://zenodo.org/records/10676866),
+annotations from [flyconnectome/flywire_annotations](https://github.com/flyconnectome/flywire_annotations)
+(Schlegel et al., *Nature* 2024; Dorkenwald et al., *Nature* 2024).
 
 ## Status
 
@@ -133,7 +155,7 @@ Connectomics Group, Google Research and collaborators —
 - [x] Animated step-by-step journey through the pathway
 - [x] Route ranking, path lengths, alternative routes, bottleneck analysis
 - [x] Structural node-removal experiment
-- [x] Male/female comparison via cross-connectome mappings
+- [x] Male/female comparison computed on the female FlyWire connectome
 - [x] Statistical null models and threshold-robustness analysis
 - [x] Interactive explorer over all 30 senses x 480 descending neurons
 - [x] Any route drawn and played back in 3D at real soma positions

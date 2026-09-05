@@ -944,3 +944,31 @@ code {
 .gateway-senses {
   margin-top: 2px;
 }
+
+.sex-route {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  flex-wrap: wrap;
+}
+
+.sex-tag {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.sex-tag.male {
+  background: rgba(56, 189, 248, 0.16);
+  color: #7dd3fc;
+}
+
+.sex-tag.female {
+  background: rgba(168, 85, 247, 0.16);
+  color: #d8b4fe;
+}

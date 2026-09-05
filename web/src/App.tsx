@@ -270,7 +270,13 @@ export default function App() {
                 playing={playing}
               />
             )}
-            {tab === "sex" && <SexPanel data={data} onSelectType={setSelectedType} />}
+            {tab === "sex" && (
+              <SexPanel
+                data={data}
+                onSelectType={setSelectedType}
+                onShowRoute={showRoute}
+              />
+            )}
           </div>
 
           {selectedNode && (

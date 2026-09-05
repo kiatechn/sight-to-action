@@ -16,6 +16,8 @@ does that route differ between the male and female connectomes?
 
 | Item | Source |
 | --- | --- |
+| Female connectivity (comparison) | Zenodo 10676866, FlyWire whole-brain snapshot 783 (CC-BY) |
+| Female annotations | github.com/flyconnectome/flywire_annotations (Schlegel et al., Nature 2024) |
 | Connectivity, annotations, neurotransmitter predictions | `gs://flyem-male-cns/v1.0/connectome-data/flat-connectome/` |
 | Neuron skeletons (SWC) | `gs://flyem-male-cns/v1.0/segmentation/skeletons-malecns/skeletons-swc/` |
 | Dataset | MaleCNS v1.0 (min. synapse confidence 0.5) |
@@ -90,10 +92,56 @@ sanity check on the data pipeline: R1–R6 are **histaminergic** (as
 photoreceptors should be), L1 **glutamatergic**, and L2/L3 and most
 downstream types **cholinergic**.
 
-### 4.4 Male / female comparison
+### 4.4 Male / female comparison — computed, not annotated
 
-This is the most interesting result. Using the dataset's own cross-connectome
-mappings (`flywireType`, `hemibrainType`) and `dimorphism` flags:
+The identical analysis was re-run on the **female** connectome (FlyWire/FAFB
+whole-brain, snapshot 783; connectivity from Zenodo 10676866, annotations from
+Schlegel et al., Nature 2024). Same graph construction, same relative-weight
+definition, same route ranking. FlyWire is a brain-only dataset, so descending
+neurons are present but truncated at the neck.
+
+**23 of the 31 connections** in the male pathway have a female counterpart, and
+the matched connections agree closely across two independently reconstructed
+connectomes:
+
+| Connection | Male | Female |
+| --- | --- | --- |
+| R1-R6 → L1 | 21.2% | 35.3% |
+| L1 → Tm3 | 20.1% | 20.6% |
+| L2 → Tm4 | 22.5% | 21.8% |
+| L1 → Mi1 | 20.7% | 26.0% |
+| LC10a → AOTU002_a | 45.6% | 34.0% |
+| AOTU002_b → DNg13 | 0.92% | 1.17% |
+
+**Every one of the 8 missing connections involves LoVP92, VES200m or LC10c-1** —
+the neurons with no female counterpart. The early visual stages are shared and
+quantitatively similar; the divergence is concentrated at the male-specific
+branch near the end of the pathway.
+
+Consequently the strongest male route has **no female equivalent**:
+
+```
+male    R1-R6 → L3 → Tm5c → LoVP92 → DNg13        (LoVP92 is male-specific)
+female  R1-6  → L1 → L5   → MTe01b → DNpe027 → DNg13
+shared  R1-R6 → L1 → Mi1  → Y3     → LoVP90b → DNg13
+```
+
+Note that this was arrived at by computation: the male-specific neurons were
+*discovered* to be absent from the female connectome, independently of the
+dimorphism flags recorded in MaleCNS — which they then agree with.
+
+**The null test replicates.** Re-running it on the female brain, DNg13 ranks
+**264 of 443** female descending neurons from the photoreceptors — below
+median, as in the male (312 of 480). The top of the ranking is nearly identical
+in both datasets (DNc01, DNc02, DNp11, DNp04, DNg46), despite the two
+connectomes being reconstructed by different groups with different pipelines.
+That cross-dataset agreement is a strong check that the measure reflects
+biology rather than an artefact of one reconstruction.
+
+### 4.4b Dataset annotations, for reference
+
+Using MaleCNS's own cross-connectome mappings (`flywireType`,
+`hemibrainType`) and `dimorphism` flags:
 
 | Category | Types |
 | --- | --- |

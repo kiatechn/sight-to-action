@@ -87,7 +87,43 @@ export interface PathwayContext {
   note: string;
 }
 
+export interface FemaleEdge {
+  male_source: string;
+  male_target: string;
+  male_weight: number;
+  male_relative_weight: number;
+  female_source: string | null;
+  female_target: string | null;
+  found: boolean;
+  female_weight: number | null;
+  female_relative_weight: number | null;
+  reason_missing: string | null;
+}
+
+export interface FemaleComparison {
+  meta: {
+    femaleDataset: string;
+    femaleSource: string;
+    note: string;
+    source: string;
+    target: string;
+    min_weight: number;
+    max_hops: number;
+  };
+  edges: FemaleEdge[];
+  edgesFound: number;
+  edgesTotal: number;
+  missingTypes: string[];
+  femaleRoutes: { nodes: string[]; hops: number; score: number }[];
+  conservedRoutes: string[][];
+  femaleRank: number | null;
+  femalePool: number;
+  femaleTopDescending: { type: string; score: number }[];
+  femaleTargetScore: number;
+}
+
 export interface PathwayData {
+  female?: FemaleComparison;
   context?: PathwayContext;
   meta: {
     title: string;
