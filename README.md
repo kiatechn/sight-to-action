@@ -206,15 +206,15 @@ annotations from [flyconnectome/flywire_annotations](https://github.com/flyconne
 ## How this project was built, and my use of AI tools
 
 This is stated plainly because the commit history shows an AI co-author
-trailer, and I would rather be direct about it than have someone work it out.
+trailer, and I would rather be direct about this.
 
 **What I brought.** The choice of project and question; the decision to trace
 a specific sensory-to-motor pathway rather than build another connectome
 browser; the scope, the endpoints (R1–R6 → DNg13) and the requirement that
 every claim be labelled by how well it is evidenced. I directed each round of
 work, judged the output, and rejected what was not good enough — the 3D view
-went through several rewrites on my feedback, and I found the interaction bugs
-(stray neuron selection, stutter on zoom) that led to real fixes.
+went through several rewrites on my feedback, and I found the interaction bugs 
+that led to real fixes.
 
 **What the AI did.** Wrote most of the code, and proposed the analysis
 methods — the relative-weight edge definition, the route ranking, the null
@@ -237,10 +237,6 @@ neuPrint, Codex and Virtual Fly Brain. What I think is genuinely uncommon is
 the combination: a route, a statistical test of whether that route is
 remarkable, the same analysis repeated on a second connectome, and an explicit
 evidence label on every statement.
-
-## Acknowledgements
-
-Claude Code was used as an AI coding assistant for implementation, debugging and documentation support. The project scope, scientific framing, analysis decisions, validation and final interpretation were directed and reviewed by Kiana Ruiz.
 
 ## Licence
 
