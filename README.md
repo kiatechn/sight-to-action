@@ -2,6 +2,12 @@
 
 **An interactive explorer of the *Drosophila* visual–motor connectome.**
 
+
+
+
+
+
+
 How can visual information travel through the fruit-fly nervous system towards
 neurons involved in movement control? This project traces one structural
 pathway — from the **R1–R6 photoreceptors** to **DNg13**, a descending neuron
@@ -17,8 +23,8 @@ evidence-linked information about every neuron.
 ---
 
 ## What's in the app
-<img width="1408" height="675" alt="ss" src="https://github.com/user-attachments/assets/e064b69e-e81c-4f4f-84a8-8481e69f9d44" />
 
+<img width="1408" height="675" alt="ss" src="https://github.com/user-attachments/assets/e064b69e-e81c-4f4f-84a8-8481e69f9d44" />
 
 
 | View | What it does |
