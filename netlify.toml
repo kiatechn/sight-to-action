@@ -1,0 +1,16 @@
+# The app lives in web/, while the analysis outputs it depends on live in
+# data/processed/ at the repository root. Netlify runs the build from `base`,
+# and web/scripts/sync-data.mjs (wired to prebuild) copies the data across.
+[build]
+  base = "web"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Single-page app: serve index.html for any unmatched path.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

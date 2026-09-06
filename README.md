@@ -105,8 +105,17 @@ Then run the notebook, which regenerates every file the app consumes
 
 ```bash
 jupyter nbconvert --to notebook --execute --inplace notebooks/01_extract_pathway.ipynb
-cp data/processed/*.json web/public/data/
 ```
+
+The app copies `data/processed/*.json` into place automatically whenever you
+run `npm run dev` or `npm run build`, so there is no manual sync step.
+
+## Deploying
+
+The site is a static build with no backend. On Netlify the settings come from
+[netlify.toml](netlify.toml) — base directory `web`, build `npm run build`,
+publish `web/dist`. The analysis outputs are committed under `data/processed/`
+and copied into the bundle at build time, so a deploy needs no extra steps.
 
 ## Repository layout
 
