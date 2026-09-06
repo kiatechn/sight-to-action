@@ -2,7 +2,7 @@
 
 **An interactive explorer of the *Drosophila* visual–motor connectome.**
 
-### ▶ [Open the live site](https://sight-to-action.netlify.app)
+# ▶ [Open the live site](https://sight-to-action.netlify.app)
 
 [![From Sight to Action — click to open the live site](docs/media/demo.gif)](https://sight-to-action.netlify.app)
 
