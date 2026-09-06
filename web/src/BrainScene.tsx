@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Html, OrbitControls } from "@react-three/drei";
+import { AdaptiveDpr, Html, OrbitControls, PerformanceMonitor } from "@react-three/drei";
 import * as THREE from "three";
 import type { CloudData, PathwayNode, SkeletonData } from "./types";
 import { STAGE_COLORS } from "./types";
@@ -72,27 +72,35 @@ function TypeSkeleton({
   onClick: () => void;
 }) {
   const matRef = useRef<THREE.LineBasicMaterial>(null);
+  const meshRef = useRef<THREE.LineSegments>(null);
   const current = useRef(0);
 
-  const target = emphasis === "active" ? 1 : emphasis === "seen" ? 0.5 : 0.08;
+  const target = emphasis === "active" ? 1 : emphasis === "seen" ? 0.5 : 0.0;
 
   useFrame((_, delta) => {
-    if (!matRef.current) return;
+    if (!matRef.current || !meshRef.current) return;
     const dt = Math.min(delta, 0.05);
     current.current += (target - current.current) * Math.min(1, dt * 5);
-    matRef.current.opacity = 0.08 + current.current * 0.92;
+    const opacity = current.current;
+    matRef.current.opacity = opacity;
+    // Muted neurons used to keep rasterising at low opacity. With ~20 dense
+    // arbors of additively-blended lines that is a lot of overdraw for
+    // something you cannot see, and it dominated the frame cost while
+    // orbiting. Below a threshold, stop drawing them entirely.
+    meshRef.current.visible = opacity > 0.02;
   });
 
   const geometry = useMemo(() => {
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.BufferAttribute(segments, 3));
+    g.computeBoundingSphere(); // needed for frustum culling to work
     return g;
   }, [segments]);
 
   return (
     <lineSegments
+      ref={meshRef}
       geometry={geometry}
-      frustumCulled={false}
       onClick={(e) => {
         e.stopPropagation();
         onClick();
@@ -200,11 +208,15 @@ function RouteOverlay({
           </mesh>
         );
       })}
-      {points.map((p, i) => (
-        <Html key={`label-${p.type}-${i}`} position={p.pos} center distanceFactor={1.6}>
-          <div className={`scene-label ${step < 0 || i <= step ? "" : "dim"}`}>{p.type}</div>
-        </Html>
-      ))}
+      {/* Each Html label costs DOM work every frame, so only the lit ones
+          are drawn rather than the whole route. */}
+      {points.map((p, i) =>
+        step < 0 || i <= step ? (
+          <Html key={`label-${p.type}-${i}`} position={p.pos} center distanceFactor={1.6}>
+            <div className="scene-label">{p.type}</div>
+          </Html>
+        ) : null,
+      )}
     </group>
   );
 }
@@ -233,6 +245,7 @@ function Rig({
     if (!ctrl) return;
     const cancel = () => {
       animating.current = 0;
+      ctrl.enableDamping = true;
     };
     ctrl.addEventListener("start", cancel);
     return () => ctrl.removeEventListener("start", cancel);
@@ -260,6 +273,7 @@ function Rig({
       goalTarget.current.copy(focus.centre);
       goalPos.current.copy(focus.centre).add(dir.multiplyScalar(dist));
       animating.current = 1.5; // seconds of assisted movement, then user drives
+      ctrl.enableDamping = false;
     }
 
     if (animating.current > 0) {
@@ -271,6 +285,7 @@ function Rig({
       camera.position.lerp(goalPos.current, k);
       ctrl.target.lerp(goalTarget.current, k);
       ctrl.update();
+      if (animating.current <= 0) ctrl.enableDamping = true; // hand back
     }
   });
   return null;
@@ -292,6 +307,12 @@ export default function BrainScene({
 }: Props) {
   const activeCloud = cloudOverride ?? cloud;
   const controlsRef = useRef<any>(null);
+
+  // This scene is fill-rate bound: many additively blended, transparent line
+  // arbors mean heavy overdraw, and on a retina display the pixel count is
+  // what costs, not the geometry. Start at 1x and let the performance monitor
+  // trade resolution for a steady frame rate.
+  const [dpr, setDpr] = useState(1);
   const stageOf = useMemo(
     () => new Map(nodes.map((n) => [n.type, n.stage])),
     [nodes],
@@ -362,10 +383,20 @@ export default function BrainScene({
   return (
     <Canvas
       camera={{ position: [1.6, 0.4, 1.9], fov: 45, near: 0.01, far: 100 }}
-      dpr={[1, 1.5]}
-      gl={{ antialias: true, preserveDrawingBuffer: true }}
+      dpr={dpr}
+      // preserveDrawingBuffer is deliberately off: it forces the browser to
+      // keep the back buffer each frame rather than discarding it after
+      // compositing, which costs real frame time. It was only ever enabled so
+      // the canvas could be captured during development.
+      gl={{ antialias: true, powerPreference: "high-performance" }}
       onPointerMissed={() => onSelectType(null)}
     >
+      <PerformanceMonitor
+        onDecline={() => setDpr((d) => Math.max(0.6, d - 0.25))}
+        onIncline={() => setDpr((d) => Math.min(1.5, d + 0.25))}
+      />
+      {/* drops resolution while the camera is moving, restores when it stops */}
+      <AdaptiveDpr pixelated />
       <color attach="background" args={["#070b14"]} />
       <CloudPoints cloud={activeCloud} />
       {brain === "male" && meshes.map((m) => {
@@ -403,14 +434,16 @@ export default function BrainScene({
         />
       ) : null}
       <Rig focus={focus} controls={controlsRef} />
-      {/* damping off: drei's OrbitControls and the rig would otherwise both
-          call update() each frame and visibly fight over the camera */}
+      {/* Damping is what makes orbiting feel fluid, so it stays on. The rig
+          suspends it for the duration of an assisted move instead, which is
+          what stops the two fighting over the camera. */}
       <OrbitControls
         ref={controlsRef}
         enablePan={false}
         minDistance={MIN_DIST}
         maxDistance={MAX_DIST}
-        enableDamping={false}
+        enableDamping
+        dampingFactor={0.12}
       />
     </Canvas>
   );
