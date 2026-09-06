@@ -59,22 +59,23 @@ comparisons do not agree:
   neuron's own input profile and randomises only *which partner supplies
   which share*.
 
-That last disagreement is the substantive result. The conservative null is
-the fairer test, and under it the route is **borderline — suggestive, but
-short of conventional significance**. Quoting either null alone would support
-a different headline, which is precisely why both are reported.
+That disagreement is the substantive result. The two null models preserve different
+properties of the network and therefore answer different questions. Under the 
+structure-preserving null, 6.8% of randomised networks performed at least as well as 
+the observed route, making it suggestive but short of conventional significance. 
+Under the global weight shuffle, 76.2% did. Reporting both shows how strongly the 
+conclusion depends on the assumptions built into the null model.
 
 The same ranking independently surfaces **DNp01 (the Giant Fiber)** and the
 other known visually-driven descending neurons at the top — about 140×
 stronger than DNg13 — which is a useful check that the method works.
 
-The pathway also proves not to be sex-neutral, and this is *computed* rather
-than read off annotations. Re-running the identical analysis on the female
-FlyWire connectome: **25 of 31** connections have a female counterpart, and all
-6 that don't involve only LoVP92 and VES200m — exactly the two male-specific
-neurons. The
-strongest male route (via the male-specific **LoVP92**) does not exist in the
-female brain, which reaches DNg13 another way. The null result replicates too —
+The pathway also is not structurally identical across the two datasets, and this is
+*computed* ratherthan read off annotations. Re-running the identical analysis on the 
+female FlyWire connectome: **25 of 31** connections have a female counterpart, and 
+all 6 that don't involve only LoVP92 and VES200m — exactly the two male-specific
+neurons. The strongest male route (via the male-specific **LoVP92**) does not exist 
+in the female brain, which reaches DNg13 another way. The null result replicates too —
 DNg13 ranks 264/443 female descending neurons, below median as in the male.
 
 Full write-up: [docs/methods-and-findings.md](docs/methods-and-findings.md).
@@ -224,12 +225,10 @@ work, judged the output, and rejected what was not good enough — the 3D view
 went through several rewrites on my feedback, and I found the interaction bugs 
 that led to real fixes.
 
-**What the AI did.** Wrote most of the code, and proposed the analysis
-methods — the relative-weight edge definition, the route ranking, the null
-models and the cross-connectome comparison were drafted by Claude and then
-reviewed and iterated with me. It also carried out the data engineering:
-locating the public datasets, the download pipeline, the SWC decimation and
-the web application.
+**How AI assisted.** Wrote most of the code, and proposed the analysis
+methods and then reviewed and iterated with me. It also carried out the data 
+engineering: locating the public datasets, the download pipeline, the SWC 
+decimation and the web application.
 
 **What I checked.** That the endpoints and cell types exist in the data; that
 the neurotransmitter predictions match known biology (R1–R6 histaminergic,
