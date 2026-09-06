@@ -20986,10 +20986,13 @@
    "source_rank": 191,
    "source_pool": 333,
    "source_percentile": 42.94294294294294,
-   "shuffled_mean": 1.492085451290061e-05,
-   "shuffled_p95": 7.152537180178614e-05,
-   "shuffled_better_fraction": 0.7,
-   "n_shuffles": 50
+   "shuffled_mean": 1.8711273423732512e-05,
+   "shuffled_p95": 6.694334643829128e-05,
+   "shuffled_better_fraction": 0.762,
+   "n_shuffles": 500,
+   "within_mean": 1.410849944739603e-06,
+   "within_p95": 5.158190328361943e-06,
+   "within_better_fraction": 0.068
   },
   "topDescendingFromSource": [
    {
