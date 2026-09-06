@@ -2,6 +2,8 @@
 
 **An interactive explorer of the *Drosophila* visual–motor connectome.**
 
+### ▶ [Open the live site](https://sight-to-action.netlify.app) · [Watch the demo](https://sight-to-action.netlify.app/media/demo-full.mov)
+
 How can visual information travel through the fruit-fly nervous system towards
 neurons involved in movement control? This project traces one structural
 pathway — from the **R1–R6 photoreceptors** to **DNg13**, a descending neuron
@@ -64,13 +66,16 @@ Full write-up: [docs/methods-and-findings.md](docs/methods-and-findings.md).
 
 ## Run it
 
+The deployed site is at **<https://sight-to-action.netlify.app>**. To run it
+locally:
+
 ```bash
 npm install --prefix web
 npm run dev --prefix web
 ```
 
-Then open <http://localhost:5173>. The app reads three small pre-computed
-JSON files, so it needs no backend.
+Then open <http://localhost:5173>. The app reads pre-computed JSON files, so
+it needs no backend.
 
 ## Reproduce the analysis
 
