@@ -13,6 +13,8 @@ web/build/
 
 # generated from data/processed by web/scripts/sync-data.mjs
 web/public/data/
+# but keep hand-added media (video/screenshots) that ship with the site
+!web/public/media/
 
 # local editor/tool config, not part of the project
 .claude/
