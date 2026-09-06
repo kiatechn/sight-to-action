@@ -237,6 +237,10 @@ the combination: a route, a statistical test of whether that route is
 remarkable, the same analysis repeated on a second connectome, and an explicit
 evidence label on every statement.
 
+## Acknowledgements
+
+Claude Code was used as an AI coding assistant for implementation, debugging and documentation support. The project scope, scientific framing, analysis decisions, validation and final interpretation were directed and reviewed by Kiana Ruiz.
+
 ## Licence
 
 Code is MIT (see [LICENSE](LICENSE)). The connectome datasets are the work of
