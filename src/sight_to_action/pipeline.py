@@ -228,7 +228,7 @@ def build_context(
     weights: pd.DataFrame,
     annotations: pd.DataFrame,
     max_hops: int = 5,
-    n_shuffles: int = 50,
+    n_shuffles: int = 500,
     leaderboard: int = 12,
     thresholds: tuple[int, ...] = (10, 20, 50, 100),
 ) -> dict:

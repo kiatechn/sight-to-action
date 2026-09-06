@@ -77,6 +77,9 @@ export interface NullStats {
   shuffled_p95: number;
   shuffled_better_fraction: number;
   n_shuffles: number;
+  within_mean: number;
+  within_p95: number;
+  within_better_fraction: number;
 }
 
 export interface PathwayContext {

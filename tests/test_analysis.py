@@ -144,3 +144,68 @@ def test_graph_is_directed_and_not_symmetric(toy_connectivity):
     assert isinstance(g, nx.DiGraph)
     assert g.has_edge("A", "C")
     assert not g.has_edge("C", "A")
+
+
+# --- null models ---------------------------------------------------------
+
+
+def test_within_target_null_preserves_each_input_profile(toy_connectivity):
+    """The conservative null must leave every node's set of incoming relative
+    weights untouched, only reassigning which source supplies which."""
+    import numpy as np
+
+    from sight_to_action.nulls import _edge_arrays
+
+    g = build_type_graph(toy_connectivity, min_weight=1)
+    _, _, _, v, cost = _edge_arrays(g)
+
+    rng = np.random.default_rng(0)
+    order = np.argsort(v, kind="stable")
+    boundaries = np.flatnonzero(np.diff(v[order])) + 1
+    shuffled = cost.copy()
+    for grp in [g_ for g_ in np.split(order, boundaries) if len(g_) > 1]:
+        shuffled[grp] = rng.permutation(shuffled[grp])
+
+    for node in np.unique(v):
+        mask = v == node
+        np.testing.assert_allclose(np.sort(cost[mask]), np.sort(shuffled[mask]))
+
+
+def test_global_null_does_not_preserve_input_profiles(toy_connectivity):
+    """The blunt null is expected to break that structure — which is exactly
+    why it is the harsher of the two."""
+    import numpy as np
+
+    from sight_to_action.nulls import _edge_arrays
+
+    g = build_type_graph(toy_connectivity, min_weight=1)
+    _, _, _, v, cost = _edge_arrays(g)
+    shuffled = np.random.default_rng(3).permutation(cost)
+    differs = any(
+        not np.allclose(np.sort(cost[v == n]), np.sort(shuffled[v == n]))
+        for n in np.unique(v)
+    )
+    assert differs
+
+
+def test_nulls_return_the_requested_number_of_samples(toy_connectivity):
+    from sight_to_action.nulls import weight_shuffled_scores
+
+    g = build_type_graph(toy_connectivity, min_weight=1)
+    for within in (False, True):
+        out = weight_shuffled_scores(
+            g, "SRC", "DST", n_shuffles=25, max_hops=4, within_target=within
+        )
+        assert len(out) == 25
+        assert (out >= 0).all()
+
+
+def test_nulls_are_reproducible_for_a_given_seed(toy_connectivity):
+    import numpy as np
+
+    from sight_to_action.nulls import weight_shuffled_scores
+
+    g = build_type_graph(toy_connectivity, min_weight=1)
+    a = weight_shuffled_scores(g, "SRC", "DST", n_shuffles=10, seed=7, max_hops=4)
+    b = weight_shuffled_scores(g, "SRC", "DST", n_shuffles=10, seed=7, max_hops=4)
+    np.testing.assert_allclose(a, b)

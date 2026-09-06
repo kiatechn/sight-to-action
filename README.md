@@ -202,6 +202,41 @@ annotations from [flyconnectome/flywire_annotations](https://github.com/flyconne
 - [x] Public deployment
 - [x] Short demonstration video
 
+## How this project was built, and my use of AI tools
+
+This is stated plainly because the commit history shows an AI co-author
+trailer, and I would rather be direct about it than have someone work it out.
+
+**What I brought.** The choice of project and question; the decision to trace
+a specific sensory-to-motor pathway rather than build another connectome
+browser; the scope, the endpoints (R1–R6 → DNg13) and the requirement that
+every claim be labelled by how well it is evidenced. I directed each round of
+work, judged the output, and rejected what was not good enough — the 3D view
+went through several rewrites on my feedback, and I found the interaction bugs
+(stray neuron selection, stutter on zoom) that led to real fixes.
+
+**What the AI did.** Wrote most of the code, and proposed the analysis
+methods — the relative-weight edge definition, the route ranking, the null
+models and the cross-connectome comparison were drafted by Claude and then
+reviewed and iterated with me. It also carried out the data engineering:
+locating the public datasets, the download pipeline, the SWC decimation and
+the web application.
+
+**What I checked.** That the endpoints and cell types exist in the data; that
+the neurotransmitter predictions match known biology (R1–R6 histaminergic,
+L1 glutamatergic) as a sanity check on the pipeline; that the reported
+findings follow from the outputs; and that the caveats are stated. The test
+suite exists precisely so these claims do not rest on trust — writing it
+immediately exposed a bug affecting 17% of routes in the Explore tab.
+
+**What I would not claim.** The science here is a reproduction, not a
+discovery. The visual pathway it recovers is textbook, the sexual dimorphism
+in this dataset is published, and the tooling category is well served by
+neuPrint, Codex and Virtual Fly Brain. What I think is genuinely uncommon is
+the combination: a route, a statistical test of whether that route is
+remarkable, the same analysis repeated on a second connectome, and an explicit
+evidence label on every statement.
+
 ## Licence
 
 Code is MIT (see [LICENSE](LICENSE)). The connectome datasets are the work of

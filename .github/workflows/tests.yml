@@ -1,0 +1,49 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  python:
+    name: analysis tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # The connectome tables are a ~1.4 GB download and are not in the
+      # repository, so only the tests that run against synthetic fixtures
+      # execute here. Those cover route scoring, the null models and the
+      # cross-connectome mapping.
+      - name: Run tests
+        run: python -m pytest tests/ -v -m "not needs_data"
+
+  web:
+    name: web build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - run: npm ci
+        working-directory: web
+
+      # Type-checks and builds exactly as Netlify does, so a broken deploy
+      # is caught here rather than after publishing.
+      - run: npm run build
+        working-directory: web

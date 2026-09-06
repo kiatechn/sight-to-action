@@ -15,10 +15,11 @@ Three references are computed:
    neuron. Where does the real target rank among them?
 2. **Source rank** — best route score to the target from every sensory
    type. Where does the real source rank?
-3. **Weight-shuffled null** — keep the wiring exactly as it is but permute
-   the relative weights across edges, then recompute. This separates "this
-   route is strong because of which specific connections are strong" from
-   "this route looks strong because the graph is dense".
+3. **Shuffled-weight nulls** — keep the wiring exactly as it is but permute
+   the relative weights, then recompute. Two versions are run: a global
+   permutation, and a conservative one that permutes only within each
+   target's incoming edges, so every node keeps its own input profile and
+   only the choice of partner is randomised.
 
 All of it remains structural. None of it says anything about activity.
 """
@@ -41,6 +42,10 @@ class NullResult:
     shuffled_p95: float
     shuffled_better_fraction: float
     n_shuffles: int
+    # the conservative null: each node keeps its own input profile
+    within_mean: float = 0.0
+    within_p95: float = 0.0
+    within_better_fraction: float = 0.0
 
     def to_dict(self) -> dict:
         return {
@@ -55,6 +60,9 @@ class NullResult:
             "shuffled_p95": self.shuffled_p95,
             "shuffled_better_fraction": self.shuffled_better_fraction,
             "n_shuffles": self.n_shuffles,
+            "within_mean": self.within_mean,
+            "within_p95": self.within_p95,
+            "within_better_fraction": self.within_better_fraction,
         }
 
 
@@ -127,17 +135,47 @@ def weight_shuffled_scores(
     graph: nx.DiGraph,
     source: str,
     target: str,
-    n_shuffles: int = 50,
+    n_shuffles: int = 500,
     max_hops: int = 5,
     seed: int = 0,
+    within_target: bool = False,
 ) -> np.ndarray:
-    """Best source->target score with relative weights permuted across edges."""
+    """Best source->target score under a randomised null.
+
+    Two nulls are available and they ask different questions.
+
+    ``within_target=False`` permutes edge costs across the whole graph. It is
+    a blunt instrument: it destroys the relationship between how strong a
+    connection is and where it sits, so heavy weights can land on edges near
+    the target that never carry them in reality. Deliberately harsh.
+
+    ``within_target=True`` permutes costs only among the incoming edges of
+    each target node. Every node therefore keeps its own input profile
+    exactly — the same multiset of relative weights, still summing to one —
+    and only *which source supplies which share* is randomised. This is the
+    more conservative and more informative comparison, because it holds the
+    network's weight structure fixed and tests the specific assignment of
+    partners.
+    """
     nodes, index, u, v, cost = _edge_arrays(graph)
     rng = np.random.default_rng(seed)
     si, ti = index[source], index[target]
+
+    # incoming-edge groups, computed once rather than per shuffle
+    groups: list[np.ndarray] = []
+    if within_target:
+        order = np.argsort(v, kind="stable")
+        boundaries = np.flatnonzero(np.diff(v[order])) + 1
+        groups = [g for g in np.split(order, boundaries) if len(g) > 1]
+
     out = np.empty(n_shuffles)
     for i in range(n_shuffles):
-        shuffled = rng.permutation(cost)
+        if within_target:
+            shuffled = cost.copy()
+            for g in groups:
+                shuffled[g] = rng.permutation(shuffled[g])
+        else:
+            shuffled = rng.permutation(cost)
         dist = hop_limited_costs(len(nodes), u, v, shuffled, si, max_hops)
         out[i] = float(np.exp(-dist[ti]))
     return out
@@ -149,7 +187,7 @@ def evaluate(
     source: str,
     target: str,
     max_hops: int = 5,
-    n_shuffles: int = 50,
+    n_shuffles: int = 500,
     seed: int = 0,
 ) -> NullResult:
     traced = annotations[annotations["status"] == "Traced"]
@@ -175,6 +213,10 @@ def evaluate(
     shuffled = weight_shuffled_scores(
         graph, source, target, n_shuffles=n_shuffles, max_hops=max_hops, seed=seed
     )
+    within = weight_shuffled_scores(
+        graph, source, target, n_shuffles=n_shuffles, max_hops=max_hops,
+        seed=seed + 1, within_target=True,
+    )
 
     return NullResult(
         observed_score=observed,
@@ -188,4 +230,7 @@ def evaluate(
         shuffled_p95=float(np.percentile(shuffled, 95)),
         shuffled_better_fraction=float((shuffled >= observed).mean()),
         n_shuffles=n_shuffles,
+        within_mean=float(within.mean()),
+        within_p95=float(np.percentile(within, 95)),
+        within_better_fraction=float((within >= observed).mean()),
     )

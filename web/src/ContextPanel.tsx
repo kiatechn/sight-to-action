@@ -16,7 +16,6 @@ export default function ContextPanel({ data, onSelectType }: Props) {
   const source = data.meta.source;
   const target = data.meta.target;
 
-  const beatsShuffle = n.shuffled_better_fraction < 0.05;
   const pathwayTypes = new Set(data.nodes.map((d) => d.type));
 
   return (
@@ -30,16 +29,24 @@ export default function ContextPanel({ data, onSelectType }: Props) {
         </p>
       </section>
 
-      <section className={`detail-block ${beatsShuffle ? "" : "highlight-warn"}`}>
-        <h4>Verdict</h4>
+      <section className="detail-block highlight-warn">
+        <h4>Verdict: mixed, and the null model you choose decides it</h4>
         <p className="small">
-          The {source} → {target} route is <strong>not statistically special</strong> by these
-          measures. It exists and it is the strongest route between these two cell types, but
-          it sits below the median on every comparison below.
+          Against other descending neurons and other senses, the {source} → {target} route sits{" "}
+          <strong>below the median</strong> — it is not among the strongest visual routes to a
+          movement neuron.
+        </p>
+        <p className="small">
+          But against randomised wiring the answer depends on how the randomisation is done.
+          Scrambling weights across the whole graph, {pct(n.shuffled_better_fraction)} of
+          shuffles beat it. Scrambling only <em>which partner supplies which share</em>, while
+          leaving every neuron's input profile intact, only{" "}
+          <strong>{pct(n.within_better_fraction)}</strong> do.
         </p>
         <p className="small muted">
-          That is a real result, not a failure: it shows why path-existence alone should not
-          be read as evidence of a functional channel.
+          The second is the more conservative test, and by it the route is close to — though
+          not past — the conventional 5% threshold. Reporting both is the honest thing to do:
+          a single null model here would have supported either story.
         </p>
       </section>
 
@@ -104,17 +111,33 @@ export default function ContextPanel({ data, onSelectType }: Props) {
       </section>
 
       <section className="detail-block">
-        <h4>3 · Compared with shuffled wiring strengths</h4>
-        <p className="small">
-          Keeping the wiring but permuting connection strengths across edges,{" "}
-          <strong>{pct(n.shuffled_better_fraction)}</strong> of {n.n_shuffles} shuffles produced
-          a route at least as strong as the real one.
-        </p>
+        <h4>3 · Compared with randomised wiring ({n.n_shuffles} runs each)</h4>
+
+        <div className="null-row">
+          <div>
+            <span className="fact-key">Conservative null</span>
+            <span className="verdict-num">{pct(n.within_better_fraction)}</span>
+            <span className="small muted">
+              beat the real route. Weights are permuted only among each neuron's own incoming
+              connections, so every input profile is preserved exactly and only the choice of
+              partner changes.
+            </span>
+          </div>
+          <div>
+            <span className="fact-key">Harsh null</span>
+            <span className="verdict-num">{pct(n.shuffled_better_fraction)}</span>
+            <span className="small muted">
+              beat it. Weights are permuted across the entire graph, which also destroys the
+              relationship between a connection's strength and where it sits.
+            </span>
+          </div>
+        </div>
+
         <p className="small muted">
-          Observed {n.observed_score.toExponential(2)} vs shuffled mean{" "}
-          {n.shuffled_mean.toExponential(2)}. Caveat: this null breaks the relationship between
-          a connection's strength and where it sits in the network, so it is a deliberately
-          harsh comparison rather than a definitive test.
+          Observed {n.observed_score.toExponential(2)} · conservative mean{" "}
+          {n.within_mean.toExponential(2)} · harsh mean {n.shuffled_mean.toExponential(2)}.
+          The two disagree because they hold different things fixed, which is precisely why
+          only quoting one would be misleading.
         </p>
       </section>
 

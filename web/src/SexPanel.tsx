@@ -50,15 +50,21 @@ export default function SexPanel({ data, onSelectType, onShowRoute }: Props) {
               </strong>{" "}
               connections in the male pathway have a female counterpart. Every one of the{" "}
               {f.edgesTotal - f.edgesFound} missing connections involves{" "}
-              {f.missingTypes.map((t, i) => (
-                <span key={t}>
-                  {i > 0 && ", "}
-                  <button className="chip" onClick={() => onSelectType(t)}>
-                    {t}
-                  </button>
-                </span>
-              ))}
-              , which have no female counterpart at all.
+              {f.missingTypes.map((t, i) => {
+                const node = data.nodes.find((n) => n.type === t);
+                return (
+                  <span key={t}>
+                    {i > 0 && ", "}
+                    <button className="chip" onClick={() => onSelectType(t)}>
+                      {t}
+                    </button>
+                    <span className="muted"> ({node?.sex.category ?? "unmatched"})</span>
+                  </span>
+                );
+              })}
+              . Neither has a counterpart in the female dataset — though note the
+              annotations differ in confidence: LoVP92 is recorded as male-specific,
+              VES200m only as <em>potentially</em> male-specific.
             </p>
             <p className="small muted">
               So the early visual stages are shared and quantitatively similar between the sexes,
