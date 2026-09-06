@@ -58,11 +58,11 @@ function CloudPoints({ cloud }: { cloud: CloudData }) {
           is what made zooming lurch while orbiting stayed smooth. Constant
           pixel size keeps the cost flat at every distance. */}
       <pointsMaterial
-        color="#3d5b85"
+        color="#51739f"
         size={1.6}
         sizeAttenuation={false}
         transparent
-        opacity={0.5}
+        opacity={0.6}
         depthWrite={false}
       />
     </points>
@@ -436,7 +436,7 @@ export default function BrainScene({
         } as THREE.RaycasterParameters,
       }}
     >
-      <color attach="background" args={["#070b14"]} />
+      <color attach="background" args={["#0d1526"]} />
       <CloudPoints cloud={activeCloud} />
       {brain === "male" && meshes.map((m) => {
         if (hiddenTypes.has(m.type)) return null;
@@ -483,6 +483,9 @@ export default function BrainScene({
         maxDistance={MAX_DIST}
         enableDamping
         dampingFactor={0.12}
+        // zoom toward whatever is under the pointer rather than the orbit
+        // centre, so you can move in on a specific neuron directly
+        zoomToCursor
       />
     </Canvas>
   );
