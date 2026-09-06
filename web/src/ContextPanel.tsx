@@ -25,7 +25,7 @@ export default function ContextPanel({ data, onSelectType }: Props) {
         <p className="small muted">
           Connectome explorers will return a path between almost any two neurons, because a
           dense recurrent network links nearly everything within a few hops. So "a path
-          exists" is weak evidence. These are three attempts to falsify the route.
+          exists" is weak evidence. These are four attempts to falsify the route.
         </p>
       </section>
 

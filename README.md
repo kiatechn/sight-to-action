@@ -46,15 +46,23 @@ few hops. **So "a path exists" is weak evidence — and this project measures
 how weak.**
 
 The R1–R6 → DNg13 route is real, reproducible and stable across thresholds.
-It also turns out **not to be statistically special**:
+Whether it is *special* depends on what you compare it against, and the
+comparisons do not agree:
 
 - DNg13 ranks **312 of 480** descending neurons for connection strength from
-  the photoreceptors.
+  the photoreceptors — below median.
 - R1–R6 ranks **191 of 333** sensory types into DNg13 — whose strongest
   structural sensory inputs are mechanosensory, gustatory and olfactory, not
   visual.
-- **70% of weight-shuffled** versions of the same graph produce a route at
-  least as strong.
+- Against randomised wiring (500 runs each), **76%** of globally shuffled
+  graphs beat the route — but only **6.8%** when the shuffle preserves each
+  neuron's own input profile and randomises only *which partner supplies
+  which share*.
+
+That last disagreement is the substantive result. The conservative null is
+the fairer test, and under it the route is **borderline — suggestive, but
+short of conventional significance**. Quoting either null alone would support
+a different headline, which is precisely why both are reported.
 
 The same ranking independently surfaces **DNp01 (the Giant Fiber)** and the
 other known visually-driven descending neurons at the top — about 140×

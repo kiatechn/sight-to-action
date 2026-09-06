@@ -9,17 +9,19 @@ meaningless on its own. This module asks the harder question:
   between comparable pairs of neurons, and with routes through a graph
   whose connection strengths have been shuffled?
 
-Three references are computed:
+Four references are computed:
 
 1. **Target rank** — best route score from the source to every descending
    neuron. Where does the real target rank among them?
 2. **Source rank** — best route score to the target from every sensory
    type. Where does the real source rank?
-3. **Shuffled-weight nulls** — keep the wiring exactly as it is but permute
-   the relative weights, then recompute. Two versions are run: a global
-   permutation, and a conservative one that permutes only within each
-   target's incoming edges, so every node keeps its own input profile and
-   only the choice of partner is randomised.
+3. **Global shuffled-weight null** — keep the wiring but permute relative
+   weights across the whole graph. Harsh: it also destroys the relationship
+   between a connection's strength and its position.
+4. **Within-target shuffled-weight null** — permute weights only among each
+   node's incoming edges, so every node keeps its own input profile and only
+   the choice of partner is randomised. The conservative comparison, and the
+   one that should be quoted if only one is.
 
 All of it remains structural. None of it says anything about activity.
 """

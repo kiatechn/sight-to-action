@@ -191,15 +191,32 @@ visual at all — they are mechanosensory (SNpp10), gustatory (BM_Taste) and
 olfactory (ORN_DA1), each two to three orders of magnitude stronger than the
 photoreceptor route.
 
-**Against shuffled connection strengths.** Keeping the wiring fixed but
-permuting relative weights across edges, **70% of 50 shuffles** produced a
-route at least as strong as the observed one (observed 3.95 × 10⁻⁶ vs
-shuffled mean 1.49 × 10⁻⁵). *Caveat:* this null breaks the relationship
-between a connection's strength and its position in the network, so it is a
-deliberately harsh comparison rather than a definitive test.
+**Against shuffled connection strengths.** Two nulls are run, at 500
+iterations each, and they disagree — which is the most informative result in
+this section.
 
-**Interpretation.** The R1–R6 → DNg13 route is real, reproducible and stable,
-but it is **not statistically special**. This does not contradict the
+*Global permutation* shuffles relative weights across the whole graph:
+**76.2%** of randomisations produce a route at least as strong as the observed
+one. This null also destroys the relationship between a connection's strength
+and its position in the network, so heavy weights can land beside the target
+where they never occur in reality. It is deliberately harsh.
+
+*Within-target permutation* shuffles weights only among each node's incoming
+edges. Every neuron therefore keeps its own input profile exactly — the same
+multiset of relative weights, still summing to one — and only *which source
+supplies which share* is randomised. Under this more conservative and more
+meaningful null, only **6.8%** of randomisations beat the observed route.
+
+The route is therefore **borderline: suggestive, but short of the
+conventional 5% threshold**. Reporting a single null would have supported
+either "unremarkable" or "close to significant", which is why both are
+given.
+
+**Interpretation.** The R1–R6 → DNg13 route is real, reproducible and stable.
+Whether it is *special* depends on the comparison: it is below median against
+other descending neurons and other senses, yet borderline-significant against
+the conservative null. It is therefore **suggestive rather than established**.
+This does not contradict the
 published finding that DNg13 is visually driven and steers locomotion — DNg13
 may well receive its visual drive over routes this method scores poorly, or
 via pathways whose relevance is functional rather than structural weight. What
