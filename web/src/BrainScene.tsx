@@ -48,12 +48,17 @@ function CloudPoints({ cloud }: { cloud: CloudData }) {
 
   return (
     <points geometry={geometry} frustumCulled={false}>
+      {/* Size is in pixels and deliberately NOT distance-attenuated. With
+          attenuation each point grew ~10x wider as you zoomed to the near
+          limit, i.e. ~100x the pixels, across 12k transparent points — which
+          is what made zooming lurch while orbiting stayed smooth. Constant
+          pixel size keeps the cost flat at every distance. */}
       <pointsMaterial
-        color="#334f74"
-        size={0.0055}
-        sizeAttenuation
+        color="#3d5b85"
+        size={1.6}
+        sizeAttenuation={false}
         transparent
-        opacity={0.55}
+        opacity={0.5}
         depthWrite={false}
       />
     </points>
@@ -437,6 +442,9 @@ export default function BrainScene({
       {/* Damping is what makes orbiting feel fluid, so it stays on. The rig
           suspends it for the duration of an assisted move instead, which is
           what stops the two fighting over the camera. */}
+      {/* `regress` is what actually drives AdaptiveDpr: without it nothing
+          calls performance.regress(), so resolution never drops during
+          interaction and the adaptive setup does nothing. */}
       <OrbitControls
         ref={controlsRef}
         enablePan={false}
@@ -444,6 +452,8 @@ export default function BrainScene({
         maxDistance={MAX_DIST}
         enableDamping
         dampingFactor={0.12}
+        zoomSpeed={0.7}
+        regress
       />
     </Canvas>
   );
