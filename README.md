@@ -2,7 +2,11 @@
 
 **An interactive explorer of the *Drosophila* visual–motor connectome.**
 
-### ▶ [Open the live site](https://sight-to-action.netlify.app) · [Watch the demo](https://sight-to-action.netlify.app/media/demo-full.mov)
+### ▶ [Open the live site](https://sight-to-action.netlify.app)
+
+[![From Sight to Action — click to watch the demo](docs/media/demo-poster.png)](https://sight-to-action.netlify.app/media/demo-full.mov)
+
+<sub>▲ Real EM-traced neuron shapes from the MaleCNS connectome. **[Click the image to watch the demo](https://sight-to-action.netlify.app/media/demo-full.mov)** (18s, full quality).</sub>
 
 How can visual information travel through the fruit-fly nervous system towards
 neurons involved in movement control? This project traces one structural
