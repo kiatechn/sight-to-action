@@ -26,6 +26,7 @@ evidence-linked information about every neuron.
 <img alt="The 3D connectome view alongside the journey panel" src="https://github.com/user-attachments/assets/e064b69e-e81c-4f4f-84a8-8481e69f9d44" />
 
 
+
 | View | What it does |
 | --- | --- |
 | **3D connectome** | Real EM-traced neuron skeletons, coloured by pathway stage, inside a soma point-cloud of the whole CNS. Click a neuron to inspect it. |
