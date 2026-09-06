@@ -176,8 +176,8 @@ annotations from [flyconnectome/flywire_annotations](https://github.com/flyconne
 - [x] Male and female brains both viewable in 3D, with routes drawn in either
 - [x] Four-level evidence labelling with links to source data
 - [x] Reproducible notebook, documented provenance, methods write-up
-- [ ] Public deployment
-- [ ] Short demonstration video
+- [x] Public deployment
+- [x] Short demonstration video
 
 ## Licence
 
