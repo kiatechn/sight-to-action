@@ -226,9 +226,10 @@ button {
 /* ---------- sidebar ---------- */
 
 .sidebar {
-  flex: 0 0 400px;
-  min-width: 340px;
-  max-width: 460px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  min-width: 320px;
+  max-width: 760px;
   min-height: 0;
   display: flex;
   flex-direction: column;
@@ -1020,4 +1021,32 @@ code {
 /* an explicit display rule beats the [hidden] attribute, so restore it */
 .viewer-legend[hidden] {
   display: none;
+}
+
+/* ---------- draggable divider ---------- */
+
+.resizer {
+  flex: 0 0 6px;
+  cursor: col-resize;
+  background: var(--line);
+  position: relative;
+  transition: background 120ms ease;
+}
+
+.resizer:hover,
+.resizer:active {
+  background: var(--accent);
+}
+
+/* a wider invisible grab area than the visible 6px line */
+.resizer::after {
+  content: "";
+  position: absolute;
+  inset: 0 -5px;
+}
+
+@media (max-width: 900px) {
+  .resizer {
+    display: none;
+  }
 }

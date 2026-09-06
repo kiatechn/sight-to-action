@@ -149,6 +149,7 @@ type and re-runs the search.
 
 ## Data and licence
 
+
 **Male:** MaleCNS v1.0, CC-BY, produced by HHMI Janelia, the Cambridge
 Drosophila Connectomics Group, Google Research and collaborators —
 <https://male-cns.janelia.org/download/>.
@@ -174,3 +175,9 @@ annotations from [flyconnectome/flywire_annotations](https://github.com/flyconne
 - [x] Reproducible notebook, documented provenance, methods write-up
 - [ ] Public deployment
 - [ ] Short demonstration video
+
+## Licence
+
+Code is MIT (see [LICENSE](LICENSE)). The connectome datasets are the work of
+others and remain under their own CC-BY terms, which require attribution to
+the original authors — see the licence file for details.

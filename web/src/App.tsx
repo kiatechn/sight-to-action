@@ -23,6 +23,36 @@ export default function App() {
   const [femaleSoma, setFemaleSoma] = useState<SomaData | null>(null);
   const [brain, setBrain] = useState<"male" | "female">("male");
 
+  // Width of the information column. Some panels are dense — the route
+  // tables and the sex comparison especially — so it can be dragged wider.
+  const [sidebarWidth, setSidebarWidth] = useState(() => {
+    const saved = Number(localStorage.getItem("sta:sidebarWidth"));
+    return saved >= 320 && saved <= 760 ? saved : 400;
+  });
+  const dragging = useRef(false);
+
+  useEffect(() => {
+    function move(e: PointerEvent) {
+      if (!dragging.current) return;
+      // measured from the right edge, since the column is on the right
+      const next = Math.min(760, Math.max(320, window.innerWidth - e.clientX));
+      setSidebarWidth(next);
+    }
+    function up() {
+      if (!dragging.current) return;
+      dragging.current = false;
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+      localStorage.setItem("sta:sidebarWidth", String(sidebarWidth));
+    }
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+    return () => {
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+    };
+  }, [sidebarWidth]);
+
   // an explored route drawn over the 3D view, with its own playback position
   const [overlayRoute, setOverlayRoute] = useState<string[] | null>(null);
   const [overlayStep, setOverlayStep] = useState(-1);
@@ -246,7 +276,24 @@ export default function App() {
           )}
         </section>
 
-        <aside className="sidebar">
+        <div
+          className="resizer"
+          role="separator"
+          aria-label="Resize information panel"
+          aria-orientation="vertical"
+          title="Drag to resize · double-click to reset"
+          onPointerDown={() => {
+            dragging.current = true;
+            document.body.style.cursor = "col-resize";
+            document.body.style.userSelect = "none";
+          }}
+          onDoubleClick={() => {
+            setSidebarWidth(400);
+            localStorage.setItem("sta:sidebarWidth", "400");
+          }}
+        />
+
+        <aside className="sidebar" style={{ flexBasis: sidebarWidth }}>
           <nav className="tabs">
             {(
               [
