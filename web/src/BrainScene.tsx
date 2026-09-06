@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { AdaptiveDpr, Html, OrbitControls, PerformanceMonitor } from "@react-three/drei";
+import { Html, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import type { CloudData, PathwayNode, SkeletonData } from "./types";
 import { STAGE_COLORS } from "./types";
@@ -22,6 +22,7 @@ interface Props {
   cloudOverride: CloudData | null;
 }
 
+const SKELETONS_PER_TYPE = 1;
 const MIN_DIST = 0.25;
 const MAX_DIST = 5;
 
@@ -217,7 +218,7 @@ function RouteOverlay({
           are drawn rather than the whole route. */}
       {points.map((p, i) =>
         step < 0 || i <= step ? (
-          <Html key={`label-${p.type}-${i}`} position={p.pos} center distanceFactor={1.6}>
+          <Html key={`label-${p.type}-${i}`} position={p.pos} center>
             <div className="scene-label">{p.type}</div>
           </Html>
         ) : null,
@@ -313,11 +314,10 @@ export default function BrainScene({
   const activeCloud = cloudOverride ?? cloud;
   const controlsRef = useRef<any>(null);
 
-  // This scene is fill-rate bound: many additively blended, transparent line
-  // arbors mean heavy overdraw, and on a retina display the pixel count is
-  // what costs, not the geometry. Start at 1x and let the performance monitor
-  // trade resolution for a steady frame rate.
-  const [dpr, setDpr] = useState(1);
+  // Resolution is deliberately fixed. Adapting it did buy frame rate, but it
+  // cost sharpness and every change reallocates the drawing buffer — which
+  // hitched exactly when you began an interaction, since the regress fires on
+  // interaction start. Cost is reduced by drawing less, not by drawing blurrier.
   const stageOf = useMemo(
     () => new Map(nodes.map((n) => [n.type, n.stage])),
     [nodes],
@@ -327,10 +327,15 @@ export default function BrainScene({
     const out: { type: string; stage: number; positions: Float32Array }[] = [];
     for (const [type, entries] of Object.entries(skeletons)) {
       const stage = stageOf.get(type) ?? 0;
-      const total = entries.reduce((s, e) => s + e.segments.length, 0);
+      // One exemplar per cell type, not the bilateral pair. All 21 types draw
+      // at once in the default view, so this is the heaviest state; showing a
+      // single copy cuts the line work to ~42% and reads more clearly, since
+      // overlapping left/right arbors mostly obscure each other anyway.
+      const shown = entries.slice(0, SKELETONS_PER_TYPE);
+      const total = shown.reduce((s, e) => s + e.segments.length, 0);
       const arr = new Float32Array(total);
       let o = 0;
-      for (const e of entries) {
+      for (const e of shown) {
         for (let i = 0; i < e.segments.length; i += 3) {
           const [x, y, z] = toScene(e.segments[i], e.segments[i + 1], e.segments[i + 2]);
           arr[o++] = x;
@@ -388,7 +393,7 @@ export default function BrainScene({
   return (
     <Canvas
       camera={{ position: [1.6, 0.4, 1.9], fov: 45, near: 0.01, far: 100 }}
-      dpr={dpr}
+      dpr={[1, 2]}
       // preserveDrawingBuffer is deliberately off: it forces the browser to
       // keep the back buffer each frame rather than discarding it after
       // compositing, which costs real frame time. It was only ever enabled so
@@ -396,12 +401,6 @@ export default function BrainScene({
       gl={{ antialias: true, powerPreference: "high-performance" }}
       onPointerMissed={() => onSelectType(null)}
     >
-      <PerformanceMonitor
-        onDecline={() => setDpr((d) => Math.max(0.6, d - 0.25))}
-        onIncline={() => setDpr((d) => Math.min(1.5, d + 0.25))}
-      />
-      {/* drops resolution while the camera is moving, restores when it stops */}
-      <AdaptiveDpr pixelated />
       <color attach="background" args={["#070b14"]} />
       <CloudPoints cloud={activeCloud} />
       {brain === "male" && meshes.map((m) => {
@@ -442,9 +441,6 @@ export default function BrainScene({
       {/* Damping is what makes orbiting feel fluid, so it stays on. The rig
           suspends it for the duration of an assisted move instead, which is
           what stops the two fighting over the camera. */}
-      {/* `regress` is what actually drives AdaptiveDpr: without it nothing
-          calls performance.regress(), so resolution never drops during
-          interaction and the adaptive setup does nothing. */}
       <OrbitControls
         ref={controlsRef}
         enablePan={false}
@@ -452,8 +448,6 @@ export default function BrainScene({
         maxDistance={MAX_DIST}
         enableDamping
         dampingFactor={0.12}
-        zoomSpeed={0.7}
-        regress
       />
     </Canvas>
   );
