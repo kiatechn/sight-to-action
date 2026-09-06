@@ -97,6 +97,19 @@ def _describe(g: nx.DiGraph, path: list[str]) -> PathResult:
     )
 
 
+def _ignore_no_path(paths):
+    """Yield paths, treating "no path exists" as simply nothing to yield.
+
+    networkx raises when the target is unreachable. For this project that is
+    an ordinary answer — particularly in the removal experiment, where cutting
+    a bottleneck is *expected* to disconnect the pair.
+    """
+    try:
+        yield from paths
+    except nx.NetworkXNoPath:
+        return
+
+
 def strongest_paths(
     g: nx.DiGraph,
     source: str,
@@ -114,7 +127,11 @@ def strongest_paths(
     # search; `examined` bounds the work for graphs with many near-ties.
     out: list[PathResult] = []
     examined = 0
-    for path in nx.shortest_simple_paths(sub, source, target, weight="cost"):
+    try:
+        candidates = nx.shortest_simple_paths(sub, source, target, weight="cost")
+    except nx.NetworkXNoPath:
+        return []
+    for path in _ignore_no_path(candidates):
         examined += 1
         if len(path) - 1 <= max_hops:
             out.append(_describe(g, path))

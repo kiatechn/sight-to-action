@@ -128,6 +128,20 @@ The site is a static build with no backend. On Netlify the settings come from
 publish `web/dist`. The analysis outputs are committed under `data/processed/`
 and copied into the bundle at build time, so a deploy needs no extra steps.
 
+## Tests
+
+```bash
+python -m pytest tests/ -m "not needs_data"      # fast, no data download needed
+python -m pytest tests/                          # includes checks against the real connectome
+```
+
+The suite pins down what the route ranking actually computes (relative weights
+sum to one per target, score is their product along a path, hop limits hold),
+and cross-checks the fast route finder used by the Explore tab against the
+exact k-shortest-paths implementation used everywhere else. That equivalence
+had previously only been verified by hand — and when it was made automatic it
+immediately caught a real bug, described in the commit history.
+
 ## Repository layout
 
 ```
@@ -141,6 +155,7 @@ src/sight_to_action/
   skeletons.py   SWC download, parsing and decimation
   build.py       one reproducible build of every artefact
 notebooks/       the analysis, executed with outputs
+tests/           pytest suite; synthetic fixtures, no data download required
 web/             React + Three.js (R3F) + Cytoscape.js application
 docs/            methods and findings write-up
 data/processed/  small derived JSON consumed by the app (committed)

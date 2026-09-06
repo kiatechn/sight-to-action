@@ -60,7 +60,13 @@ def hop_limited_paths(
         improved &= new_dist[v] < dist[v] - 1e-15
         if not improved.any():
             break
-        np.maximum.at(pred_edge, v[improved], edge_ids[improved])
+        # Plain assignment, deliberately not np.maximum.at: that takes the
+        # maximum of the stored and incoming edge *indices*, so a worse
+        # predecessor recorded in an earlier round could survive simply for
+        # having a higher index. The result was a correct distance attached to
+        # the wrong route. Only edges achieving the new minimum are marked in
+        # `improved`, so overwriting is right (ties pick an arbitrary argmin).
+        pred_edge[v[improved]] = edge_ids[improved]
         dist = new_dist
     return dist, pred_edge
 
