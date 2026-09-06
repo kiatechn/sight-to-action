@@ -5,9 +5,9 @@
 <<<<<<< HEAD
 ### ▶ [Open the live site](https://sight-to-action.netlify.app)
 
-[![From Sight to Action — click to watch the demo](docs/media/demo-poster.png)](https://sight-to-action.netlify.app/media/demo-full.mov)
+[![From Sight to Action — click to open the live site](docs/media/demo.gif)](https://sight-to-action.netlify.app)
 
-<sub>▲ Real EM-traced neuron shapes from the MaleCNS connectome. **[Click the image to watch the demo](https://sight-to-action.netlify.app/media/demo-full.mov)** (18s, full quality).</sub>
+<sub>▲ Real EM-traced neuron morphology from the MaleCNS connectome. **[Click to open the live site](https://sight-to-action.netlify.app)**, or [watch the full-quality recording](https://sight-to-action.netlify.app/media/demo-full.mov).</sub>
 =======
 
 
