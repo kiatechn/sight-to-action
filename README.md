@@ -32,6 +32,9 @@ evidence-linked information about every neuron.
 
 ## What's in the app
 
+<img width="1408" height="675" alt="ss" src="https://github.com/user-attachments/assets/e064b69e-e81c-4f4f-84a8-8481e69f9d44" />
+
+
 | View | What it does |
 | --- | --- |
 | **3D connectome** | Real EM-traced neuron skeletons, coloured by pathway stage, inside a soma point-cloud of the whole CNS. Click a neuron to inspect it. |
@@ -190,8 +193,8 @@ annotations from [flyconnectome/flywire_annotations](https://github.com/flyconne
 - [x] Male and female brains both viewable in 3D, with routes drawn in either
 - [x] Four-level evidence labelling with links to source data
 - [x] Reproducible notebook, documented provenance, methods write-up
-- [ ] Public deployment
-- [ ] Short demonstration video
+- [x] Public deployment
+- [x] Short demonstration video
 
 ## Licence
 
