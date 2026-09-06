@@ -23,6 +23,9 @@ interface Props {
 }
 
 const SKELETONS_PER_TYPE = 1;
+
+/** Pointer travel beyond this many pixels counts as a drag, not a click. */
+const DRAG_SLOP_PX = 5;
 const MIN_DIST = 0.25;
 const MAX_DIST = 5;
 
@@ -314,6 +317,18 @@ export default function BrainScene({
   const activeCloud = cloudOverride ?? cloud;
   const controlsRef = useRef<any>(null);
 
+  // Orbiting ends with a pointer-up over the model, which the renderer would
+  // otherwise report as a click and select whatever happens to be under the
+  // cursor. Track how far the pointer travelled and ignore selections that
+  // came at the end of a drag.
+  const pointerDown = useRef<{ x: number; y: number } | null>(null);
+  const wasDrag = useRef(false);
+
+  const guardedSelect = (type: string | null) => {
+    if (wasDrag.current) return;
+    onSelectType(type);
+  };
+
   // Resolution is deliberately fixed. Adapting it did buy frame rate, but it
   // cost sharpness and every change reallocates the drawing buffer — which
   // hitched exactly when you began an interaction, since the regress fires on
@@ -399,7 +414,27 @@ export default function BrainScene({
       // compositing, which costs real frame time. It was only ever enabled so
       // the canvas could be captured during development.
       gl={{ antialias: true, powerPreference: "high-performance" }}
-      onPointerMissed={() => onSelectType(null)}
+      onPointerMissed={() => guardedSelect(null)}
+      onPointerDown={(e) => {
+        pointerDown.current = { x: e.clientX, y: e.clientY };
+        wasDrag.current = false;
+      }}
+      onPointerMove={(e) => {
+        const d = pointerDown.current;
+        if (!d) return;
+        if (Math.hypot(e.clientX - d.x, e.clientY - d.y) > DRAG_SLOP_PX) {
+          wasDrag.current = true;
+        }
+      }}
+      // Three.js defaults the line raycast threshold to 1 world unit, but this
+      // whole scene spans roughly [-1, 1] — so almost any click counted as a
+      // hit on some neuron. Tighten it to something proportionate to the scene.
+      raycaster={{
+        params: {
+          Line: { threshold: 0.006 },
+          Points: { threshold: 0.01 },
+        } as THREE.RaycasterParameters,
+      }}
     >
       <color attach="background" args={["#070b14"]} />
       <CloudPoints cloud={activeCloud} />
@@ -425,7 +460,7 @@ export default function BrainScene({
             segments={m.positions}
             color={STAGE_COLORS[m.stage] ?? "#94a3b8"}
             emphasis={emphasis}
-            onClick={() => onSelectType(m.type)}
+            onClick={() => guardedSelect(m.type)}
           />
         );
       })}
@@ -434,7 +469,7 @@ export default function BrainScene({
           route={overlayRoute}
           soma={soma}
           step={overlayStep}
-          onSelectType={onSelectType}
+          onSelectType={guardedSelect}
         />
       ) : null}
       <Rig focus={focus} controls={controlsRef} />
