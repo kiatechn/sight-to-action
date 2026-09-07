@@ -221,8 +221,8 @@ trailer, and I would rather be direct about this.
 a specific sensory-to-motor pathway rather than build another connectome
 browser; the scope, the endpoints (R1–R6 → DNg13) and the requirement that
 every claim be labelled by how well it is evidenced. I directed each round of
-work, judged the output, and rejected what was not good enough — the 3D view
-went through several rewrites on my feedback, and I found the interaction bugs 
+work, judged the output, and rejected what was not good enough. The 3D view
+also went through several rewrites on my feedback, and I found the bugs 
 that led to real fixes.
 
 **How AI assisted.** Wrote most of the code, and proposed the analysis
