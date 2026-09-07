@@ -182,6 +182,16 @@ export default function App() {
             {data.meta.dataset}
           </a>
           <span className="disclaimer">Structural wiring only — not a simulation of activity</span>
+          <span className="byline">
+  Built by {" "}
+  
+    href="https://www.linkedin.com/in/kianaruizpasieka/"
+    target="_blank"
+    rel="noreferrer"
+  >
+    Kiana Ruiz
+  </a>
+</span>
         </div>
       </header>
 
