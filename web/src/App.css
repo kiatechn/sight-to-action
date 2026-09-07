@@ -100,6 +100,22 @@ button {
   font-size: 10.5px;
   color: var(--muted);
 }
+.byline {
+  font-size: 10.5px;
+  color: var(--muted);
+}
+
+.byline a {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+}
+
+.byline a:hover,
+.byline a:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
 
 /* ---------- workspace ---------- */
 
